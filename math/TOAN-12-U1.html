@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toàn Creator - Online Lesson</title>
+<style>
+  :root {
+    --yellow: #f9d342;
+    --yellow-dark: #d4b833;
+    --Green: #2ecc71;
+    --starsGreen: #2ecc71;
+    --red: #d93025;
+    --green: #2ecc40;
+    --starsGray: #ccc;
+    --star-size: 30px;
+    --orange: #ff9800;
+  }
+  body {
+    margin:0; padding:0; font-family: Arial, sans-serif;
+    background: white; color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: black; color: white;
+  }
+  /* Existing #app rule */
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+/* Media query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+  #app {
+    max-width: 960px; /* Or any wider value you prefer, e.g., 900px, 1200px */
+    padding: 20px; /* Optional: Increase padding for more space on larger screens */
+  }
+
+  /* Optional: Adjust button widths for larger screens if they look too wide */
+  .btn {
+    max-width: 400px; /* Make main buttons a bit wider */
+  }
+
+  /* Optional: Adjust status bar layout for larger screens */
+  .status-bar {
+    font-size: 1.1em;
+  }
+}
+  h1, h3 {
+    text-align: center;
+    margin: 10px 0;
+  }
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+    color: #FF00FF;
+  }
+  hr {
+    border:none; border-bottom: 3px solid black;
+    margin: 5px 0 25px 0;
+  }
+  .btn {
+    background: #3399FF;
+    border-radius: 8px;
+    border:none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 15px;
+    width: 100%;
+    max-width: 350px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: 3px solid transparent;
+    user-select: none;
+  }
+  .btn:hover {
+    background: var(--yellow-dark);
+  }
+  .btn svg {
+    vertical-align: middle;
+  }
+  .question-container {
+    margin-bottom: 20px;
+    color: var(--orange) !important;
+    font-weight: bold;
+    font-size: 1.08em;
+    transition: color 0.3s;
+  }
+  body.dark .question-container {
+    color: var(--orange) !important;
+  }
+  .answers {
+    margin-top: 15px;
+  }
+  .answer-btn {
+    display: block;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 6px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
+    padding: 12px 10px;
+    margin: 7px 0;
+    cursor: pointer;
+    text-align: left;
+    user-select: none;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .answer-btn:hover:not(.disabled) {
+    background-color: #eee;
+  }
+  body.dark .answer-btn {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  body.dark .answer-btn:hover:not(.disabled) {
+    background-color: #444;
+  }
+  .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  body.dark .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  body.dark .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  .disabled {
+    pointer-events: none;
+  }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .star-container {
+    text-align: center;
+    margin: 20px 0 10px 0;
+  }
+  .star {
+    font-size: var(--star-size);
+    margin: 0 5px;
+    color: var(--starsGray);
+  }
+  .star.Green {
+    color: var(--Green);
+  }
+  .star.red {
+    color: var(--red);
+  }
+  .toggle-btn {
+    background: lime;
+    color: white;
+    font-size: 1.5em;
+    padding: 12px 0;
+    margin: 25px auto;
+    width: 150px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    display: block;
+  }
+  .input-textarea {
+    width: 100%;
+    min-height: 80px;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid black;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  body.dark .input-textarea {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  .btn-small {
+    background: #FF99CC;
+    width: auto;
+    padding: 8px 15px;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+  .answer-btn img {
+    max-width: 100%;
+    max-height: 150px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .question-container img {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  body.dark .answer-btn img,
+  body.dark .question-container img {
+    border-color: #555;
+  }
+  .question-container img, .answer-btn img {
+    display: block;
+    margin: 0 auto;
+    background: #f5f5f5;
+  }
+  body.dark .question-container img,
+  body.dark .answer-btn img {
+    background: #333;
+  }
+  /* Style for the header image placeholder */
+  .header-image-placeholder {
+    display: block;
+    width: 100%; /* Hoặc một chiều rộng cố định */
+    height: 100px; /* Điều chỉnh chiều cao này để phù hợp với kích thước bạn muốn */
+    background-color: #f0f0f0; /* Màu nền để dễ nhìn thấy placeholder */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 25px; /* Khoảng cách với tiêu đề bên dưới */
+    
+  }
+  body.dark .header-image-placeholder {
+    background-color: #333;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <img src="https://i.ibb.co/tMdHNdPH/Picsart-25-07-17-06-40-25-073.jpg" alt="Header Image" class="header-image-placeholder">
+  
+  <h2>TOÁN - BÀI 1</h2>
+
+  <button class="btn" id="btn-exit" style="background: var(--red);">
+    <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+      <path d="M16 17v-4h-2V7h-4V4H6V2H4v2h2v4h4v6h2v4h4v2h2v-2h-2z"/>
+    </svg>
+    Thoát
+  </button>
+  <button class="btn" id="btn-multi">TRẮC NGHIỆM 4 PHƯƠNG ÁN</button>
+  <button class="btn" id="btn-truefalse">TRẮC NGHIỆM ĐÚNG/SAI</button>
+  <button class="btn" id="btn-essay">TỰ LUẬN</button>
+
+  <button class="toggle-btn" id="toggle-theme">💡</button>
+  <button class="toggle-btn" id="btn-download" style="background: orange; margin-top: -20px; margin-bottom: 25px;">
+    Tải xuống
+  </button>
+  <div id="quiz-section" style="display:none; margin-top: 10px;">
+    <div class="status-bar">
+      <div>Thời gian:<span id="timer">00:00</span></div>
+      <div>Câu đã làm:<span id="done-count">0</span></div>
+      <div>Đúng:<span id="correct-count">0</span> | <strong>Sai:</strong><span id="wrong-count">0</span></div>
+    </div>
+
+    <div id="question-block" class="question-container"></div>
+    <div id="answers-block" class="answers"></div>
+
+    <div id="essay-input-block" style="display:none;">
+      <textarea id="essay-answer" class="input-textarea" placeholder="Nhập câu trả lời của bạn..."></textarea>
+      <button id="btn-essay-submit" class="btn-small">Xong</button>
+    </div>
+
+    <div style="display:flex; justify-content: space-between; margin-top: 20px;">
+      <button id="btn-back-home-in-quiz" class="btn btn-small" style="background: var(--Green); width: 48%;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+      <button id="btn-next" class="btn btn-small" style="width: 48%;">Tiếp tục</button>
+    </div>
+  </div>
+
+  <div id="result-section" style="display:none; text-align:center; margin-top: 30px;">
+    <h2>KẾT THÚC BÀI LÀM</h2>
+    <div><strong>Tổng thời gian làm bài:</strong> <span id="result-time"></span></div>
+    <div><strong>Tổng số câu đã làm:</strong> <span id="result-total"></span></div>
+    <div><strong>Đúng:</strong><span id="result-correct"></span><strong> | </strong><strong>Sai:</strong><span id="result-wrong"></span></div>
+    <div id="star-rating" class="star-container"></div>
+    <div style="margin-top: 25px;">
+      <button id="btn-home" class="btn" style="display:inline-block; width:120px;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg> 
+      </button>
+      </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // --- QUESTION DATA ---
+  // Multiple choice questions [ABCD]
+  const multiChoiceQuestions = [
+    {
+      q: "Cho hàm số f(x) có bảng xét dấu của đạo hàm như sau, hàm số đã cho đồng biến trên khoảng nào dưới đây?",
+      qImage: "https://i.ibb.co/GQt19Dyw/image.png",
+      answers: [
+        { text: "(-∞; -2)", correct: false, image: null },
+        { text: "(-2; 1)", correct: true, image: null },
+        { text: "(1; +∞)", correct: false, image: null },
+        { text: "(-∞; 1)", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Cho hàm số y = f(x) có bảng biến thiên như sau, hàm số đã cho nghịch biến trên khoảng nào dưới đây?",
+      qImage: "https://i.ibb.co/k6wypRqc/image.png",
+      answers: [
+        { text: "(-3; -1)", correct: false, image: null },
+        { text: "(-∞; 0)", correct: false, image: null },
+        { text: "(-2; -1)", correct: true, image: null },
+        { text: "(-3; -2)∪ (-2; -1)", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Cho bảng biến thiên như hình vẽ bên. Hỏi đây là bảng biến thiên của hàm số nào trong các hàm số sau?",
+      qImage: "https://i.ibb.co/Wv4sb2zf/image.png",
+      answers: [
+        { text: "y = (-x+2)/(x-1)", correct: false, image: null },
+        { text: "y = (x+2)/(x-1)", correct: true, image: null },
+        { text: "y = (x+2)/(x+1)", correct: false, image: null },
+        { text: "y = (x-3)/(x-1)", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Đường cong ở hình bên là đồ thị của hàm số y = (ax+b)/(cx+d) với a,b,c,d là các số thực. Mệnh đề nào dưới đây đúng?",
+      qImage: "https://i.ibb.co/FbPFMkkW/image.png",
+      answers: [
+        { text: "y' < 0, ∀x≠1", correct: true, image: null },
+        { text: "y' > 0, ∀x∈R", correct: false, image: null },
+        { text: "y' < 0, ∀x∈R", correct: false, image: null },
+        { text: "y' > 0, ∀x≠1", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Cho hàm số f(x) có đạo hàm trên R là hàm số f'(x) có đồ thị như hình vẽ. Hàm số f(x) nghịch biến trên khoảng nào?",
+      qImage: "https://i.ibb.co/n831HY61/image.png",
+      answers: [
+        { text: "(-∞; 0)", correct: true, image: null },
+        { text: "(0; 1)", correct: false, image: null },
+        { text: "(1; +∞)", correct: false, image: null },
+        { text: "(-1/3; 1)", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Cho hàm số y = x³ - 3x² + 5. Mệnh đề nào dưới đây đúng?",
+      qImage: null,
+      answers: [
+        { text: "Hàm số nghịch biến trên khoảng (-∞; 0)", correct: false, image: null },
+        { text: "Hàm số nghịch biến trên khoảng (0; 2)", correct: true, image: null },
+        { text: "Hàm số đồng biến trên khoảng (2; +∞)", correct: false, image: null },
+        { text: "Hàm số đồng biến trên khoảng (0; 2)", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Trong các hàm số sau, hàm số nào đồng biến trên R?",
+      qImage: null,
+      answers: [
+        { text: "y = tan(x)", correct: false, image: null },
+        { text: "y = x⁴ + x² + 1", correct: false, image: null },
+        { text: "y = x³ + 1", correct: true, image: null },
+        { text: "y = (4x+1)/(x+2)", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Hàm số y = f(x) có đạo hàm y' = x²(x-5). Mệnh đề nào sau đây đúng?",
+      qImage: null,
+      answers: [
+        { text: "Hàm số đồng biến trên (5; +∞)", correct: true, image: null },
+        { text: "Hàm số đồng biến trên (5; +∞)", correct: false, image: null },
+        { text: "Hàm số nghịch biến trên R", correct: false, image: null },
+        { text: "Hàm số nghịch biến trên (-∞; 0) và (5; +∞)", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Cho hàm số y = f(x) có đạo hàm f'(x) = x² - 2x, ∀x∈R. Hàm số y = -2f(x) đồng biến trên khoảng nào?",
+      qImage: null,
+      answers: [
+        { text: "(0; 2)", correct: true, image: null },
+        { text: "(2; +∞)", correct: false, image: null },
+        { text: "(-∞; -2)", correct: false, image: null },
+        { text: "(-2; 0)", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Cho hàm số f(x) có đạo hàm f'(x) = (x+1)²(x-1)³(2-x). Hàm số f(x) đồng biến trên khoảng nào, trong các khoảng dưới đây?",
+      qImage: null,
+      answers: [
+        { text: "(-1; 1)", correct: false, image: null },
+        { text: "(1; 2)", correct: true, image: null },
+        { text: "(-∞; -1)", correct: false, image: null },
+        { text: "(2; +∞)", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Cho hàm số y = f(x) có đạo hàm f'(x) = (3-x)(x²-1) + 2x, ∀x∈R. Hỏi hàm số g(x) = f(x) - x² - 1 đồng biến trên khoảng nào trong các khoảng dưới đây?",
+      qImage: null,
+      answers: [
+        { text: "(3; +∞)", correct: false, image: null },
+        { text: "(-∞; 1)", correct: false, image: null },
+        { text: "(1; 2)", correct: true, image: null },
+        { text: "(-1; 0)", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Cho hàm số y = f(x) liên tục trên R và có đạo hàm f'(x) = (x+1)²(x-1)³(2-x). Hàm số y = f(x) đồng biến trên khoảng nào dưới đây?",
+      qImage: null,
+      answers: [
+        { text: "(1; 2)", correct: true, image: null },
+        { text: "(-∞; -1)", correct: false, image: null },
+        { text: "(-1; 1)", correct: false, image: null },
+        { text: "(2; +∞)", correct: false, image: null }
+      ]
+    },
+	{
+      "q": "Hàm số y = -x³ + 3x² - 1 nghịch biến trên khoảng nào dưới đây?",
+      "answers": [
+        { "text": "[0; 2]", "correct": false },
+        { "text": "(-∞; 0]", "correct": true },
+        { "text": "(1; +∞)", "correct": false },
+        { "text": "(-1; 1)", "correct": false }
+      ]
+    },
+    {
+      "q": "Hàm số y = x⁴ - 2x² - 3 đồng biến trên khoảng nào dưới đây?",
+      "answers": [
+        { "text": "(-1; 0)", "correct": true },
+        { "text": "(-∞; -1)", "correct": false },
+        { "text": "(0; 1)", "correct": false },
+        { "text": "(-1; 1)", "correct": false }
+      ]
+    },
+    {
+      "q": "Cho hàm số y = (2x+1)/(x-1). Mệnh đề nào sau đây là đúng?",
+      "answers": [
+        { "text": "Hàm số đồng biến trên R \\ {1}", "correct": false },
+        { "text": "Hàm số nghịch biến trên các khoảng (-∞; 1) và (1; +∞)", "correct": true },
+        { "text": "Hàm số đồng biến trên các khoảng (-∞; 1) và (1; +∞)", "correct": false },
+        { "text": "Hàm số nghịch biến trên R", "correct": false }
+      ]
+    },
+    {
+      "q": "Hàm số nào sau đây nghịch biến trên R?",
+      "answers": [
+        { "text": "y = -x³ + x² - x + 1", "correct": true },
+        { "text": "y = x³ + 3", "correct": false },
+        { "text": "y = -x⁴ - 2x²", "correct": false },
+        { "text": "y = (x+1)/(x-2)", "correct": false }
+      ]
+    },
+    {
+      "q": "Cho hàm số y = f(x) có đạo hàm f'(x) = x(x-1)²(x-2). Hàm số f(x) có bao nhiêu điểm cực trị?",
+      "answers": [
+        { "text": "0", "correct": false },
+        { "text": "1", "correct": false },
+        { "text": "2", "correct": true },
+        { "text": "3", "correct": false }
+      ]
+    },
+    {
+      "q": "Khoảng đồng biến của hàm số y = -x⁴ + 8x² - 1 là:",
+      "answers": [
+        { "text": "(-∞; -2) và (0; 2)", "correct": true },
+        { "text": "(-2; 0) và (2; +∞)", "correct": false },
+        { "text": "(-∞; -2) và (2; +∞)", "correct": false },
+        { "text": "(-2; 2)", "correct": false }
+      ]
+    },
+    {
+      "q": "Tìm tất cả các giá trị thực của tham số m để hàm số y = x³ - 3x² + mx + 2 đồng biến trên khoảng (1; +∞).",
+      "answers": [
+        { "text": "m ≥ 3", "correct": true },
+        { "text": "m ≤ 3", "correct": false },
+        { "text": "m = 3", "correct": false },
+        { "text": "m < 3", "correct": false }
+      ]
+    },
+    {
+      "q": "Hàm số y = √(2x - x²) nghịch biến trên khoảng:",
+      "answers": [
+        { "text": "(0; 1)", "correct": false },
+        { "text": "(1; 2)", "correct": true },
+        { "text": "(0; 2)", "correct": false },
+        { "text": "(1; +∞)", "correct": false }
+      ]
+    },
+    {
+      "q": "Trong các hàm số sau, hàm số nào chỉ có khoảng nghịch biến?",
+      "answers": [
+        { "text": "y = 2x + 1", "correct": false },
+        { "text": "y = x³ + 2x", "correct": false },
+        { "text": "y = -x³ - 3x", "correct": true },
+        { "text": "y = x⁴ + x²", "correct": false }
+      ]
+    },
+    {
+      "q": "Cho hàm số y = f(x) có đạo hàm f'(x) = x² + 1. Khẳng định nào sau đây là đúng?",
+      "answers": [
+        { "text": "Hàm số nghịch biến trên (-∞; 0)", "correct": false },
+        { "text": "Hàm số đồng biến trên R", "correct": true },
+        { "text": "Hàm số nghịch biến trên (1; +∞)", "correct": false },
+        { "text": "Hàm số chỉ đồng biến trên (0; +∞)", "correct": false }
+      ]
+    },
+    {
+      "q": "Hàm số y = (mx+4)/(x+m) nghịch biến trên khoảng (-∞; 1) khi:",
+      "answers": [
+        { "text": "-2 < m ≤ -1", "correct": false },
+        { "text": "m > 2", "correct": false },
+        { "text": "-1 < m < 2", "correct": true },
+        { "text": "m < -2", "correct": false }
+      ]
+    },
+    {
+      "q": "Cho hàm số y = x/ln(x). Mệnh đề nào dưới đây là sai?",
+      "answers": [
+        { "text": "Hàm số đồng biến trên (0; e)", "correct": true },
+        { "text": "Hàm số đồng biến trên (e; +∞)", "correct": false },
+        { "text": "Hàm số nghịch biến trên (0; 1)", "correct": false },
+        { "text": "Hàm số nghịch biến trên (1; e)", "correct": false }
+      ]
+    },
+    {
+      "q": "Cho hàm số y = f(x) có đạo hàm f'(x) = (x-1)(x-2)(x-3). Hàm số y=f(x) đồng biến trên khoảng nào?",
+      "answers": [
+        { "text": "(1; 2)", "correct": true },
+        { "text": "(-∞; 1)", "correct": false },
+        { "text": "(2; 3)", "correct": false },
+        { "text": "(1; +∞)", "correct": false }
+      ]
+    },
+    {
+      "q": "Tìm m để hàm số y = -x³ + (m-1)x² - (m-1)x + 5 nghịch biến trên R.",
+      "answers": [
+        { "text": "1 ≤ m ≤ 4", "correct": true },
+        { "text": "m < 1 hoặc m > 4", "correct": false },
+        { "text": "1 < m ", "correct": false },
+        { "text": "m < 4", "correct": false }
+      ]
+    },
+    {
+      "q": "Hàm số nào sau đây đồng biến trên khoảng (0; π/2)?",
+      "answers": [
+        { "text": "y = cos(x)", "correct": false },
+        { "text": "y = cot(x)", "correct": false },
+        { "text": "y = sin(x)", "correct": true },
+        { "text": "y = -tan(x)", "correct": false }
+      ]
+    },
+    {
+      "q": "Cho hàm số y=f(x) có đạo hàm f'(x) = x²(x-1)(x+2)³. Hàm số y=f(x) đồng biến trên khoảng nào?",
+      "answers": [
+        { "text": "(-2; 1)", "correct": false },
+        { "text": "(-∞; -2)", "correct": false },
+        { "text": "(0; 1)", "correct": false },
+        { "text": "(1; +∞)", "correct": true }
+      ]
+    },
+    {
+      "q": "Số khoảng đồng biến của hàm số y = x⁴ - 6x² + 8x + 1 là:",
+      "answers": [
+        { "text": "1", "correct": true },
+        { "text": "2", "correct": false },
+        { "text": "3", "correct": false },
+        { "text": "0", "correct": false }
+      ]
+    },
+    {
+      "q": "Hàm số y = sin(x) + x đồng biến trên:",
+      "answers": [
+        { "text": "(0; π)", "correct": false },
+        { "text": "(-π/2; π/2)", "correct": false },
+        { "text": "R", "correct": true },
+        { "text": "(-π; 0)", "correct": false }
+      ]
+    },
+    {
+      "q": "Hàm số y = x + 4/x nghịch biến trên khoảng nào?",
+      "answers": [
+        { "text": "(-2; 2)", "correct": false },
+        { "text": "(-2; 0) và (0; 2)", "correct": true },
+        { "text": "(-∞; -2)", "correct": false },
+        { "text": "(2; +∞)", "correct": false }
+      ]
+    },
+    {
+      "q": "Tìm tất cả các giá trị của m để hàm số y = (x+m)/(x-1) đồng biến trên từng khoảng xác định.",
+      "answers": [
+        { "text": "m > -1", "correct": false },
+        { "text": "m < -1", "correct": true },
+        { "text": "m ≥ 1", "correct": false },
+        { "text": "m ≤ 1", "correct": false }
+      ]
+    },
+    {
+      "q": "Cho hàm số y=f(x) có đạo hàm f'(x) = x(x+2)². Hàm số đồng biến trên khoảng nào?",
+      "answers": [
+        { "text": "(-∞; -2)", "correct": false },
+        { "text": "(-2; 0)", "correct": false },
+        { "text": "(0; +∞)", "correct": true },
+        { "text": "(-∞; 0)", "correct": false }
+      ]
+    },
+    {
+      "q": "Hàm số y = x³ - 6x² + 9x + 1 đồng biến trên khoảng nào?",
+      "answers": [
+        { "text": "(1; 3)", "correct": false },
+        { "text": "(-∞; 1)", "correct": true },
+        { "text": "(-∞; 3)", "correct": false },
+        { "text": "(1; +∞)", "correct": false }
+      ]
+    },
+    {
+      "q": "Hàm số y = -x³ + 3x - 5 nghịch biến trên khoảng nào?",
+      "answers": [
+        { "text": "(-1; 1)", "correct": false },
+        { "text": "(-∞; -1)", "correct": true },
+        { "text": "(-∞; 1)", "correct": false },
+        { "text": "(-∞; +∞)", "correct": false }
+      ]
+    },
+    {
+      "q": "Cho hàm số y=f(x) có đạo hàm f'(x) = 1 - x. Hàm số f(x) đồng biến trên khoảng nào?",
+      "answers": [
+        { "text": "(1; +∞)", "correct": false },
+        { "text": "(-∞; 1)", "correct": true },
+        { "text": "(-∞; +∞)", "correct": false },
+        { "text": "(-1; 1)", "correct": false }
+      ]
+    },
+    {
+      "q": "Tìm m để hàm số y = (2x+1)/(x-m) đồng biến trên khoảng (2; +∞).",
+      "answers": [
+        { "text": "m ≤ 2", "correct": false },
+        { "text": "m > 2", "correct": false },
+        { "text": "m < -1/2", "correct": true },
+        { "text": "Không tồn tại m", "correct": false }
+      ]
+    },
+	{
+      q: "Cho hàm số f(x) có xác định với mọi x ≠ 4 có BBT như hình dưới dây, hàm số đã cho đồng biến trên khoảng nào trong các khoảng sao?",
+      qImage: "https://i.ibb.co/SDk61TYn/image.png",
+      answers: [
+        { text: "(-7;+∞)", correct: true, image: null },
+        { text: "(-7; -4)", correct: false, image: null },
+        { text: "(6; +∞)", correct: false, image: null },
+        { text: "(-7; 4)", correct: false, image: null }
+      ]
+    },
+	{
+      q: "Cho hàm số y=f(x) là hàm số bậc ba có đồ thị là đường cong trong hình dưới đây. Hàm số đã cho đồng biến trên khoảng nào dưới đây?",
+      qImage: "https://i.ibb.co/jvpwsqSm/image.png",
+      answers: [
+        { text: "(1; +∞)", correct: false, image: null },
+        { text: "(0; 1)", correct: true, image: null },
+        { text: "(-∞; 2)", correct: false, image: null },
+        { text: "(-∞; 0)", correct: false, image: null }
+      ]
+    },
+	{
+      q: "Một vật có phương trình quãng đường tính theo thời gian là s(t) = 5 + 8t -2t² . Tại thời điểm nào, vật cách mốc tính quãng đường khoảng lớn nhất?",
+      qImage: null,
+      answers: [
+        { text: "1 giây", correct: false, image: null },
+        { text: "2 giây", correct: true, image: null },
+        { text: "3 giây", correct: false, image: null },
+        { text: "4 giây", correct: false, image: null }
+      ]
+    }
+  ];
+
+  // True/False questions [D/S]
+  const trueFalseQuestions = [
+    {
+      q: "Cho hàm số y = f(x) có bảng biến thiên như hình vẽ, xét tính đúng sai của các mệnh đề sau:",
+      qImage: "https://i.ibb.co/j9jchXzr/image.png",
+      answers: [
+        { text: "Hàm số y = f(x) nghịch biến trên khoảng (-3; -2).", correct: false },
+        { text: "Hàm số y = f(x) nghịch biến trên khoảng (-1; 2).", correct: true },
+        { text: "Hàm số y = f(x) đồng biến trên khoảng (-∞; -2).", correct: true },
+        { text: "Hàm số y = f(x) đồng biến trên khoảng (-2; 0).", correct: false }
+      ]
+    },
+    {
+      q: "Hàm số y = f(x) xác định, có đạo hàm trên R và f'(x) có đồ thị như hình vẽ bên. Các mệnh đề sau đúng hay sai?",
+      qImage: "https://i.ibb.co/4n5tN9CX/image.png",
+	  answers: [
+        { text: "Hàm số y = f(x) nghịch biến trên khoảng (-3; -2).", correct: false },
+        { text: "Hàm số y = f(x) đồng biến trên khoảng (-∞; -3).", correct: false },
+        { text: "Hàm số y = f(x) đồng biến trên khoảng (-3; -2).", correct: true },
+        { text: "Hàm số y = f(x) nghịch biến trên khoảng (-2; 0).", correct: true }
+      ]
+    },
+    {
+      q: "Cho hàm số y = f(x) xác định trên R và có bảng biến thiên như sau. Hỏi các mệnh đề sau đúng hay sai?",
+      qImage: "https://i.ibb.co/gnyzPf9/image.png",
+	  answers: [
+        { text: "Hàm số y = f(x) đồng biến trên khoảng (-6; +∞).", correct: true },
+        { text: "Hàm số y = f(x) nghịch biến trên khoảng (-∞; -6).", correct: true },
+        { text: "Hàm số y = f(x) đồng biến trên khoảng (-∞; -2).", correct: false },
+        { text: "Hàm số y = f(x) đồng biến trên khoảng (-2; 0).", correct: true }
+      ]
+    },
+    {
+      q: "Cho hàm số y = (-x+2)/(x-1). Các mệnh đề sau đúng hay sai?",
+      answers: [
+        { text: "Hàm số đồng biến trên mỗi khoảng (-∞; 1) và (1; +∞).", correct: false },
+        { text: "Hàm số nghịch biến trên mỗi khoảng (-∞; 1) và (1; +∞).", correct: true },
+        { text: "Hàm số nghịch biến trên R \\ {1}.", correct: false },
+        { text: "Hàm số có đạo hàm y' = 1/(x-1)².", correct: false }
+      ]
+    },
+    {
+      q: "Cho hàm số y = f(x) có đạo hàm f'(x) = x(x-2)². Các mệnh đề sau đúng hay sai?",
+      answers: [
+        { text: "Hàm số f(x) đồng biến trên khoảng (0; 2).", correct: true },
+        { text: "Hàm số f(x) nghịch biến trên khoảng (-∞; 0).", correct: true },
+        { text: "Hàm số f(x) đạt cực tiểu tại x = 0.", correct: true },
+        { text: "Hàm số f(x) có hai điểm cực trị.", correct: false }
+      ]
+    }
+  ];
+
+  // Essay questions [TL]
+  const essayQuestions = [
+    {
+      q: "Độ giảm huyết áp của một bệnh nhân được cho bởi công thức G(x) = 0.025x²(30-x), trong đó x là liều lượng thuốc được tiêm cho bệnh nhân (x > 0, tính bằng miligam). Liều lượng thuốc cần tiêm cho bệnh nhân nằm trong khoảng nào để huyết áp bệnh nhân giảm (tức là G(x) tăng)?",
+      qImage: null,
+      answerRef: "Để huyết áp giảm, G(x) phải tăng. Ta có G(x) = 0.75x² - 0.025x³. G'(x) = 1.5x - 0.075x² = 0.075x(20 - x). G'(x) > 0 khi 0 < x < 20. Vậy liều lượng thuốc cần tiêm là x ∈ (0; 20) miligam.",
+      answerRefImage: null
+    },
+    {
+      q: "Một chuyển động thẳng xác định bởi phương trình S(t) = (1/3)t³ - 3t² + 5t + 2 với t≥0, trong đó t tính bằng giây và S tính bằng mét. Trong khoảng thời gian nào vận tốc của vật tăng?",
+      qImage: null,
+      answerRef: "Vận tốc của vật là v(t) = S'(t) = t² - 6t + 5. Gia tốc của vật là a(t) = v'(t) = 2t - 6. Vận tốc tăng khi a(t) > 0, tức là 2t - 6 > 0, suy ra t > 3. Vậy vận tốc tăng trong khoảng (3; +∞) giây.",
+      answerRefImage: null
+    },
+    {
+      q: "Một chất điểm chuyển động theo quy luật S = -(1/3)t³ + 4t² + 9t với t≥0 (giây) là khoảng thời gian tính từ lúc vật bắt đầu chuyển động và S (mét) là quãng đường vật chuyển động trong thời gian đó. Hỏi trong khoảng thời gian 10 giây, kể từ lúc bắt đầu chuyển động, khoảng thời gian nào vận tốc của vật tăng?",
+      qImage: null,
+      answerRef: "Vận tốc của vật là v(t) = S'(t) = -t² + 8t + 9. Gia tốc của vật là a(t) = v'(t) = -2t + 8. Với t ≥ 0, a(t) = -2t + 8 > 0. Do đó, vận tốc của vật tăng khi t < 4. Trong 10 giây đầu, vận tốc tăng trên khoảng (0; 4).",
+      answerRefImage: null
+    },
+    {
+      q: "Công suất P (đơn vị W) của một mạch điện được cung cấp bởi một nguồn pin 12V được cho bởi công thức P = 12I - 0.5I² với I (đơn vị A) là cường độ dòng điện (I > 0). Hỏi công suất P tăng trong khoảng cường độ dòng điện nào?",
+      qImage: null,
+      answerRef: "Ta có P'(I) = 12 - I. Để công suất P tăng, P'(I) > 0, tức là 12 - I > 0, suy ra I < 12. Vì I > 0, nên công suất tăng trong khoảng (0; 12) A.",
+      answerRefImage: null
+    },
+    {
+      q: "Một hợp tác xã nuôi cá thí nghiệm trong hồ. Người ta thấy rằng nếu trên mỗi đơn vị diện tích của mặt hồ có n con cá (n > 0) thì trung bình mỗi con cá sau một vụ cân nặng P(n) = 480 - 20n (gam). Hỏi phải thả cá trong khoảng nào trên một đơn vị diện tích của mặt hồ để tổng khối lượng cá sau một vụ thu được là tăng?",
+      qImage: null,
+      answerRef: "Tổng khối lượng cá là T(n) = n * P(n) = n(480 - 20n) = 480n - 20n². Để tổng khối lượng tăng, T'(n) > 0. Ta có T'(n) = 480 - 40n. T'(n) > 0 ⇔ 480 - 40n > 0 ⇔ n < 12. Vậy phải thả trong khoảng (0; 12) con cá trên một đơn vị diện tích.",
+      answerRefImage: null
+    }
+  ];
+
+  // --- UTILITY FUNCTIONS ---
+  function shuffleArray(arr) {
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/</g, "‹")
+      .replace(/>/g, "›")
+      .replace(/"/g, "'");
+  }
+
+  // --- DOM ELEMENTS ---
+  const btnMulti = document.getElementById('btn-multi');
+  const btnTrueFalse = document.getElementById('btn-truefalse');
+  const btnEssay = document.getElementById('btn-essay');
+  const toggleThemeBtn = document.getElementById('toggle-theme');
+  const btnExit = document.getElementById('btn-exit'); 
+  const btnBackHomeInQuiz = document.getElementById('btn-back-home-in-quiz'); // Nút Back Home trong quiz
+  const btnDownload = document.getElementById('btn-download');
+
+  const quizSection = document.getElementById('quiz-section');
+  const questionBlock = document.getElementById('question-block');
+  const answersBlock = document.getElementById('answers-block');
+  const essayInputBlock = document.getElementById('essay-input-block');
+  const essayAnswerTextarea = document.getElementById('essay-answer');
+  const btnEssaySubmit = document.getElementById('btn-essay-submit');
+  const btnNext = document.getElementById('btn-next');
+
+  const timerSpan = document.getElementById('timer');
+  const doneCountSpan = document.getElementById('done-count');
+  const correctCountSpan = document.getElementById('correct-count');
+  const wrongCountSpan = document.getElementById('wrong-count');
+
+  const resultSection = document.getElementById('result-section');
+  const resultTime = document.getElementById('result-time');
+  const resultTotal = document.getElementById('result-total');
+  const resultCorrect = document.getElementById('result-correct');
+  const resultWrong = document.getElementById('result-wrong');
+  const starRating = document.getElementById('star-rating');
+
+  // const btnRestart = document.getElementById('btn-restart'); // Đã xóa khỏi HTML, nên bỏ dòng này hoặc comment lại
+  const btnHome = document.getElementById('btn-home');
+
+  // --- STATE VARIABLES ---
+  let quizType = null; // 'multi', 'truefalse', 'essay'
+  let questions = [];
+  let currentQIdx = 0;
+  let timerInterval = null;
+  let timeSeconds = 0;
+  let doneCount = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let currentTFAnswerIdx = 0;
+
+  // --- TIMER FUNCTIONS ---
+  function startTimer() {
+    timeSeconds = 0;
+    timerSpan.textContent = formatTime(timeSeconds);
+    if(timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeSeconds++;
+      timerSpan.textContent = formatTime(timeSeconds);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if(timerInterval) clearInterval(timerInterval);
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s/60);
+    const sec = s % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (sec < 10 ? '0' + sec : sec);
+  }
+
+  // --- QUIZ FUNCTIONS ---
+  function resetStats() {
+    doneCount = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    doneCountSpan.textContent = "0";
+    correctCountSpan.textContent = "0";
+    wrongCountSpan.textContent = "0";
+  }
+
+  function initQuiz(type) {
+    quizType = type;
+    currentQIdx = 0;
+    resetStats();
+
+    if(type === 'multi') {
+      questions = multiChoiceQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+    } else if(type === 'truefalse') {
+      questions = trueFalseQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+      currentTFAnswerIdx = 0;
+    } else if(type === 'essay') {
+      questions = essayQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answerRef: q.answerRef,
+        answerRefImage: q.answerRefImage
+      }));
+      shuffleArray(questions);
+    }
+    
+    quizSection.style.display = 'block';
+    resultSection.style.display = 'none';
+    btnMulti.style.display = 'none';
+    btnTrueFalse.style.display = 'none';
+    btnEssay.style.display = 'none';
+    btnExit.style.display = 'none'; // Ẩn nút Exit khi bắt đầu quiz
+    toggleThemeBtn.style.display = 'none'; // Ẩn nút chuyển theme khi vào quiz
+    btnDownload.style.display = 'none';
+
+    showQuestion();
+    startTimer();
+  }
+
+  function showQuestion() {
+    // Ẩn nút "Tiếp tục" nếu nó đang hiển thị
+    btnNext.style.display = 'none'; 
+    // Nếu là dạng tự luận, nút "Xong" (submit) sẽ được hiển thị, ngược lại ẩn
+    btnEssaySubmit.style.display = (quizType === 'essay') ? 'block' : 'none';
+    // Đảm bảo nút "Xong" được kích hoạt lại cho câu hỏi tự luận mới
+    btnEssaySubmit.disabled = false; 
+
+    answersBlock.innerHTML = ''; // Xóa các câu trả lời cũ
+    essayInputBlock.style.display = 'none'; // Ẩn khung nhập tự luận
+    essayAnswerTextarea.value = ''; // Xóa nội dung cũ trong khung tự luận
+    
+    if (currentQIdx >= questions.length) {
+      endQuiz();
+      return;
+    }
+
+    const currentQ = questions[currentQIdx];
+    
+    // Display question text and image (if any)
+    let questionHTML = `
+      <div style="color: var(--orange); font-weight: bold; margin-bottom: 15px;">
+        Câu ${currentQIdx + 1}: ${escapeHtml(currentQ.q)}
+      </div>
+    `;
+    
+    if (currentQ.qImage) {
+      questionHTML += `
+        <div style="text-align: center; margin: 15px 0;">
+          <img src="${currentQ.qImage}" 
+               style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;"
+               onerror="this.style.display='none'">
+        </div>
+      `;
+    }
+    
+    questionBlock.innerHTML = questionHTML;
+
+    if (quizType === 'multi') {
+      // Multiple choice questions
+      answersBlock.style.display = 'block';
+      currentQ.answers.forEach((ans, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        
+        let answerContent = `${String.fromCharCode(65 + i)}. ${escapeHtml(ans.text)}`;
+        
+        if (ans.image) {
+          answerContent += `
+            <div style="margin-top: 8px; text-align: center;">
+              <img src="${ans.image}" 
+                   style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 3px;"
+                   onerror="this.style.display='none'">
+            </div>
+          `;
+        }
+        
+        btn.innerHTML = answerContent;
+        btn.onclick = () => handleMultiAnswerClick(btn, ans.correct, currentQ.answers);
+        answersBlock.appendChild(btn);
+      });
+
+    } else if (quizType === 'truefalse') {
+      // True/False questions
+      answersBlock.style.display = 'block';
+      currentTFAnswerIdx = 0;
+      showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+      
+    } else if (quizType === 'essay') {
+      // Essay questions
+      essayInputBlock.style.display = 'block';
+    }
+  }
+
+  function handleMultiAnswerClick(btn, isCorrect, allAnswers) {
+    Array.from(answersBlock.children).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(isCorrect) {
+      btn.classList.add('correct');
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+    } else {
+      btn.classList.add('incorrect');
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      // Highlight correct answer
+      const correctAns = allAnswers.find(a => a.correct);
+      for(let b of answersBlock.children) {
+        // Cẩn thận với việc so sánh textContent trực tiếp nếu có hình ảnh
+        // Cần lấy chỉ phần text của câu trả lời
+        const btnText = b.childNodes[0].nodeType === 3 ? b.childNodes[0].nodeValue.substring(3).trim() : ''; // Lấy text trước hình ảnh
+        const correctText = escapeHtml(correctAns.text);
+
+        if(btnText === correctText && correctAns.correct) {
+          b.classList.add('correct');
+          break;
+        }
+      }
+    }
+    btnNext.style.display = 'inline-block';
+  }
+
+  function showTrueFalseAnswer(answerObj) {
+    answersBlock.innerHTML = '';
+
+    const label = document.createElement('div');
+    label.style.marginBottom = '10px';
+    label.style.fontWeight = 'bold';
+    label.textContent = `Câu hỏi phụ ${currentTFAnswerIdx + 1}: ${answerObj.text}`;
+    answersBlock.appendChild(label);
+
+    if (answerObj.image) {
+      const imgDiv = document.createElement('div');
+      imgDiv.style.textAlign = 'center';
+      imgDiv.style.margin = '10px 0';
+      imgDiv.innerHTML = `<img src="${answerObj.image}" style="max-width: 100%; max-height: 200px; border: 1px solid #ccc; border-radius: 3px;" onerror="this.style.display='none'">`;
+      answersBlock.appendChild(imgDiv);
+    }
+
+    const btnTrue = document.createElement('button');
+    btnTrue.className = 'answer-btn';
+    btnTrue.textContent = 'Đúng';
+    btnTrue.onclick = () => handleTrueFalseAnswerClick(true, answerObj.correct);
+    answersBlock.appendChild(btnTrue);
+    
+    const btnFalse = document.createElement('button');
+    btnFalse.className = 'answer-btn';
+    btnFalse.textContent = 'Sai';
+    btnFalse.onclick = () => handleTrueFalseAnswerClick(false, answerObj.correct);
+    answersBlock.appendChild(btnFalse);
+  }
+
+  function handleTrueFalseAnswerClick(userAnswer, correctAnswer) {
+    Array.from(answersBlock.querySelectorAll('button')).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(userAnswer === correctAnswer) {
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    } else {
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('incorrect');
+        }
+        if(b.textContent.toLowerCase() === (correctAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    }
+
+    btnNext.style.display = 'inline-block';
+  }
+
+  // Essay submit handler
+  btnEssaySubmit.onclick = () => {
+    const userText = essayAnswerTextarea.value.trim();
+    if(userText.length === 0) {
+      alert('Hãy nhập câu trả lời trước khi nhấn "Xong"');
+      return;
+    }
+    btnEssaySubmit.disabled = true; // Vô hiệu hóa nút "Xong" sau khi submit
+    
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    const currentQ = questions[currentQIdx];
+    let answerRefHTML = `<br><br><em><strong>Đáp án tham khảo:</strong> ${currentQ.answerRef}</em>`;
+    
+    if(currentQ.answerRefImage) {
+      answerRefHTML += `<div style="margin: 15px 0; text-align: center;">
+        <img src="${currentQ.answerRefImage}" style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;">
+      </div>`;
+    }
+    
+    questionBlock.innerHTML += answerRefHTML;
+    btnNext.style.display = 'inline-block';
+  };
+
+  btnNext.onclick = () => {
+    // Ẩn nút "Tiếp tục"
+    btnNext.style.display = 'none';
+    // Đảm bảo nút "Xong" (essay) được kích hoạt lại
+    btnEssaySubmit.disabled = false; 
+
+    if(quizType === 'truefalse') {
+      currentTFAnswerIdx++;
+      const currentQ = questions[currentQIdx];
+      // Nếu còn câu hỏi phụ trong câu hỏi Đúng/Sai hiện tại
+      if(currentTFAnswerIdx < currentQ.answers.length) {
+        showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+        return; // Không chuyển sang câu hỏi tiếp theo mà hiển thị câu phụ
+      }
+    }
+
+    // Chuyển sang câu hỏi tiếp theo
+    currentQIdx++;
+    showQuestion();
+  };
+
+  function endQuiz() {
+    stopTimer();
+    quizSection.style.display = 'none';
+    resultSection.style.display = 'block';
+    toggleThemeBtn.style.display = 'block'; // Hiển thị lại nút chuyển theme
+
+    resultTime.textContent = formatTime(timeSeconds);
+    resultTotal.textContent = doneCount;
+    resultCorrect.textContent = correctCount;
+    resultWrong.textContent = wrongCount;
+
+    starRating.innerHTML = '';
+
+    // Logic tính sao đã được khôi phục và tinh chỉnh
+    if(quizType === 'multi' || quizType === 'truefalse') {
+      let starsGreen = 0;
+      let starsGray = 0;
+      
+      if(wrongCount === 0) { // Nếu không có câu sai
+        starsGreen = 3; // 3 sao xanh
+      } else if (wrongCount >= 1 && wrongCount <= 3) {
+        starsGreen = 2; // 2 sao xanh
+        starsGray = 1; // 1 sao xám
+      } else if (wrongCount >= 4 && wrongCount <= 9) {
+        starsGreen = 1; // 1 sao xanh
+        starsGray = 2; // 2 sao xám
+      } else { // wrongCount >= 10
+        starsGreen = 0; // 0 sao xanh
+        starsGray = 3; // 3 sao xám
+      }
+
+      for(let i = 1; i <= 3; i++) {
+        const star = document.createElement('span');
+        star.classList.add('star');
+        if(i <= starsGreen) star.classList.add('Green');
+        else if(i <= starsGray) star.classList.add('gray');
+        star.innerHTML = '&#9733;';
+        starRating.appendChild(star);
+      }
+    } else if (quizType === 'essay') {
+        // Đối với bài tự luận, không có điểm đúng/sai tự động
+        // Bạn có thể thêm logic chấm điểm thủ công hoặc hiển thị thông báo khác
+        const infoDiv = document.createElement('div');
+        infoDiv.textContent = "Bài Tự Luận Cần Được Giáo Viên Chấm Điểm.";
+        infoDiv.style.fontWeight = "bold";
+        infoDiv.style.marginTop = "20px";
+        starRating.appendChild(infoDiv);
+    }
+  }
+
+  // --- EVENT LISTENERS ---
+  // Đã xóa btnRestart.onclick và logic liên quan
+  // Nếu bạn muốn chức năng "làm lại" bài quiz, bạn cần tạo một nút mới với ID khác
+  // và thêm lại logic reset Stats vào event listener của nút đó.
+
+  // Nút Home (ở màn hình kết quả) - vẫn reload trang hiện tại
+  btnHome.onclick = () => {
+    location.reload(); 
+  };
+
+  btnMulti.onclick = () => initQuiz('multi');
+  btnTrueFalse.onclick = () => initQuiz('truefalse');
+  btnEssay.onclick = () => initQuiz('essay');
+  // New: Download button functionality
+  btnDownload.onclick = () => {
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'toancreator-default'; // Set the desired filename
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  };
+  
+  
+  // Xử lý sự kiện cho nút Exit mới
+  btnExit.onclick = () => {
+    window.location.href = '../index.html'; // Chuyển hướng về index.html
+  };
+
+  // Xử lý sự kiện cho nút Back to Home trong quiz
+  btnBackHomeInQuiz.onclick = () => {
+    if (confirm('Bạn có chắc chắn muốn thoát bài làm hiện tại?')) {
+      stopTimer(); // Dừng đồng hồ
+      location.reload(); // Tải lại trang promt-onlineV2.html
+    }
+  };
+
+  toggleThemeBtn.onclick = () => {
+    document.body.classList.toggle('dark');
+  };
+
+  // Ẩn/hiện nút toggle theme ban đầu
+  // Bạn có thể đặt nút toggle theme ở vị trí cố định thay vì ẩn/hiện tùy thuộc vào màn hình
+  // Hiện tại, nó sẽ luôn hiển thị trừ khi bị ẩn bởi CSS hoặc logic khác
+  toggleThemeBtn.style.display = 'block'; 
+})();
+</script>
+</body>
+</html>

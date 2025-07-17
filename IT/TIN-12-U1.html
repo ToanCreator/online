@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toàn Creator - Online Lesson</title>
+<style>
+  :root {
+    --yellow: #f9d342;
+    --yellow-dark: #d4b833;
+    --Green: #2ecc71;
+    --starsGreen: #2ecc71;
+    --red: #d93025;
+    --green: #2ecc40;
+    --starsGray: #ccc;
+    --star-size: 30px;
+    --orange: #ff9800;
+  }
+  body {
+    margin:0; padding:0; font-family: Arial, sans-serif;
+    background: white; color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: black; color: white;
+  }
+  /* Existing #app rule */
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+/* Media query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+  #app {
+    max-width: 960px; /* Or any wider value you prefer, e.g., 900px, 1200px */
+    padding: 20px; /* Optional: Increase padding for more space on larger screens */
+  }
+
+  /* Optional: Adjust button widths for larger screens if they look too wide */
+  .btn {
+    max-width: 400px; /* Make main buttons a bit wider */
+  }
+
+  /* Optional: Adjust status bar layout for larger screens */
+  .status-bar {
+    font-size: 1.1em;
+  }
+}
+  h1, h3 {
+    text-align: center;
+    margin: 10px 0;
+  }
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+    color: #FF00FF;
+  }
+  hr {
+    border:none; border-bottom: 3px solid black;
+    margin: 5px 0 25px 0;
+  }
+  .btn {
+    background: #3399FF;
+    border-radius: 8px;
+    border:none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 15px;
+    width: 100%;
+    max-width: 350px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: 3px solid transparent;
+    user-select: none;
+  }
+  .btn:hover {
+    background: var(--yellow-dark);
+  }
+  .btn svg {
+    vertical-align: middle;
+  }
+  .question-container {
+    margin-bottom: 20px;
+    color: var(--orange) !important;
+    font-weight: bold;
+    font-size: 1.08em;
+    transition: color 0.3s;
+  }
+  body.dark .question-container {
+    color: var(--orange) !important;
+  }
+  .answers {
+    margin-top: 15px;
+  }
+  .answer-btn {
+    display: block;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 6px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
+    padding: 12px 10px;
+    margin: 7px 0;
+    cursor: pointer;
+    text-align: left;
+    user-select: none;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .answer-btn:hover:not(.disabled) {
+    background-color: #eee;
+  }
+  body.dark .answer-btn {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  body.dark .answer-btn:hover:not(.disabled) {
+    background-color: #444;
+  }
+  .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  body.dark .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  body.dark .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  .disabled {
+    pointer-events: none;
+  }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .star-container {
+    text-align: center;
+    margin: 20px 0 10px 0;
+  }
+  .star {
+    font-size: var(--star-size);
+    margin: 0 5px;
+    color: var(--starsGray);
+  }
+  .star.Green {
+    color: var(--Green);
+  }
+  .star.red {
+    color: var(--red);
+  }
+  .toggle-btn {
+    background: lime;
+    color: white;
+    font-size: 1.5em;
+    padding: 12px 0;
+    margin: 25px auto;
+    width: 150px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    display: block;
+  }
+  .input-textarea {
+    width: 100%;
+    min-height: 80px;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid black;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  body.dark .input-textarea {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  .btn-small {
+    background: #FF99CC;
+    width: auto;
+    padding: 8px 15px;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+  .answer-btn img {
+    max-width: 100%;
+    max-height: 150px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .question-container img {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  body.dark .answer-btn img,
+  body.dark .question-container img {
+    border-color: #555;
+  }
+  .question-container img, .answer-btn img {
+    display: block;
+    margin: 0 auto;
+    background: #f5f5f5;
+  }
+  body.dark .question-container img,
+  body.dark .answer-btn img {
+    background: #333;
+  }
+  /* Style for the header image placeholder */
+  .header-image-placeholder {
+    display: block;
+    width: 100%; /* Hoặc một chiều rộng cố định */
+    height: 100px; /* Điều chỉnh chiều cao này để phù hợp với kích thước bạn muốn */
+    background-color: #f0f0f0; /* Màu nền để dễ nhìn thấy placeholder */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 25px; /* Khoảng cách với tiêu đề bên dưới */
+    
+  }
+  body.dark .header-image-placeholder {
+    background-color: #333;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <img src="https://i.ibb.co/tMdHNdPH/Picsart-25-07-17-06-40-25-073.jpg" alt="Header Image" class="header-image-placeholder">
+  
+  <h2>TIN - BÀI 1</h2>
+
+  <button class="btn" id="btn-exit" style="background: var(--red);">
+    <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+      <path d="M16 17v-4h-2V7h-4V4H6V2H4v2h2v4h4v6h2v4h4v2h2v-2h-2z"/>
+    </svg>
+    Thoát
+  </button>
+  <button class="btn" id="btn-multi">TRẮC NGHIỆM 4 PHƯƠNG ÁN</button>
+  <button class="btn" id="btn-truefalse">TRẮC NGHIỆM ĐÚNG/SAI</button>
+  <button class="btn" id="btn-essay">TỰ LUẬN</button>
+
+  <button class="toggle-btn" id="toggle-theme">💡</button>
+  <button class="toggle-btn" id="btn-download" style="background: orange; margin-top: -20px; margin-bottom: 25px;">
+    Tải xuống
+  </button>
+  <div id="quiz-section" style="display:none; margin-top: 10px;">
+    <div class="status-bar">
+      <div>Thời gian:<span id="timer">00:00</span></div>
+      <div>Câu đã làm:<span id="done-count">0</span></div>
+      <div>Đúng:<span id="correct-count">0</span> | <strong>Sai:</strong><span id="wrong-count">0</span></div>
+    </div>
+
+    <div id="question-block" class="question-container"></div>
+    <div id="answers-block" class="answers"></div>
+
+    <div id="essay-input-block" style="display:none;">
+      <textarea id="essay-answer" class="input-textarea" placeholder="Nhập câu trả lời của bạn..."></textarea>
+      <button id="btn-essay-submit" class="btn-small">Xong</button>
+    </div>
+
+    <div style="display:flex; justify-content: space-between; margin-top: 20px;">
+      <button id="btn-back-home-in-quiz" class="btn btn-small" style="background: var(--Green); width: 48%;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+      <button id="btn-next" class="btn btn-small" style="width: 48%;">Tiếp tục</button>
+    </div>
+  </div>
+
+  <div id="result-section" style="display:none; text-align:center; margin-top: 30px;">
+    <h2>KẾT THÚC BÀI LÀM</h2>
+    <div><strong>Tổng thời gian làm bài:</strong> <span id="result-time"></span></div>
+    <div><strong>Tổng số câu đã làm:</strong> <span id="result-total"></span></div>
+    <div><strong>Đúng:</strong><span id="result-correct"></span><strong> | </strong><strong>Sai:</strong><span id="result-wrong"></span></div>
+    <div id="star-rating" class="star-container"></div>
+    <div style="margin-top: 25px;">
+      <button id="btn-home" class="btn" style="display:inline-block; width:120px;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg> 
+      </button>
+      </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // --- QUESTION DATA ---
+  // Trắc nghiệm 4 phương án [ABCD]
+  const multiChoiceQuestions = [
+  {
+    q: "Trí tuệ nhân tạo (AI) được nhắc đến lần đầu tiên vào năm nào?",
+    answers: [
+      { text: "1950", correct: true },
+      { text: "1960", correct: false },
+      { text: "1970", correct: false },
+      { text: "1980", correct: false }
+    ]
+  },
+  {
+    q: "AI là viết tắt của từ gì?",
+    answers: [
+      { text: "Artificial Intelligence", correct: true },
+      { text: "Automated Integration", correct: false },
+      { text: "Advanced Intelligence", correct: false },
+      { text: "Artificial Integration", correct: false }
+    ]
+  },
+  {
+    q: "Ai là người đã đề cập đến khái niệm AI đầu tiên?",
+    answers: [
+      { text: "John McCarthy", correct: true },
+      { text: "Alan Turing", correct: false },
+      { text: "Elon Musk", correct: false },
+      { text: "Bill Gates", correct: false }
+    ]
+  },
+  {
+    q: "Hội thảo đánh dấu sự ra đời của lĩnh vực AI được tổ chức vào năm nào?",
+    answers: [
+      { text: "1956", correct: true },
+      { text: "1950", correct: false },
+      { text: "1952", correct: false },
+      { text: "1954", correct: false }
+    ]
+  },
+  {
+    q: "Ứng dụng nào sau đây không phải là ứng dụng của AI?",
+    answers: [
+      { text: "Guồng nước ở vùng quê", correct: true },
+      { text: "Google Translate", correct: false },
+      { text: "Robot Asimo", correct: false },
+      { text: "Trợ lý ảo Siri", correct: false }
+    ]
+  },
+  {
+    q: "Khả năng học của AI là gì?",
+    answers: [
+      { text: "Nắm bắt thông tin từ dữ liệu và điều chỉnh hành vi", correct: true },
+      { text: "Tự động hóa mọi công việc mà không cần dữ liệu", correct: false },
+      { text: "Thay thế con người hoàn toàn", correct: false },
+      { text: "Chỉ hoạt động dựa trên lập trình cứng", correct: false }
+    ]
+  },
+  {
+    q: "Khả năng suy luận của AI liên quan đến điều gì?",
+    answers: [
+      { text: "Vận dụng logic và tri thức để ra quyết định", correct: true },
+      { text: "Nhận dạng hình ảnh mà không cần logic", correct: false },
+      { text: "Tự động hóa các tác vụ vật lý", correct: false },
+      { text: "Học dữ liệu mà không cần tri thức", correct: false }
+    ]
+  },
+  {
+    q: "Khả năng nhận thức của AI bao gồm việc gì?",
+    answers: [
+      { text: "Cảm nhận và hiểu môi trường qua cảm biến và dữ liệu", correct: true },
+      { text: "Chỉ thực hiện các tác vụ đơn giản", correct: false },
+      { text: "Ra quyết định mà không cần dữ liệu", correct: false },
+      { text: "Tự động hóa công việc thủ công", correct: false }
+    ]
+  },
+  {
+    q: "Khả năng hiểu ngôn ngữ của AI là gì?",
+    answers: [
+      { text: "Hiểu và xử lý ngôn ngữ tự nhiên của con người", correct: true },
+      { text: "Chỉ hiểu ngôn ngữ lập trình", correct: false },
+      { text: "Không thể xử lý văn bản", correct: false },
+      { text: "Chỉ nhận diện âm thanh", correct: false }
+    ]
+  },
+  {
+    q: "Khả năng giải quyết vấn đề của AI liên quan đến điều gì?",
+    answers: [
+      { text: "Tìm cách giải quyết tình huống phức tạp dựa trên thông tin", correct: true },
+      { text: "Chỉ giải quyết các vấn đề đơn giản", correct: false },
+      { text: "Không cần thông tin để giải quyết vấn đề", correct: false },
+      { text: "Tự động hóa mà không cần suy nghĩ", correct: false }
+    ]
+  },
+  {
+    q: "AI hẹp (Narrow AI) có đặc điểm gì?",
+    answers: [
+      { text: "Được thiết kế để thực hiện một nhiệm vụ cụ thể", correct: true },
+      { text: "Có khả năng thực hiện mọi công việc như con người", correct: false },
+      { text: "Không cần dữ liệu để hoạt động", correct: false },
+      { text: "Tự thích nghi mà không cần lập trình", correct: false }
+    ]
+  },
+  {
+    q: "AI tổng quát (General AI) có đặc điểm gì?",
+    answers: [
+      { text: "Có khả năng tự học và thực hiện nhiều công việc như con người", correct: true },
+      { text: "Chỉ thực hiện một nhiệm vụ cụ thể", correct: false },
+      { text: "Không thể hiểu ngôn ngữ tự nhiên", correct: false },
+      { text: "Không cần dữ liệu để hoạt động", correct: false }
+    ]
+  },
+  {
+    q: "Hệ chuyên gia MYCIN được sử dụng trong lĩnh vực nào?",
+    answers: [
+      { text: "Y học", correct: true },
+      { text: "Giao thông", correct: false },
+      { text: "Giáo dục", correct: false },
+      { text: "Thể thao", correct: false }
+    ]
+  },
+  {
+    q: "Robot Asimo là sản phẩm của công ty nào?",
+    answers: [
+      { text: "Honda", correct: true },
+      { text: "Tesla", correct: false },
+      { text: "Google", correct: false },
+      { text: "Microsoft", correct: false }
+    ]
+  },
+  {
+    q: "Google Translate chủ yếu được sử dụng để làm gì?",
+    answers: [
+      { text: "Dịch thuật", correct: true },
+      { text: "Nhận dạng khuôn mặt", correct: false },
+      { text: "Dự báo thời tiết", correct: false },
+      { text: "Hỗ trợ lái xe", correct: false }
+    ]
+  },
+  {
+    q: "Ứng dụng nhận dạng khuôn mặt thường được dùng trong lĩnh vực nào?",
+    answers: [
+      { text: "An ninh", correct: true },
+      { text: "Y tế", correct: false },
+      { text: "Dịch thuật", correct: false },
+      { text: "Giáo dục", correct: false }
+    ]
+  },
+  {
+    q: "Nhận dạng chữ viết tay thường được ứng dụng trong việc gì?",
+    answers: [
+      { text: "Xử lý hóa đơn và tài liệu", correct: true },
+      { text: "Dịch thuật ngôn ngữ", correct: false },
+      { text: "Nhận diện âm thanh", correct: false },
+      { text: "Dự báo thời tiết", correct: false }
+    ]
+  },
+  {
+    q: "Trợ lý ảo như Siri được thiết kế để làm gì?",
+    answers: [
+      { text: "Hỗ trợ và tương tác với người dùng", correct: true },
+      { text: "Dự báo thời tiết", correct: false },
+      { text: "Nhận dạng khuôn mặt", correct: false },
+      { text: "Lái xe tự động", correct: false }
+    ]
+  },
+  {
+    q: "Netflix sử dụng AI để làm gì?",
+    answers: [
+      { text: "Đề xuất phim dựa trên sở thích người dùng", correct: true },
+      { text: "Nhận diện chữ viết tay", correct: false },
+      { text: "Dịch thuật ngôn ngữ", correct: false },
+      { text: "Hỗ trợ y tế", correct: false }
+    ]
+  },
+  {
+    q: "MasterCard sử dụng AI để làm gì?",
+    answers: [
+      { text: "Phát hiện gian lận trong giao dịch", correct: true },
+      { text: "Dự báo thời tiết", correct: false },
+      { text: "Đề xuất phim", correct: false },
+      { text: "Hỗ trợ lái xe", correct: false }
+    ]
+  },
+  {
+    q: "Cambio Health Care sử dụng AI để làm gì?",
+    answers: [
+      { text: "Hỗ trợ quyết định lâm sàng phòng ngừa đột quỵ", correct: true },
+      { text: "Nhận dạng khuôn mặt", correct: false },
+      { text: "Dịch thuật", correct: false },
+      { text: "Dự báo thời tiết", correct: false }
+    ]
+  },
+  {
+    q: "Hệ chuyên gia MYCIN sử dụng bao nhiêu luật suy diễn?",
+    answers: [
+      { text: "Khoảng 600", correct: true },
+      { text: "Khoảng 100", correct: false },
+      { text: "Khoảng 1000", correct: false },
+      { text: "Khoảng 200", correct: false }
+    ]
+  },
+  {
+    q: "Robot Asimo có khả năng nào sau đây?",
+    answers: [
+      { text: "Nhận dạng tiếng nói", correct: true },
+      { text: "Dự báo thời tiết", correct: false },
+      { text: "Dịch thuật", correct: false },
+      { text: "Phát hiện gian lận", correct: false }
+    ]
+  },
+  {
+    q: "Google Translate có thể làm gì?",
+    answers: [
+      { text: "Nhận dạng văn bản trong hình ảnh", correct: true },
+      { text: "Nhận dạng khuôn mặt", correct: false },
+      { text: "Dự báo thời tiết", correct: false },
+      { text: "Hỗ trợ lái xe", correct: false }
+    ]
+  },
+  {
+    q: "AI có thể được ứng dụng trong lĩnh vực nào sau đây?",
+    answers: [
+      { text: "Tất cả các lĩnh vực", correct: true },
+      { text: "Chỉ trong y tế", correct: false },
+      { text: "Chỉ trong giáo dục", correct: false },
+      { text: "Chỉ trong giao thông", correct: false }
+    ]
+  },
+  {
+    q: "Hệ thống dự báo thời tiết sử dụng AI thuộc khả năng nào?",
+    answers: [
+      { text: "Giải quyết vấn đề", correct: true },
+      { text: "Nhận dạng khuôn mặt", correct: false },
+      { text: "Dịch thuật", correct: false },
+      { text: "Lái xe tự động", correct: false }
+    ]
+  },
+  {
+    q: "Xe tự lái sử dụng AI thuộc khả năng nào?",
+    answers: [
+      { text: "Nhận thức", correct: true },
+      { text: "Dịch thuật", correct: false },
+      { text: "Nhận dạng chữ viết tay", correct: false },
+      { text: "Dự báo thời tiết", correct: false }
+    ]
+  },
+  {
+    q: "Trợ lý ảo như Alexa thuộc khả năng nào của AI?",
+    answers: [
+      { text: "Hiểu ngôn ngữ", correct: true },
+      { text: "Nhận dạng khuôn mặt", correct: false },
+      { text: "Dự báo thời tiết", correct: false },
+      { text: "Lái xe tự động", correct: false }
+    ]
+  },
+  {
+    q: "Hệ chuyên gia MYCIN được phát triển tại đâu?",
+    answers: [
+      { text: "Đại học Stanford", correct: true },
+      { text: "Đại học Harvard", correct: false },
+      { text: "Đại học Cornell", correct: false },
+      { text: "Đại học New York", correct: false }
+    ]
+  },
+  {
+    q: "AI có thể được chia thành mấy loại chính theo chức năng?",
+    answers: [
+      { text: "2", correct: true },
+      { text: "3", correct: false },
+      { text: "4", correct: false },
+      { text: "5", correct: false }
+    ]
+  },
+  {
+    q: "Ứng dụng nào sau đây thuộc về AI hẹp?",
+    answers: [
+      { text: "Google Translate", correct: true },
+      { text: "Robot có thể làm mọi việc như con người", correct: false },
+      { text: "Máy tính tự học mọi lĩnh vực", correct: false },
+      { text: "Hệ thống thay thế con người hoàn toàn", correct: false }
+    ]
+  },
+  {
+    q: "Khả năng nào không phải là đặc trưng chính của AI?",
+    answers: [
+      { text: "Cảm thụ văn học", correct: true },
+      { text: "Học", correct: false },
+      { text: "Suy luận", correct: false },
+      { text: "Nhận thức", correct: false }
+    ]
+  },
+  {
+    q: "Phần mềm kiểm tra lỗi chính tả thuộc khả năng nào của AI?",
+    answers: [
+      { text: "Hiểu ngôn ngữ", correct: true },
+      { text: "Nhận dạng khuôn mặt", correct: false },
+      { text: "Dự báo thời tiết", correct: false },
+      { text: "Lái xe tự động", correct: false }
+    ]
+  },
+  {
+    q: "AI được phát triển với mục tiêu gì?",
+    answers: [
+      { text: "Xây dựng hệ thống có đặc trưng trí tuệ như con người", correct: true },
+      { text: "Thay thế hoàn toàn con người", correct: false },
+      { text: "Chỉ tự động hóa các công việc đơn giản", correct: false },
+      { text: "Không cần sử dụng dữ liệu", correct: false }
+    ]
+  },
+  {
+    q: "Hệ thống khuyến nghị của YouTube thuộc khả năng nào của AI?",
+    answers: [
+      { text: "Học", correct: true },
+      { text: "Nhận dạng khuôn mặt", correct: false },
+      { text: "Dịch thuật", correct: false },
+      { text: "Lái xe tự động", correct: false }
+    ]
+  },
+  {
+    q: "Hệ thống chẩn đoán y tế dựa trên AI thuộc khả năng nào?",
+    answers: [
+      { text: "Suy luận", correct: true },
+      { text: "Nhận dạng chữ viết tay", correct: false },
+      { text: "Dịch thuật", correct: false },
+      { text: "Dự báo thời tiết", correct: false }
+    ]
+  },
+  {
+    q: "Ứng dụng nào sau đây sử dụng khả năng nhận thức của AI?",
+    answers: [
+      { text: "Xe tự lái", correct: true },
+      { text: "Guồng nước", correct: false },
+      { text: "Máy giặt tự động", correct: false },
+      { text: "Đèn tự sáng khi trời tối", correct: false }
+    ]
+  },
+  {
+    q: "AI có thể được ứng dụng trong lĩnh vực nào sau đây?",
+    answers: [
+      { text: "Khoa học và đời sống", correct: true },
+      { text: "Chỉ trong công nghệ", correct: false },
+      { text: "Chỉ trong y tế", correct: false },
+      { text: "Chỉ trong giáo dục", correct: false }
+    ]
+  },
+  {
+    q: "Robot Asimo có khả năng nào sau đây?",
+    answers: [
+      { text: "Nhận dạng hình ảnh", correct: true },
+      { text: "Dự báo thời tiết", correct: false },
+      { text: "Dịch thuật", correct: false },
+      { text: "Phát hiện gian lận", correct: false }
+    ]
+  },
+  {
+    q: "Google Translate có thể tự động làm gì?",
+    answers: [
+      { text: "Phát hiện ngôn ngữ", correct: true },
+      { text: "Nhận dạng khuôn mặt", correct: false },
+      { text: "Dự báo thời tiết", correct: false },
+      { text: "Hỗ trợ lái xe", correct: false }
+    ]
+  },
+  {
+    q: "Ứng dụng nhận dạng khuôn mặt có thể được dùng để làm gì?",
+    answers: [
+      { text: "Mở khóa điện thoại", correct: true },
+      { text: "Dịch thuật", correct: false },
+      { text: "Dự báo thời tiết", correct: false },
+      { text: "Nhận dạng chữ viết tay", correct: false }
+    ]
+  },
+  {
+    q: "Trợ lý ảo như Cortana có thể làm gì?",
+    answers: [
+      { text: "Gọi điện thoại theo tên trong danh bạ", correct: true },
+      { text: "Nhận dạng khuôn mặt", correct: false },
+      { text: "Dự báo thời tiết", correct: false },
+      { text: "Lái xe tự động", correct: false }
+    ]
+  }
+];
+
+  // Trắc nghiệm đúng/sai [DS]
+  const trueFalseQuestions = [
+  {
+    q: "Trí tuệ nhân tạo (AI) là khả năng của máy tính thực hiện các công việc mang tính trí tuệ của con người như đọc chữ, hiểu tiếng nói, dịch thuật, lái xe hay học và ra quyết định. AI có các đặc trưng chính như khả năng học, suy luận, nhận thức, hiểu ngôn ngữ và giải quyết vấn đề.",
+    answers: [
+      { text: "AI có khả năng học từ dữ liệu", correct: true },
+      { text: "AI không thể hiểu ngôn ngữ tự nhiên", correct: false },
+      { text: "AI chỉ có thể thực hiện các công việc đơn giản", correct: false },
+      { text: "AI có khả năng nhận thức môi trường xung quanh", correct: true }
+    ]
+  },
+  {
+    q: "Hệ chuyên gia MYCIN là một hệ thống AI trong lĩnh vực y học, được phát triển để chẩn đoán bệnh và đề xuất sử dụng kháng sinh. MYCIN sử dụng khoảng 600 luật suy diễn để đưa ra kết luận dựa trên triệu chứng.",
+    answers: [
+      { text: "MYCIN là một ứng dụng của AI trong y học", correct: true },
+      { text: "MYCIN không thể suy luận", correct: false },
+      { text: "MYCIN sử dụng hơn 1000 luật suy diễn", correct: false },
+      { text: "MYCIN có thể đề xuất liều lượng kháng sinh", correct: true }
+    ]
+  },
+  {
+    q: "Robot Asimo là robot hình người đầu tiên trên thế giới, tích hợp nhiều ứng dụng AI như tự động điều khiển, nhận dạng hình ảnh và tiếng nói. Asimo có thể tương tác với con người nhờ các khả năng học, nhận thức và hiểu ngôn ngữ.",
+    answers: [
+      { text: "Asimo là robot hình người", correct: true },
+      { text: "Asimo không thể nhận dạng tiếng nói", correct: false },
+      { text: "Asimo có khả năng học", correct: true },
+      { text: "Asimo chỉ thực hiện một nhiệm vụ duy nhất", correct: false }
+    ]
+  },
+  {
+    q: "Google Translate là một ứng dụng dịch thuật sử dụng AI để nhận dạng văn bản, tự động phát hiện ngôn ngữ và dịch trực tiếp. Nó có khả năng học, suy luận và nhận thức để cải thiện độ chính xác của bản dịch.",
+    answers: [
+      { text: "Google Translate có thể nhận dạng văn bản trong hình ảnh", correct: true },
+      { text: "Google Translate không sử dụng AI", correct: false },
+      { text: "Google Translate có khả năng học từ dữ liệu", correct: true },
+      { text: "Google Translate chỉ dịch được một ngôn ngữ", correct: false }
+    ]
+  },
+  {
+    q: "Trợ lý ảo như Siri, Cortana và Alexa là các ứng dụng AI hỗ trợ người dùng qua việc trò chuyện, tìm kiếm thông tin, gọi điện thoại và nhiều tính năng khác. Chúng sử dụng AI để hiểu ngôn ngữ tự nhiên và phản hồi phù hợp.",
+    answers: [
+      { text: "Trợ lý ảo có thể trò chuyện với người dùng", correct: true },
+      { text: "Trợ lý ảo không thể hiểu tiếng nói", correct: false },
+      { text: "Trợ lý ảo có thể tìm kiếm thông tin", correct: true },
+      { text: "Trợ lý ảo chỉ hoạt động trên máy tính", correct: false }
+    ]
+  }
+];
+
+  // Tự luận [TL]
+  const essayQuestions = [
+  {
+    q: "Trí tuệ nhân tạo (AI) là gì? Hãy nêu các đặc trưng chính của AI.",
+    answerRef: "Trí tuệ nhân tạo (AI) là khả năng của máy tính thực hiện các công việc mang tính trí tuệ của con người như đọc chữ, hiểu tiếng nói, dịch thuật, lái xe, học và ra quyết định. Các đặc trưng chính của AI bao gồm: khả năng học, khả năng suy luận, khả năng nhận thức, khả năng hiểu ngôn ngữ và khả năng giải quyết vấn đề."
+  },
+  {
+    q: "Phân biệt giữa AI hẹp và AI tổng quát.",
+    answerRef: "AI hẹp (Narrow AI) là AI được thiết kế để thực hiện một nhiệm vụ cụ thể như nhận dạng khuôn mặt hoặc dịch thuật. AI tổng quát (General AI) là AI có khả năng tự học, tự thích nghi và thực hiện nhiều công việc giống con người, ví dụ như một robot đa năng."
+  },
+  {
+    q: "Hãy nêu một số ứng dụng thực tế của AI mà bạn biết.",
+    answerRef: "Một số ứng dụng thực tế của AI bao gồm: hệ chuyên gia MYCIN (chẩn đoán y học), robot Asimo (tương tác với con người), Google Translate (dịch thuật), nhận dạng khuôn mặt (an ninh), nhận dạng chữ viết tay (xử lý tài liệu), trợ lý ảo như Siri, hệ thống đề xuất phim của Netflix, và hệ thống phát hiện gian lận của MasterCard."
+  },
+  {
+    q: "Tại sao AI lại quan trọng trong xã hội ngày nay?",
+    answerRef: "AI quan trọng vì nó giúp tự động hóa công việc, nâng cao hiệu suất, hỗ trợ ra quyết định và giải quyết các vấn đề phức tạp trong nhiều lĩnh vực như y tế, giáo dục, tài chính, an ninh. AI có tiềm năng cải thiện chất lượng cuộc sống và thay đổi cách chúng ta làm việc."
+  },
+  {
+    q: "Bạn nghĩ AI có thể thay thế hoàn toàn con người trong tương lai không? Giải thích lý do.",
+    answerRef: "AI có thể thay thế con người trong một số công việc lặp lại hoặc xử lý dữ liệu lớn, nhưng khó thay thế hoàn toàn vì nó thiếu khả năng cảm xúc, sáng tạo và xử lý các tình huống phức tạp như con người. AI có thể hỗ trợ con người hiệu quả hơn là thay thế hoàn toàn."
+  }
+];
+
+  // --- UTILITY FUNCTIONS ---
+  function shuffleArray(arr) {
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/</g, "‹")
+      .replace(/>/g, "›")
+      .replace(/"/g, "'");
+  }
+
+  // --- DOM ELEMENTS ---
+  const btnMulti = document.getElementById('btn-multi');
+  const btnTrueFalse = document.getElementById('btn-truefalse');
+  const btnEssay = document.getElementById('btn-essay');
+  const toggleThemeBtn = document.getElementById('toggle-theme');
+  const btnExit = document.getElementById('btn-exit'); 
+  const btnBackHomeInQuiz = document.getElementById('btn-back-home-in-quiz'); // Nút Back Home trong quiz
+  const btnDownload = document.getElementById('btn-download');
+
+  const quizSection = document.getElementById('quiz-section');
+  const questionBlock = document.getElementById('question-block');
+  const answersBlock = document.getElementById('answers-block');
+  const essayInputBlock = document.getElementById('essay-input-block');
+  const essayAnswerTextarea = document.getElementById('essay-answer');
+  const btnEssaySubmit = document.getElementById('btn-essay-submit');
+  const btnNext = document.getElementById('btn-next');
+
+  const timerSpan = document.getElementById('timer');
+  const doneCountSpan = document.getElementById('done-count');
+  const correctCountSpan = document.getElementById('correct-count');
+  const wrongCountSpan = document.getElementById('wrong-count');
+
+  const resultSection = document.getElementById('result-section');
+  const resultTime = document.getElementById('result-time');
+  const resultTotal = document.getElementById('result-total');
+  const resultCorrect = document.getElementById('result-correct');
+  const resultWrong = document.getElementById('result-wrong');
+  const starRating = document.getElementById('star-rating');
+
+  // const btnRestart = document.getElementById('btn-restart'); // Đã xóa khỏi HTML, nên bỏ dòng này hoặc comment lại
+  const btnHome = document.getElementById('btn-home');
+
+  // --- STATE VARIABLES ---
+  let quizType = null; // 'multi', 'truefalse', 'essay'
+  let questions = [];
+  let currentQIdx = 0;
+  let timerInterval = null;
+  let timeSeconds = 0;
+  let doneCount = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let currentTFAnswerIdx = 0;
+
+  // --- TIMER FUNCTIONS ---
+  function startTimer() {
+    timeSeconds = 0;
+    timerSpan.textContent = formatTime(timeSeconds);
+    if(timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeSeconds++;
+      timerSpan.textContent = formatTime(timeSeconds);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if(timerInterval) clearInterval(timerInterval);
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s/60);
+    const sec = s % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (sec < 10 ? '0' + sec : sec);
+  }
+
+  // --- QUIZ FUNCTIONS ---
+  function resetStats() {
+    doneCount = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    doneCountSpan.textContent = "0";
+    correctCountSpan.textContent = "0";
+    wrongCountSpan.textContent = "0";
+  }
+
+  function initQuiz(type) {
+    quizType = type;
+    currentQIdx = 0;
+    resetStats();
+
+    if(type === 'multi') {
+      questions = multiChoiceQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+    } else if(type === 'truefalse') {
+      questions = trueFalseQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+      currentTFAnswerIdx = 0;
+    } else if(type === 'essay') {
+      questions = essayQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answerRef: q.answerRef,
+        answerRefImage: q.answerRefImage
+      }));
+      shuffleArray(questions);
+    }
+    
+    quizSection.style.display = 'block';
+    resultSection.style.display = 'none';
+    btnMulti.style.display = 'none';
+    btnTrueFalse.style.display = 'none';
+    btnEssay.style.display = 'none';
+    btnExit.style.display = 'none'; // Ẩn nút Exit khi bắt đầu quiz
+    toggleThemeBtn.style.display = 'none'; // Ẩn nút chuyển theme khi vào quiz
+    btnDownload.style.display = 'none';
+
+    showQuestion();
+    startTimer();
+  }
+
+  function showQuestion() {
+    // Ẩn nút "Tiếp tục" nếu nó đang hiển thị
+    btnNext.style.display = 'none'; 
+    // Nếu là dạng tự luận, nút "Xong" (submit) sẽ được hiển thị, ngược lại ẩn
+    btnEssaySubmit.style.display = (quizType === 'essay') ? 'block' : 'none';
+    // Đảm bảo nút "Xong" được kích hoạt lại cho câu hỏi tự luận mới
+    btnEssaySubmit.disabled = false; 
+
+    answersBlock.innerHTML = ''; // Xóa các câu trả lời cũ
+    essayInputBlock.style.display = 'none'; // Ẩn khung nhập tự luận
+    essayAnswerTextarea.value = ''; // Xóa nội dung cũ trong khung tự luận
+    
+    if (currentQIdx >= questions.length) {
+      endQuiz();
+      return;
+    }
+
+    const currentQ = questions[currentQIdx];
+    
+    // Display question text and image (if any)
+    let questionHTML = `
+      <div style="color: var(--orange); font-weight: bold; margin-bottom: 15px;">
+        Câu ${currentQIdx + 1}: ${escapeHtml(currentQ.q)}
+      </div>
+    `;
+    
+    if (currentQ.qImage) {
+      questionHTML += `
+        <div style="text-align: center; margin: 15px 0;">
+          <img src="${currentQ.qImage}" 
+               style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;"
+               onerror="this.style.display='none'">
+        </div>
+      `;
+    }
+    
+    questionBlock.innerHTML = questionHTML;
+
+    if (quizType === 'multi') {
+      // Multiple choice questions
+      answersBlock.style.display = 'block';
+      currentQ.answers.forEach((ans, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        
+        let answerContent = `${String.fromCharCode(65 + i)}. ${escapeHtml(ans.text)}`;
+        
+        if (ans.image) {
+          answerContent += `
+            <div style="margin-top: 8px; text-align: center;">
+              <img src="${ans.image}" 
+                   style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 3px;"
+                   onerror="this.style.display='none'">
+            </div>
+          `;
+        }
+        
+        btn.innerHTML = answerContent;
+        btn.onclick = () => handleMultiAnswerClick(btn, ans.correct, currentQ.answers);
+        answersBlock.appendChild(btn);
+      });
+
+    } else if (quizType === 'truefalse') {
+      // True/False questions
+      answersBlock.style.display = 'block';
+      currentTFAnswerIdx = 0;
+      showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+      
+    } else if (quizType === 'essay') {
+      // Essay questions
+      essayInputBlock.style.display = 'block';
+    }
+  }
+
+  function handleMultiAnswerClick(btn, isCorrect, allAnswers) {
+    Array.from(answersBlock.children).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(isCorrect) {
+      btn.classList.add('correct');
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+    } else {
+      btn.classList.add('incorrect');
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      // Highlight correct answer
+      const correctAns = allAnswers.find(a => a.correct);
+      for(let b of answersBlock.children) {
+        // Cẩn thận với việc so sánh textContent trực tiếp nếu có hình ảnh
+        // Cần lấy chỉ phần text của câu trả lời
+        const btnText = b.childNodes[0].nodeType === 3 ? b.childNodes[0].nodeValue.substring(3).trim() : ''; // Lấy text trước hình ảnh
+        const correctText = escapeHtml(correctAns.text);
+
+        if(btnText === correctText && correctAns.correct) {
+          b.classList.add('correct');
+          break;
+        }
+      }
+    }
+    btnNext.style.display = 'inline-block';
+  }
+
+  function showTrueFalseAnswer(answerObj) {
+    answersBlock.innerHTML = '';
+
+    const label = document.createElement('div');
+    label.style.marginBottom = '10px';
+    label.style.fontWeight = 'bold';
+    label.textContent = `Câu hỏi phụ ${currentTFAnswerIdx + 1}: ${answerObj.text}`;
+    answersBlock.appendChild(label);
+
+    if (answerObj.image) {
+      const imgDiv = document.createElement('div');
+      imgDiv.style.textAlign = 'center';
+      imgDiv.style.margin = '10px 0';
+      imgDiv.innerHTML = `<img src="${answerObj.image}" style="max-width: 100%; max-height: 200px; border: 1px solid #ccc; border-radius: 3px;" onerror="this.style.display='none'">`;
+      answersBlock.appendChild(imgDiv);
+    }
+
+    const btnTrue = document.createElement('button');
+    btnTrue.className = 'answer-btn';
+    btnTrue.textContent = 'Đúng';
+    btnTrue.onclick = () => handleTrueFalseAnswerClick(true, answerObj.correct);
+    answersBlock.appendChild(btnTrue);
+    
+    const btnFalse = document.createElement('button');
+    btnFalse.className = 'answer-btn';
+    btnFalse.textContent = 'Sai';
+    btnFalse.onclick = () => handleTrueFalseAnswerClick(false, answerObj.correct);
+    answersBlock.appendChild(btnFalse);
+  }
+
+  function handleTrueFalseAnswerClick(userAnswer, correctAnswer) {
+    Array.from(answersBlock.querySelectorAll('button')).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(userAnswer === correctAnswer) {
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    } else {
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('incorrect');
+        }
+        if(b.textContent.toLowerCase() === (correctAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    }
+
+    btnNext.style.display = 'inline-block';
+  }
+
+  // Essay submit handler
+  btnEssaySubmit.onclick = () => {
+    const userText = essayAnswerTextarea.value.trim();
+    if(userText.length === 0) {
+      alert('Hãy nhập câu trả lời trước khi nhấn "Xong"');
+      return;
+    }
+    btnEssaySubmit.disabled = true; // Vô hiệu hóa nút "Xong" sau khi submit
+    
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    const currentQ = questions[currentQIdx];
+    let answerRefHTML = `<br><br><em><strong>Đáp án tham khảo:</strong> ${currentQ.answerRef}</em>`;
+    
+    if(currentQ.answerRefImage) {
+      answerRefHTML += `<div style="margin: 15px 0; text-align: center;">
+        <img src="${currentQ.answerRefImage}" style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;">
+      </div>`;
+    }
+    
+    questionBlock.innerHTML += answerRefHTML;
+    btnNext.style.display = 'inline-block';
+  };
+
+  btnNext.onclick = () => {
+    // Ẩn nút "Tiếp tục"
+    btnNext.style.display = 'none';
+    // Đảm bảo nút "Xong" (essay) được kích hoạt lại
+    btnEssaySubmit.disabled = false; 
+
+    if(quizType === 'truefalse') {
+      currentTFAnswerIdx++;
+      const currentQ = questions[currentQIdx];
+      // Nếu còn câu hỏi phụ trong câu hỏi Đúng/Sai hiện tại
+      if(currentTFAnswerIdx < currentQ.answers.length) {
+        showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+        return; // Không chuyển sang câu hỏi tiếp theo mà hiển thị câu phụ
+      }
+    }
+
+    // Chuyển sang câu hỏi tiếp theo
+    currentQIdx++;
+    showQuestion();
+  };
+
+  function endQuiz() {
+    stopTimer();
+    quizSection.style.display = 'none';
+    resultSection.style.display = 'block';
+    toggleThemeBtn.style.display = 'block'; // Hiển thị lại nút chuyển theme
+
+    resultTime.textContent = formatTime(timeSeconds);
+    resultTotal.textContent = doneCount;
+    resultCorrect.textContent = correctCount;
+    resultWrong.textContent = wrongCount;
+
+    starRating.innerHTML = '';
+
+    // Logic tính sao đã được khôi phục và tinh chỉnh
+    if(quizType === 'multi' || quizType === 'truefalse') {
+      let starsGreen = 0;
+      let starsGray = 0;
+      
+      if(wrongCount === 0) { // Nếu không có câu sai
+        starsGreen = 3; // 3 sao xanh
+      } else if (wrongCount >= 1 && wrongCount <= 3) {
+        starsGreen = 2; // 2 sao xanh
+        starsGray = 1; // 1 sao xám
+      } else if (wrongCount >= 4 && wrongCount <= 9) {
+        starsGreen = 1; // 1 sao xanh
+        starsGray = 2; // 2 sao xám
+      } else { // wrongCount >= 10
+        starsGreen = 0; // 0 sao xanh
+        starsGray = 3; // 3 sao xám
+      }
+
+      for(let i = 1; i <= 3; i++) {
+        const star = document.createElement('span');
+        star.classList.add('star');
+        if(i <= starsGreen) star.classList.add('Green');
+        else if(i <= starsGray) star.classList.add('gray');
+        star.innerHTML = '&#9733;';
+        starRating.appendChild(star);
+      }
+    } else if (quizType === 'essay') {
+        // Đối với bài tự luận, không có điểm đúng/sai tự động
+        // Bạn có thể thêm logic chấm điểm thủ công hoặc hiển thị thông báo khác
+        const infoDiv = document.createElement('div');
+        infoDiv.textContent = "Bài Tự Luận Cần Được Giáo Viên Chấm Điểm.";
+        infoDiv.style.fontWeight = "bold";
+        infoDiv.style.marginTop = "20px";
+        starRating.appendChild(infoDiv);
+    }
+  }
+
+  // --- EVENT LISTENERS ---
+  // Đã xóa btnRestart.onclick và logic liên quan
+  // Nếu bạn muốn chức năng "làm lại" bài quiz, bạn cần tạo một nút mới với ID khác
+  // và thêm lại logic reset Stats vào event listener của nút đó.
+
+  // Nút Home (ở màn hình kết quả) - vẫn reload trang hiện tại
+  btnHome.onclick = () => {
+    location.reload(); 
+  };
+
+  btnMulti.onclick = () => initQuiz('multi');
+  btnTrueFalse.onclick = () => initQuiz('truefalse');
+  btnEssay.onclick = () => initQuiz('essay');
+  // New: Download button functionality
+  btnDownload.onclick = () => {
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'toancreator-default'; // Set the desired filename
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  };
+  
+  
+  // Xử lý sự kiện cho nút Exit mới
+  btnExit.onclick = () => {
+    window.location.href = '../index.html'; // Chuyển hướng về index.html
+  };
+
+  // Xử lý sự kiện cho nút Back to Home trong quiz
+  btnBackHomeInQuiz.onclick = () => {
+    if (confirm('Bạn có chắc chắn muốn thoát bài làm hiện tại?')) {
+      stopTimer(); // Dừng đồng hồ
+      location.reload(); // Tải lại trang promt-onlineV2.html
+    }
+  };
+
+  toggleThemeBtn.onclick = () => {
+    document.body.classList.toggle('dark');
+  };
+
+  // Ẩn/hiện nút toggle theme ban đầu
+  // Bạn có thể đặt nút toggle theme ở vị trí cố định thay vì ẩn/hiện tùy thuộc vào màn hình
+  // Hiện tại, nó sẽ luôn hiển thị trừ khi bị ẩn bởi CSS hoặc logic khác
+  toggleThemeBtn.style.display = 'block'; 
+})();
+</script>
+</body>
+</html>
