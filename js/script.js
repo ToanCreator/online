@@ -396,7 +396,7 @@ function downloadLesson() {
             return;
         }
         
-        const fileName = currentLesson.toLowerCase();
+        const fileName = currentLesson;
         const relativePath = `${folder}/${fileName}.html`;
         
         console.log("Đang truy cập:", relativePath);
