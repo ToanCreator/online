@@ -19,7 +19,7 @@ const subjects = [
         id: 1,
         title: "Toán Học",
         image: "https://i.ibb.co/k2YXTgMW/retouch-2025060606131334.jpg",
-        lessons: ["TOAN-12-U1"]
+        lessons: ["TOAN-12-U1","TOAN-12-U2"]
     },
     {
         id: 2,
