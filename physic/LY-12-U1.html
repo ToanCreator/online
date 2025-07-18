@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toàn Creator - Online Lesson</title>
+<style>
+  :root {
+    --yellow: #f9d342;
+    --yellow-dark: #d4b833;
+    --Green: #2ecc71;
+    --starsGreen: #2ecc71;
+    --red: #d93025;
+    --green: #2ecc40;
+    --starsGray: #ccc;
+    --star-size: 30px;
+    --orange: #ff9800;
+  }
+  body {
+    margin:0; padding:0; font-family: Arial, sans-serif;
+    background: white; color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: black; color: white;
+  }
+  /* Existing #app rule */
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+/* Media query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+  #app {
+    max-width: 960px; /* Or any wider value you prefer, e.g., 900px, 1200px */
+    padding: 20px; /* Optional: Increase padding for more space on larger screens */
+  }
+
+  /* Optional: Adjust button widths for larger screens if they look too wide */
+  .btn {
+    max-width: 400px; /* Make main buttons a bit wider */
+  }
+
+  /* Optional: Adjust status bar layout for larger screens */
+  .status-bar {
+    font-size: 1.1em;
+  }
+}
+  h1, h3 {
+    text-align: center;
+    margin: 10px 0;
+  }
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+    color: #FF00FF;
+  }
+  hr {
+    border:none; border-bottom: 3px solid black;
+    margin: 5px 0 25px 0;
+  }
+  .btn {
+    background: #3399FF;
+    border-radius: 8px;
+    border:none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 15px;
+    width: 100%;
+    max-width: 350px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: 3px solid transparent;
+    user-select: none;
+  }
+  .btn:hover {
+    background: var(--yellow-dark);
+  }
+  .btn svg {
+    vertical-align: middle;
+  }
+  .question-container {
+    margin-bottom: 20px;
+    color: var(--orange) !important;
+    font-weight: bold;
+    font-size: 1.08em;
+    transition: color 0.3s;
+  }
+  body.dark .question-container {
+    color: var(--orange) !important;
+  }
+  .answers {
+    margin-top: 15px;
+  }
+  .answer-btn {
+    display: block;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 6px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
+    padding: 12px 10px;
+    margin: 7px 0;
+    cursor: pointer;
+    text-align: left;
+    user-select: none;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .answer-btn:hover:not(.disabled) {
+    background-color: #eee;
+  }
+  body.dark .answer-btn {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  body.dark .answer-btn:hover:not(.disabled) {
+    background-color: #444;
+  }
+  .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  body.dark .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  body.dark .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  .disabled {
+    pointer-events: none;
+  }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .star-container {
+    text-align: center;
+    margin: 20px 0 10px 0;
+  }
+  .star {
+    font-size: var(--star-size);
+    margin: 0 5px;
+    color: var(--starsGray);
+  }
+  .star.Green {
+    color: var(--Green);
+  }
+  .star.red {
+    color: var(--red);
+  }
+  .toggle-btn {
+    background: lime;
+    color: white;
+    font-size: 1.5em;
+    padding: 12px 0;
+    margin: 25px auto;
+    width: 150px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    display: block;
+  }
+  .input-textarea {
+    width: 100%;
+    min-height: 80px;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid black;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  body.dark .input-textarea {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  .btn-small {
+    background: #FF99CC;
+    width: auto;
+    padding: 8px 15px;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+  .answer-btn img {
+    max-width: 100%;
+    max-height: 150px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .question-container img {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  body.dark .answer-btn img,
+  body.dark .question-container img {
+    border-color: #555;
+  }
+  .question-container img, .answer-btn img {
+    display: block;
+    margin: 0 auto;
+    background: #f5f5f5;
+  }
+  body.dark .question-container img,
+  body.dark .answer-btn img {
+    background: #333;
+  }
+  /* Style for the header image placeholder */
+  .header-image-placeholder {
+    display: block;
+    width: 100%; /* Hoặc một chiều rộng cố định */
+    height: 100px; /* Điều chỉnh chiều cao này để phù hợp với kích thước bạn muốn */
+    background-color: #f0f0f0; /* Màu nền để dễ nhìn thấy placeholder */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 25px; /* Khoảng cách với tiêu đề bên dưới */
+    
+  }
+  body.dark .header-image-placeholder {
+    background-color: #333;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <img src="https://i.ibb.co/tMdHNdPH/Picsart-25-07-17-06-40-25-073.jpg" alt="Header Image" class="header-image-placeholder">
+  
+  <h2>LÝ - BÀI 1</h2>
+
+  <button class="btn" id="btn-exit" style="background: var(--red);">
+    <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+      <path d="M16 17v-4h-2V7h-4V4H6V2H4v2h2v4h4v6h2v4h4v2h2v-2h-2z"/>
+    </svg>
+    Thoát
+  </button>
+  <button class="btn" id="btn-multi">TRẮC NGHIỆM 4 PHƯƠNG ÁN</button>
+  <button class="btn" id="btn-truefalse">TRẮC NGHIỆM ĐÚNG/SAI</button>
+  <button class="btn" id="btn-essay">TỰ LUẬN</button>
+
+  <button class="toggle-btn" id="toggle-theme">💡</button>
+  <button class="toggle-btn" id="btn-download" style="background: orange; margin-top: -20px; margin-bottom: 25px;">
+    Tải xuống
+  </button>
+  <div id="quiz-section" style="display:none; margin-top: 10px;">
+    <div class="status-bar">
+      <div><span id="timer">00:00</span></div>
+      <div>ㅤㅤ <span id="done-count">0</span></div>
+      <div>✅<span id="correct-count">0</span> | <strong>⛔</strong><span id="wrong-count">0</span></div>
+    </div>
+
+    <div id="question-block" class="question-container"></div>
+    <div id="answers-block" class="answers"></div>
+
+    <div id="essay-input-block" style="display:none;">
+      <textarea id="essay-answer" class="input-textarea" placeholder="Nhập câu trả lời của bạn..."></textarea>
+      <button id="btn-essay-submit" class="btn-small">Xong</button>
+    </div>
+
+    <div style="display:flex; justify-content: space-between; margin-top: 20px;">
+      <button id="btn-back-home-in-quiz" class="btn btn-small" style="background: var(--Green); width: 48%;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+      <button id="btn-next" class="btn btn-small" style="width: 48%;">Tiếp tục</button>
+    </div>
+  </div>
+
+  <div id="result-section" style="display:none; text-align:center; margin-top: 30px;">
+    <h2>KẾT THÚC BÀI LÀM</h2>
+    <div><strong>Tổng thời gian làm bài:</strong> <span id="result-time"></span></div>
+    <div><strong>Tổng số câu đã làm:</strong> <span id="result-total"></span></div>
+    <div><strong>Đúng:</strong><span id="result-correct"></span><strong> | </strong><strong>Sai:</strong><span id="result-wrong"></span></div>
+    <div id="star-rating" class="star-container"></div>
+    <div style="margin-top: 25px;">
+      <button id="btn-home" class="btn" style="display:inline-block; width:120px;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg> 
+      </button>
+      </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // --- QUESTION DATA ---
+  // Multiple choice questions [ABCD]
+const multiChoiceQuestions = [
+  {
+    q: "Mô hình động học phân tử được xây dựng dựa trên quan điểm nào?",
+    qImage: null,
+    answers: [
+      { text: "Chất có cấu tạo liên tục", correct: false, image: null },
+      { text: "Chất có cấu tạo gián đoạn", correct: true, image: null },
+      { text: "Chất không có cấu tạo", correct: false, image: null },
+      { text: "Chất có cấu tạo hỗn loạn", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Thí nghiệm Brown chứng minh điều gì về chuyển động của các phân tử?",
+    qImage: null,
+    answers: [
+      { text: "Chuyển động thẳng đều", correct: false, image: null },
+      { text: "Chuyển động hỗn loạn không ngừng", correct: true, image: null },
+      { text: "Chuyển động tròn", correct: false, image: null },
+      { text: "Chuyển động dừng lại", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao chất khí không có hình dạng và thể tích riêng?",
+    qImage: null,
+    answers: [
+      { text: "Do lực liên kết giữa các phân tử mạnh", correct: false, image: null },
+      { text: "Do các phân tử chuyển động hỗn loạn và ở xa nhau", correct: true, image: null },
+      { text: "Do các phân tử đứng yên", correct: false, image: null },
+      { text: "Do lực liên kết giữa các phân tử bằng không", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chất lỏng có đặc điểm nào sau đây?",
+    qImage: null,
+    answers: [
+      { text: "Có hình dạng riêng", correct: false, image: null },
+      { text: "Có thể tích riêng nhưng không có hình dạng riêng", correct: true, image: null },
+      { text: "Không có thể tích riêng", correct: false, image: null },
+      { text: "Không thể nén được", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chất rắn có đặc điểm nào sau đây?",
+    qImage: null,
+    answers: [
+      { text: "Không có hình dạng riêng", correct: false, image: null },
+      { text: "Có thể tích và hình dạng riêng", correct: true, image: null },
+      { text: "Dễ dàng nén được", correct: false, image: null },
+      { text: "Có thể tích riêng nhưng không có hình dạng riêng", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi tăng nhiệt độ của nước trong thí nghiệm Brown, điều gì xảy ra với các hạt phấn hoa?",
+    qImage: null,
+    answers: [
+      { text: "Chuyển động chậm lại", correct: false, image: null },
+      { text: "Chuyển động nhanh hơn", correct: true, image: null },
+      { text: "Ngừng chuyển động", correct: false, image: null },
+      { text: "Chuyển động không đổi", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Lực liên kết giữa các phân tử chất lỏng so với chất khí như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Yếu hơn", correct: false, image: null },
+      { text: "Mạnh hơn", correct: true, image: null },
+      { text: "Bằng nhau", correct: false, image: null },
+      { text: "Không tồn tại", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự chuyển thể là gì?",
+    qImage: null,
+    answers: [
+      { text: "Sự thay đổi vị trí của phân tử", correct: false, image: null },
+      { text: "Sự thay đổi trạng thái của chất", correct: true, image: null },
+      { text: "Sự thay đổi tốc độ chuyển động", correct: false, image: null },
+      { text: "Sự thay đổi kích thước phân tử", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi hai giọt nước tiếp xúc nhau, điều gì xảy ra?",
+    qImage: null,
+    answers: [
+      { text: "Chúng đẩy nhau ra", correct: false, image: null },
+      { text: "Chúng nhập thành một giọt", correct: true, image: null },
+      { text: "Chúng không thay đổi", correct: false, image: null },
+      { text: "Chúng bay hơi ngay lập tức", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong thí nghiệm Brown, chuyển động của hạt phấn hoa là do đâu?",
+    qImage: null,
+    answers: [
+      { text: "Lực hấp dẫn", correct: false, image: null },
+      { text: "Va chạm với các phân tử nước", correct: true, image: null },
+      { text: "Lực điện từ", correct: false, image: null },
+      { text: "Lực ma sát", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao chất rắn kết tinh khi đun nóng có thể chuyển thành chất lỏng?",
+    qImage: null,
+    answers: [
+      { text: "Do lực liên kết giữa các phân tử tăng", correct: false, image: null },
+      { text: "Do năng lượng cung cấp phá vỡ mạng tinh thể", correct: true, image: null },
+      { text: "Do các phân tử đứng yên", correct: false, image: null },
+      { text: "Do thể tích chất rắn giảm", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi chất lỏng sôi, năng lượng nhận được từ nguồn nhiệt dùng để làm gì?",
+    qImage: null,
+    answers: [
+      { text: "Tăng nhiệt độ chất lỏng", correct: false, image: null },
+      { text: "Phá vỡ liên kết giữa các phân tử", correct: true, image: null },
+      { text: "Tăng thể tích chất lỏng", correct: false, image: null },
+      { text: "Giảm tốc độ chuyển động phân tử", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chuyển động Brown được gọi tên theo ai?",
+    qImage: null,
+    answers: [
+      { text: "Isaac Newton", correct: false, image: null },
+      { text: "Robert Brown", correct: true, image: null },
+      { text: "Albert Einstein", correct: false, image: null },
+      { text: "Marie Curie", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Plasma là trạng thái nào của vật chất?",
+    qImage: null,
+    answers: [
+      { text: "Trạng thái rắn", correct: false, image: null },
+      { text: "Trạng thái lỏng", correct: false, image: null },
+      { text: "Trạng thái khí ion hóa", correct: true, image: null },
+      { text: "Trạng thái hỗn loạn", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi nước sôi, nhiệt độ của nước thay đổi như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Tăng liên tục", correct: false, image: null },
+      { text: "Không thay đổi", correct: true, image: null },
+      { text: "Giảm dần", correct: false, image: null },
+      { text: "Tăng rồi giảm", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao chất lỏng có thể tích riêng xác định?",
+    qImage: null,
+    answers: [
+      { text: "Do lực liên kết yếu giữa các phân tử", correct: false, image: null },
+      { text: "Do lực liên kết đủ mạnh để giữ các phân tử gần nhau", correct: true, image: null },
+      { text: "Do các phân tử đứng yên", correct: false, image: null },
+      { text: "Do chất lỏng không có lực liên kết", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong mô hình động học phân tử, các phân tử chất khí chuyển động như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Chuyển động thẳng đều", correct: false, image: null },
+      { text: "Chuyển động hỗn loạn", correct: true, image: null },
+      { text: "Chuyển động tròn", correct: false, image: null },
+      { text: "Chuyển động đứng yên", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi chất rắn kết tinh nóng chảy, năng lượng cung cấp dùng để làm gì?",
+    qImage: null,
+    answers: [
+      { text: "Tăng nhiệt độ chất rắn", correct: false, image: null },
+      { text: "Phá vỡ mạng tinh thể", correct: true, image: null },
+      { text: "Giảm lực liên kết giữa các phân tử", correct: false, image: null },
+      { text: "Tăng tốc độ chuyển động phân tử", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự bay hơi xảy ra ở đâu trong chất lỏng?",
+    qImage: null,
+    answers: [
+      { text: "Chỉ ở đáy chất lỏng", correct: false, image: null },
+      { text: "Ở mặt thoáng của chất lỏng", correct: true, image: null },
+      { text: "Ở toàn bộ thể tích chất lỏng", correct: false, image: null },
+      { text: "Chỉ ở giữa chất lỏng", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi chất lỏng bay hơi, nhiệt độ của chất lỏng thay đổi như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Tăng lên", correct: false, image: null },
+      { text: "Giảm xuống", correct: true, image: null },
+      { text: "Không đổi", correct: false, image: null },
+      { text: "Tăng rồi giảm", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao oxygen trong bình áp suất cao có thể chuyển thành thể lỏng?",
+    qImage: null,
+    answers: [
+      { text: "Do tăng khoảng cách giữa các phân tử", correct: false, image: null },
+      { text: "Do giảm khoảng cách và tăng tương tác giữa các phân tử", correct: true, image: null },
+      { text: "Do giảm năng lượng của phân tử", correct: false, image: null },
+      { text: "Do tăng nhiệt độ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chuyển động của các phân tử trong chất rắn kết tinh như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Chuyển động hỗn loạn", correct: false, image: null },
+      { text: "Dao động tại vị trí cố định", correct: true, image: null },
+      { text: "Chuyển động thẳng đều", correct: false, image: null },
+      { text: "Không chuyển động", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự sôi của chất lỏng xảy ra ở đâu?",
+    qImage: null,
+    answers: [
+      { text: "Chỉ ở mặt thoáng", correct: false, image: null },
+      { text: "Trong toàn bộ thể tích và mặt thoáng", correct: true, image: null },
+      { text: "Chỉ ở đáy", correct: false, image: null },
+      { text: "Chỉ ở giữa chất lỏng", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong thí nghiệm Brown, các hạt phấn hoa chuyển động do đâu?",
+    qImage: null,
+    answers: [
+      { text: "Lực điện từ", correct: false, image: null },
+      { text: "Va chạm với các phân tử nước", correct: true, image: null },
+      { text: "Lực hấp dẫn", correct: false, image: null },
+      { text: "Lực ma sát", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao chất rắn rất khó nén?",
+    qImage: null,
+    answers: [
+      { text: "Do lực liên kết giữa các phân tử yếu", correct: false, image: null },
+      { text: "Do các phân tử ở gần nhau và lực liên kết mạnh", correct: true, image: null },
+      { text: "Do các phân tử chuyển động hỗn loạn", correct: false, image: null },
+      { text: "Do chất rắn không có lực liên kết", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Năng lượng cung cấp khi chất rắn kết tinh nóng chảy dùng để làm gì?",
+    qImage: null,
+    answers: [
+      { text: "Tăng nhiệt độ chất rắn", correct: false, image: null },
+      { text: "Phá vỡ mạng tinh thể", correct: true, image: null },
+      { text: "Tăng tốc độ chuyển động phân tử", correct: false, image: null },
+      { text: "Giảm lực liên kết giữa các phân tử", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi chất lỏng sôi, nhiệt độ của chất lỏng thay đổi như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Tăng liên tục", correct: false, image: null },
+      { text: "Không thay đổi", correct: true, image: null },
+      { text: "Giảm dần", correct: false, image: null },
+      { text: "Tăng rồi giảm", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự bay hơi của chất lỏng làm thay đổi nhiệt độ như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Tăng nhiệt độ", correct: false, image: null },
+      { text: "Giảm nhiệt độ", correct: true, image: null },
+      { text: "Không đổi nhiệt độ", correct: false, image: null },
+      { text: "Tăng rồi giảm nhiệt độ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao chất khí dễ dàng nén được?",
+    qImage: null,
+    answers: [
+      { text: "Do lực liên kết giữa các phân tử mạnh", correct: false, image: null },
+      { text: "Do các phân tử ở xa nhau và lực liên kết yếu", correct: true, image: null },
+      { text: "Do các phân tử đứng yên", correct: false, image: null },
+      { text: "Do chất khí có hình dạng riêng", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chuyển động của các phân tử trong chất lỏng so với chất rắn như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Chuyển động hỗn loạn hơn", correct: true, image: null },
+      { text: "Chuyển động ít hơn", correct: false, image: null },
+      { text: "Không chuyển động", correct: false, image: null },
+      { text: "Chuyển động thẳng đều", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự chuyển thể từ chất rắn sang chất lỏng được gọi là gì?",
+    qImage: null,
+    answers: [
+      { text: "Sự bay hơi", correct: false, image: null },
+      { text: "Sự nóng chảy", correct: true, image: null },
+      { text: "Sự sôi", correct: false, image: null },
+      { text: "Sự đông đặc", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi chất lỏng bay hơi, các phân tử nào thoát ra ngoài?",
+    qImage: null,
+    answers: [
+      { text: "Phân tử có năng lượng thấp", correct: false, image: null },
+      { text: "Phân tử có năng lượng cao", correct: true, image: null },
+      { text: "Phân tử đứng yên", correct: false, image: null },
+      { text: "Tất cả các phân tử", correct: false, image: null }
+    ]
+  }
+];
+
+// True/False questions [D/S]
+const trueFalseQuestions = [
+  {
+    q: "Thí nghiệm Brown và chuyển động phân tử",
+    qImage: null,
+    answers: [
+      { text: "Thí nghiệm Brown chứng minh các phân tử chuyển động hỗn loạn không ngừng.", correct: true, image: null },
+      { text: "Thí nghiệm Brown cho thấy các phân tử đứng yên.", correct: false, image: null },
+      { text: "Chuyển động của hạt phấn hoa là do va chạm với các phân tử nước.", correct: true, image: null },
+      { text: "Khi tăng nhiệt độ, các hạt phấn hoa chuyển động chậm lại.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Cấu trúc của chất rắn, chất lỏng và chất khí",
+    qImage: null,
+    answers: [
+      { text: "Chất khí có hình dạng và thể tích riêng.", correct: false, image: null },
+      { text: "Chất rắn có thể tích và hình dạng riêng.", correct: true, image: null },
+      { text: "Chất lỏng có thể tích riêng nhưng không có hình dạng riêng.", correct: true, image: null },
+      { text: "Chất khí không thể nén được.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự chuyển thể của chất",
+    qImage: null,
+    answers: [
+      { text: "Sự bay hơi xảy ra ở mặt thoáng của chất lỏng.", correct: true, image: null },
+      { text: "Sự sôi xảy ra chỉ ở mặt thoáng của chất lỏng.", correct: false, image: null },
+      { text: "Khi chất lỏng sôi, nhiệt độ không thay đổi.", correct: true, image: null },
+      { text: "Sự nóng chảy làm tăng nhiệt độ của chất rắn.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Mô hình động học phân tử",
+    qImage: null,
+    answers: [
+      { text: "Các phân tử trong chất khí chuyển động hỗn loạn.", correct: true, image: null },
+      { text: "Các phân tử trong chất rắn chuyển động thẳng đều.", correct: false, image: null },
+      { text: "Lực liên kết giữa các phân tử chất lỏng mạnh hơn chất khí.", correct: true, image: null },
+      { text: "Các phân tử trong chất lỏng không chuyển động.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Năng lượng và sự chuyển thể",
+    qImage: null,
+    answers: [
+      { text: "Khi chất rắn nóng chảy, năng lượng dùng để phá vỡ mạng tinh thể.", correct: true, image: null },
+      { text: "Khi chất lỏng bay hơi, nhiệt độ tăng.", correct: false, image: null },
+      { text: "Năng lượng cung cấp khi chất lỏng sôi dùng để phá vỡ liên kết giữa các phân tử.", correct: true, image: null },
+      { text: "Sự bay hơi làm tăng năng lượng trung bình của các phân tử còn lại.", correct: false, image: null }
+    ]
+  }
+];
+
+// Essay questions [TL]
+const essayQuestions = [
+  {
+    q: "Giải thích tại sao chất khí không có hình dạng và thể tích riêng, trong khi chất rắn và chất lỏng có những đặc điểm riêng về hình dạng và thể tích.",
+    qImage: null,
+    answerRef: "Chất khí không có hình dạng và thể tích riêng vì các phân tử ở xa nhau, lực liên kết yếu, chuyển động hỗn loạn, chiếm toàn bộ thể tích bình chứa. Chất rắn có hình dạng và thể tích riêng do các phân tử ở gần nhau, lực liên kết mạnh, dao động tại vị trí cố định. Chất lỏng có thể tích riêng nhưng không có hình dạng riêng do lực liên kết vừa đủ để giữ các phân tử gần nhau nhưng vẫn cho phép chuyển động hỗn loạn.",
+    answerRefImage: null
+  },
+  {
+    q: "Dựa vào mô hình động học phân tử, giải thích tại sao khi chất lỏng bay hơi, nhiệt độ của chất lỏng giảm.",
+    qImage: null,
+    answerRef: "Khi chất lỏng bay hơi, các phân tử có năng lượng cao thoát ra ngoài ở mặt thoáng, làm giảm năng lượng trung bình của các phân tử còn lại trong chất lỏng. Do đó, nhiệt độ của chất lỏng giảm.",
+    answerRefImage: null
+  },
+  {
+    q: "Mô tả quá trình nóng chảy của chất rắn kết tinh và giải thích tại sao nhiệt độ không tăng trong suốt quá trình này.",
+    qImage: null,
+    answerRef: "Trong quá trình nóng chảy, chất rắn kết tinh nhận năng lượng từ nguồn nhiệt, làm tăng dao động của các phân tử, phá vỡ mạng tinh thể, chuyển sang trạng thái lỏng. Nhiệt độ không tăng vì năng lượng cung cấp được dùng để phá vỡ liên kết giữa các phân tử, không làm tăng năng lượng động của chúng.",
+    answerRefImage: null
+  },
+  {
+    q: "Giải thích tại sao oxygen trong bình áp suất cao có thể chuyển thành thể lỏng.",
+    qImage: null,
+    answerRef: "Khi oxygen trong bình được nén với áp suất cao, khoảng cách giữa các phân tử giảm, làm tăng tương tác giữa chúng. Điều này khiến các phân tử liên kết chặt chẽ hơn, chuyển oxygen từ thể khí sang thể lỏng.",
+    answerRefImage: null
+  },
+  {
+    q: "Dựa vào thí nghiệm Brown, giải thích tại sao các hạt phấn hoa chuyển động hỗn loạn và tại sao chuyển động này nhanh hơn khi tăng nhiệt độ.",
+    qImage: null,
+    answerRef: "Trong thí nghiệm Brown, các hạt phấn hoa chuyển động hỗn loạn do va chạm với các phân tử nước chuyển động không ngừng. Khi tăng nhiệt độ, các phân tử nước nhận thêm năng lượng, chuyển động nhanh hơn, làm tăng lực va chạm lên các hạt phấn hoa, dẫn đến chuyển động của chúng cũng nhanh hơn.",
+    answerRefImage: null
+  }
+];
+
+  // --- UTILITY FUNCTIONS ---
+  function shuffleArray(arr) {
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/</g, "‹")
+      .replace(/>/g, "›")
+      .replace(/"/g, "'");
+  }
+
+  // --- DOM ELEMENTS ---
+  const btnMulti = document.getElementById('btn-multi');
+  const btnTrueFalse = document.getElementById('btn-truefalse');
+  const btnEssay = document.getElementById('btn-essay');
+  const toggleThemeBtn = document.getElementById('toggle-theme');
+  const btnExit = document.getElementById('btn-exit'); 
+  const btnBackHomeInQuiz = document.getElementById('btn-back-home-in-quiz'); // Nút Back Home trong quiz
+  const btnDownload = document.getElementById('btn-download');
+
+  const quizSection = document.getElementById('quiz-section');
+  const questionBlock = document.getElementById('question-block');
+  const answersBlock = document.getElementById('answers-block');
+  const essayInputBlock = document.getElementById('essay-input-block');
+  const essayAnswerTextarea = document.getElementById('essay-answer');
+  const btnEssaySubmit = document.getElementById('btn-essay-submit');
+  const btnNext = document.getElementById('btn-next');
+
+  const timerSpan = document.getElementById('timer');
+  const doneCountSpan = document.getElementById('done-count');
+  const correctCountSpan = document.getElementById('correct-count');
+  const wrongCountSpan = document.getElementById('wrong-count');
+
+  const resultSection = document.getElementById('result-section');
+  const resultTime = document.getElementById('result-time');
+  const resultTotal = document.getElementById('result-total');
+  const resultCorrect = document.getElementById('result-correct');
+  const resultWrong = document.getElementById('result-wrong');
+  const starRating = document.getElementById('star-rating');
+
+  // const btnRestart = document.getElementById('btn-restart'); // Đã xóa khỏi HTML, nên bỏ dòng này hoặc comment lại
+  const btnHome = document.getElementById('btn-home');
+
+  // --- STATE VARIABLES ---
+  let quizType = null; // 'multi', 'truefalse', 'essay'
+  let questions = [];
+  let currentQIdx = 0;
+  let timerInterval = null;
+  let timeSeconds = 0;
+  let doneCount = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let currentTFAnswerIdx = 0;
+
+  // --- TIMER FUNCTIONS ---
+  function startTimer() {
+    timeSeconds = 0;
+    timerSpan.textContent = formatTime(timeSeconds);
+    if(timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeSeconds++;
+      timerSpan.textContent = formatTime(timeSeconds);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if(timerInterval) clearInterval(timerInterval);
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s/60);
+    const sec = s % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (sec < 10 ? '0' + sec : sec);
+  }
+
+  // --- QUIZ FUNCTIONS ---
+  function resetStats() {
+    doneCount = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    doneCountSpan.textContent = "0";
+    correctCountSpan.textContent = "0";
+    wrongCountSpan.textContent = "0";
+  }
+
+  function initQuiz(type) {
+    quizType = type;
+    currentQIdx = 0;
+    resetStats();
+
+    if(type === 'multi') {
+      questions = multiChoiceQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+    } else if(type === 'truefalse') {
+      questions = trueFalseQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+      currentTFAnswerIdx = 0;
+    } else if(type === 'essay') {
+      questions = essayQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answerRef: q.answerRef,
+        answerRefImage: q.answerRefImage
+      }));
+      shuffleArray(questions);
+    }
+    
+    quizSection.style.display = 'block';
+    resultSection.style.display = 'none';
+    btnMulti.style.display = 'none';
+    btnTrueFalse.style.display = 'none';
+    btnEssay.style.display = 'none';
+    btnExit.style.display = 'none'; // Ẩn nút Exit khi bắt đầu quiz
+    toggleThemeBtn.style.display = 'none'; // Ẩn nút chuyển theme khi vào quiz
+    btnDownload.style.display = 'none';
+
+    showQuestion();
+    startTimer();
+  }
+
+  function showQuestion() {
+    // Ẩn nút "Tiếp tục" nếu nó đang hiển thị
+    btnNext.style.display = 'none'; 
+    // Nếu là dạng tự luận, nút "Xong" (submit) sẽ được hiển thị, ngược lại ẩn
+    btnEssaySubmit.style.display = (quizType === 'essay') ? 'block' : 'none';
+    // Đảm bảo nút "Xong" được kích hoạt lại cho câu hỏi tự luận mới
+    btnEssaySubmit.disabled = false; 
+
+    answersBlock.innerHTML = ''; // Xóa các câu trả lời cũ
+    essayInputBlock.style.display = 'none'; // Ẩn khung nhập tự luận
+    essayAnswerTextarea.value = ''; // Xóa nội dung cũ trong khung tự luận
+    
+    if (currentQIdx >= questions.length) {
+      endQuiz();
+      return;
+    }
+
+    const currentQ = questions[currentQIdx];
+    
+    // Display question text and image (if any)
+    let questionHTML = `
+      <div style="color: var(--orange); font-weight: bold; margin-bottom: 15px;">
+        Câu ${currentQIdx + 1}: ${escapeHtml(currentQ.q)}
+      </div>
+    `;
+    
+    if (currentQ.qImage) {
+      questionHTML += `
+        <div style="text-align: center; margin: 15px 0;">
+          <img src="${currentQ.qImage}" 
+               style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;"
+               onerror="this.style.display='none'">
+        </div>
+      `;
+    }
+    
+    questionBlock.innerHTML = questionHTML;
+
+    if (quizType === 'multi') {
+      // Multiple choice questions
+      answersBlock.style.display = 'block';
+      currentQ.answers.forEach((ans, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        
+        let answerContent = `${String.fromCharCode(65 + i)}. ${escapeHtml(ans.text)}`;
+        
+        if (ans.image) {
+          answerContent += `
+            <div style="margin-top: 8px; text-align: center;">
+              <img src="${ans.image}" 
+                   style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 3px;"
+                   onerror="this.style.display='none'">
+            </div>
+          `;
+        }
+        
+        btn.innerHTML = answerContent;
+        btn.onclick = () => handleMultiAnswerClick(btn, ans.correct, currentQ.answers);
+        answersBlock.appendChild(btn);
+      });
+
+    } else if (quizType === 'truefalse') {
+      // True/False questions
+      answersBlock.style.display = 'block';
+      currentTFAnswerIdx = 0;
+      showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+      
+    } else if (quizType === 'essay') {
+      // Essay questions
+      essayInputBlock.style.display = 'block';
+    }
+  }
+
+  function handleMultiAnswerClick(btn, isCorrect, allAnswers) {
+    Array.from(answersBlock.children).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(isCorrect) {
+      btn.classList.add('correct');
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+    } else {
+      btn.classList.add('incorrect');
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      // Highlight correct answer
+      const correctAns = allAnswers.find(a => a.correct);
+      for(let b of answersBlock.children) {
+        // Cẩn thận với việc so sánh textContent trực tiếp nếu có hình ảnh
+        // Cần lấy chỉ phần text của câu trả lời
+        const btnText = b.childNodes[0].nodeType === 3 ? b.childNodes[0].nodeValue.substring(3).trim() : ''; // Lấy text trước hình ảnh
+        const correctText = escapeHtml(correctAns.text);
+
+        if(btnText === correctText && correctAns.correct) {
+          b.classList.add('correct');
+          break;
+        }
+      }
+    }
+    btnNext.style.display = 'inline-block';
+  }
+
+  function showTrueFalseAnswer(answerObj) {
+    answersBlock.innerHTML = '';
+
+    const label = document.createElement('div');
+    label.style.marginBottom = '10px';
+    label.style.fontWeight = 'bold';
+    label.textContent = `Câu hỏi phụ ${currentTFAnswerIdx + 1}: ${answerObj.text}`;
+    answersBlock.appendChild(label);
+
+    if (answerObj.image) {
+      const imgDiv = document.createElement('div');
+      imgDiv.style.textAlign = 'center';
+      imgDiv.style.margin = '10px 0';
+      imgDiv.innerHTML = `<img src="${answerObj.image}" style="max-width: 100%; max-height: 200px; border: 1px solid #ccc; border-radius: 3px;" onerror="this.style.display='none'">`;
+      answersBlock.appendChild(imgDiv);
+    }
+
+    const btnTrue = document.createElement('button');
+    btnTrue.className = 'answer-btn';
+    btnTrue.textContent = 'Đúng';
+    btnTrue.onclick = () => handleTrueFalseAnswerClick(true, answerObj.correct);
+    answersBlock.appendChild(btnTrue);
+    
+    const btnFalse = document.createElement('button');
+    btnFalse.className = 'answer-btn';
+    btnFalse.textContent = 'Sai';
+    btnFalse.onclick = () => handleTrueFalseAnswerClick(false, answerObj.correct);
+    answersBlock.appendChild(btnFalse);
+  }
+
+  function handleTrueFalseAnswerClick(userAnswer, correctAnswer) {
+    Array.from(answersBlock.querySelectorAll('button')).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(userAnswer === correctAnswer) {
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    } else {
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('incorrect');
+        }
+        if(b.textContent.toLowerCase() === (correctAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    }
+
+    btnNext.style.display = 'inline-block';
+  }
+
+  // Essay submit handler
+  btnEssaySubmit.onclick = () => {
+    const userText = essayAnswerTextarea.value.trim();
+    if(userText.length === 0) {
+      alert('Hãy nhập câu trả lời trước khi nhấn "Xong"');
+      return;
+    }
+    btnEssaySubmit.disabled = true; // Vô hiệu hóa nút "Xong" sau khi submit
+    
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    const currentQ = questions[currentQIdx];
+    let answerRefHTML = `<br><br><em><strong>Đáp án tham khảo:</strong> ${currentQ.answerRef}</em>`;
+    
+    if(currentQ.answerRefImage) {
+      answerRefHTML += `<div style="margin: 15px 0; text-align: center;">
+        <img src="${currentQ.answerRefImage}" style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;">
+      </div>`;
+    }
+    
+    questionBlock.innerHTML += answerRefHTML;
+    btnNext.style.display = 'inline-block';
+  };
+
+  btnNext.onclick = () => {
+    // Ẩn nút "Tiếp tục"
+    btnNext.style.display = 'none';
+    // Đảm bảo nút "Xong" (essay) được kích hoạt lại
+    btnEssaySubmit.disabled = false; 
+
+    if(quizType === 'truefalse') {
+      currentTFAnswerIdx++;
+      const currentQ = questions[currentQIdx];
+      // Nếu còn câu hỏi phụ trong câu hỏi Đúng/Sai hiện tại
+      if(currentTFAnswerIdx < currentQ.answers.length) {
+        showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+        return; // Không chuyển sang câu hỏi tiếp theo mà hiển thị câu phụ
+      }
+    }
+
+    // Chuyển sang câu hỏi tiếp theo
+    currentQIdx++;
+    showQuestion();
+  };
+
+  function endQuiz() {
+    stopTimer();
+    quizSection.style.display = 'none';
+    resultSection.style.display = 'block';
+    toggleThemeBtn.style.display = 'block'; // Hiển thị lại nút chuyển theme
+
+    resultTime.textContent = formatTime(timeSeconds);
+    resultTotal.textContent = doneCount;
+    resultCorrect.textContent = correctCount;
+    resultWrong.textContent = wrongCount;
+
+    starRating.innerHTML = '';
+
+    // Logic tính sao đã được khôi phục và tinh chỉnh
+    if(quizType === 'multi' || quizType === 'truefalse') {
+      let starsGreen = 0;
+      let starsGray = 0;
+      
+      if(wrongCount === 0) { // Nếu không có câu sai
+        starsGreen = 3; // 3 sao xanh
+      } else if (wrongCount >= 1 && wrongCount <= 3) {
+        starsGreen = 2; // 2 sao xanh
+        starsGray = 1; // 1 sao xám
+      } else if (wrongCount >= 4 && wrongCount <= 9) {
+        starsGreen = 1; // 1 sao xanh
+        starsGray = 2; // 2 sao xám
+      } else { // wrongCount >= 10
+        starsGreen = 0; // 0 sao xanh
+        starsGray = 3; // 3 sao xám
+      }
+
+      for(let i = 1; i <= 3; i++) {
+        const star = document.createElement('span');
+        star.classList.add('star');
+        if(i <= starsGreen) star.classList.add('Green');
+        else if(i <= starsGray) star.classList.add('gray');
+        star.innerHTML = '&#9733;';
+        starRating.appendChild(star);
+      }
+    } else if (quizType === 'essay') {
+        // Đối với bài tự luận, không có điểm đúng/sai tự động
+        // Bạn có thể thêm logic chấm điểm thủ công hoặc hiển thị thông báo khác
+        const infoDiv = document.createElement('div');
+        infoDiv.textContent = "Bài Tự Luận Cần Được Giáo Viên Chấm Điểm.";
+        infoDiv.style.fontWeight = "bold";
+        infoDiv.style.marginTop = "20px";
+        starRating.appendChild(infoDiv);
+    }
+  }
+
+  // --- EVENT LISTENERS ---
+  // Đã xóa btnRestart.onclick và logic liên quan
+  // Nếu bạn muốn chức năng "làm lại" bài quiz, bạn cần tạo một nút mới với ID khác
+  // và thêm lại logic reset Stats vào event listener của nút đó.
+
+  // Nút Home (ở màn hình kết quả) - vẫn reload trang hiện tại
+  btnHome.onclick = () => {
+    location.reload(); 
+  };
+
+  btnMulti.onclick = () => initQuiz('multi');
+  btnTrueFalse.onclick = () => initQuiz('truefalse');
+  btnEssay.onclick = () => initQuiz('essay');
+  // New: Download button functionality
+  btnDownload.onclick = () => {
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'toancreator-default'; // Set the desired filename
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  };
+  
+  
+  // Xử lý sự kiện cho nút Exit mới
+  btnExit.onclick = () => {
+    window.location.href = '../index.html'; // Chuyển hướng về index.html
+  };
+
+  // Xử lý sự kiện cho nút Back to Home trong quiz
+  btnBackHomeInQuiz.onclick = () => {
+    if (confirm('Bạn có chắc chắn muốn thoát bài làm hiện tại?')) {
+      stopTimer(); // Dừng đồng hồ
+      location.reload(); // Tải lại trang promt-onlineV2.html
+    }
+  };
+
+  toggleThemeBtn.onclick = () => {
+    document.body.classList.toggle('dark');
+  };
+
+  // Ẩn/hiện nút toggle theme ban đầu
+  // Bạn có thể đặt nút toggle theme ở vị trí cố định thay vì ẩn/hiện tùy thuộc vào màn hình
+  // Hiện tại, nó sẽ luôn hiển thị trừ khi bị ẩn bởi CSS hoặc logic khác
+  toggleThemeBtn.style.display = 'block'; 
+})();
+</script>
+</body>
+</html>

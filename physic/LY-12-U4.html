@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toàn Creator - Online Lesson</title>
+<style>
+  :root {
+    --yellow: #f9d342;
+    --yellow-dark: #d4b833;
+    --Green: #2ecc71;
+    --starsGreen: #2ecc71;
+    --red: #d93025;
+    --green: #2ecc40;
+    --starsGray: #ccc;
+    --star-size: 30px;
+    --orange: #ff9800;
+  }
+  body {
+    margin:0; padding:0; font-family: Arial, sans-serif;
+    background: white; color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: black; color: white;
+  }
+  /* Existing #app rule */
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+/* Media query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+  #app {
+    max-width: 960px; /* Or any wider value you prefer, e.g., 900px, 1200px */
+    padding: 20px; /* Optional: Increase padding for more space on larger screens */
+  }
+
+  /* Optional: Adjust button widths for larger screens if they look too wide */
+  .btn {
+    max-width: 400px; /* Make main buttons a bit wider */
+  }
+
+  /* Optional: Adjust status bar layout for larger screens */
+  .status-bar {
+    font-size: 1.1em;
+  }
+}
+  h1, h3 {
+    text-align: center;
+    margin: 10px 0;
+  }
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+    color: #FF00FF;
+  }
+  hr {
+    border:none; border-bottom: 3px solid black;
+    margin: 5px 0 25px 0;
+  }
+  .btn {
+    background: #3399FF;
+    border-radius: 8px;
+    border:none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 15px;
+    width: 100%;
+    max-width: 350px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: 3px solid transparent;
+    user-select: none;
+  }
+  .btn:hover {
+    background: var(--yellow-dark);
+  }
+  .btn svg {
+    vertical-align: middle;
+  }
+  .question-container {
+    margin-bottom: 20px;
+    color: var(--orange) !important;
+    font-weight: bold;
+    font-size: 1.08em;
+    transition: color 0.3s;
+  }
+  body.dark .question-container {
+    color: var(--orange) !important;
+  }
+  .answers {
+    margin-top: 15px;
+  }
+  .answer-btn {
+    display: block;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 6px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
+    padding: 12px 10px;
+    margin: 7px 0;
+    cursor: pointer;
+    text-align: left;
+    user-select: none;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .answer-btn:hover:not(.disabled) {
+    background-color: #eee;
+  }
+  body.dark .answer-btn {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  body.dark .answer-btn:hover:not(.disabled) {
+    background-color: #444;
+  }
+  .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  body.dark .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  body.dark .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  .disabled {
+    pointer-events: none;
+  }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .star-container {
+    text-align: center;
+    margin: 20px 0 10px 0;
+  }
+  .star {
+    font-size: var(--star-size);
+    margin: 0 5px;
+    color: var(--starsGray);
+  }
+  .star.Green {
+    color: var(--Green);
+  }
+  .star.red {
+    color: var(--red);
+  }
+  .toggle-btn {
+    background: lime;
+    color: white;
+    font-size: 1.5em;
+    padding: 12px 0;
+    margin: 25px auto;
+    width: 150px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    display: block;
+  }
+  .input-textarea {
+    width: 100%;
+    min-height: 80px;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid black;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  body.dark .input-textarea {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  .btn-small {
+    background: #FF99CC;
+    width: auto;
+    padding: 8px 15px;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+  .answer-btn img {
+    max-width: 100%;
+    max-height: 150px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .question-container img {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  body.dark .answer-btn img,
+  body.dark .question-container img {
+    border-color: #555;
+  }
+  .question-container img, .answer-btn img {
+    display: block;
+    margin: 0 auto;
+    background: #f5f5f5;
+  }
+  body.dark .question-container img,
+  body.dark .answer-btn img {
+    background: #333;
+  }
+  /* Style for the header image placeholder */
+  .header-image-placeholder {
+    display: block;
+    width: 100%; /* Hoặc một chiều rộng cố định */
+    height: 100px; /* Điều chỉnh chiều cao này để phù hợp với kích thước bạn muốn */
+    background-color: #f0f0f0; /* Màu nền để dễ nhìn thấy placeholder */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 25px; /* Khoảng cách với tiêu đề bên dưới */
+    
+  }
+  body.dark .header-image-placeholder {
+    background-color: #333;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <img src="https://i.ibb.co/tMdHNdPH/Picsart-25-07-17-06-40-25-073.jpg" alt="Header Image" class="header-image-placeholder">
+  
+  <h2>LÝ - BÀI 4</h2>
+
+  <button class="btn" id="btn-exit" style="background: var(--red);">
+    <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+      <path d="M16 17v-4h-2V7h-4V4H6V2H4v2h2v4h4v6h2v4h4v2h2v-2h-2z"/>
+    </svg>
+    Thoát
+  </button>
+  <button class="btn" id="btn-multi">TRẮC NGHIỆM 4 PHƯƠNG ÁN</button>
+  <button class="btn" id="btn-truefalse">TRẮC NGHIỆM ĐÚNG/SAI</button>
+  <button class="btn" id="btn-essay">TỰ LUẬN</button>
+
+  <button class="toggle-btn" id="toggle-theme">💡</button>
+  <button class="toggle-btn" id="btn-download" style="background: orange; margin-top: -20px; margin-bottom: 25px;">
+    Tải xuống
+  </button>
+  <div id="quiz-section" style="display:none; margin-top: 10px;">
+    <div class="status-bar">
+      <div><span id="timer">00:00</span></div>
+      <div>ㅤㅤ <span id="done-count">0</span></div>
+      <div>✅<span id="correct-count">0</span> | <strong>⛔</strong><span id="wrong-count">0</span></div>
+    </div>
+
+    <div id="question-block" class="question-container"></div>
+    <div id="answers-block" class="answers"></div>
+
+    <div id="essay-input-block" style="display:none;">
+      <textarea id="essay-answer" class="input-textarea" placeholder="Nhập câu trả lời của bạn..."></textarea>
+      <button id="btn-essay-submit" class="btn-small">Xong</button>
+    </div>
+
+    <div style="display:flex; justify-content: space-between; margin-top: 20px;">
+      <button id="btn-back-home-in-quiz" class="btn btn-small" style="background: var(--Green); width: 48%;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+      <button id="btn-next" class="btn btn-small" style="width: 48%;">Tiếp tục</button>
+    </div>
+  </div>
+
+  <div id="result-section" style="display:none; text-align:center; margin-top: 30px;">
+    <h2>KẾT THÚC BÀI LÀM</h2>
+    <div><strong>Tổng thời gian làm bài:</strong> <span id="result-time"></span></div>
+    <div><strong>Tổng số câu đã làm:</strong> <span id="result-total"></span></div>
+    <div><strong>Đúng:</strong><span id="result-correct"></span><strong> | </strong><strong>Sai:</strong><span id="result-wrong"></span></div>
+    <div id="star-rating" class="star-container"></div>
+    <div style="margin-top: 25px;">
+      <button id="btn-home" class="btn" style="display:inline-block; width:120px;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg> 
+      </button>
+      </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // --- QUESTION DATA ---
+  // Multiple choice questions [ABCD]
+const multiChoiceQuestions = [
+  {
+    q: "Nhiệt lượng cần cung cấp cho vật để làm tăng nhiệt độ của nó không phụ thuộc vào yếu tố nào sau đây?",
+    qImage: null,
+    answers: [
+      { text: "khối lượng của vật.", correct: false, image: null },
+      { text: "độ tăng nhiệt độ của vật.", correct: false, image: null },
+      { text: "tính chất của chất làm vật.", correct: false, image: null },
+      { text: "kích thước ban đầu của vật.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Một vật có khối lượng m (kg) được làm bằng chất có nhiệt dung riêng c (J/kg.K), nhận nhiệt lượng Q (J) thì nhiệt độ của vật tăng thêm ΔT (K). Hệ thức nào sau đây đúng?",
+    qImage: null,
+    answers: [
+      { text: "Q = mc.ΔT.", correct: true, image: null },
+      { text: "Q = c.ΔT / m", correct: false, image: null },
+      { text: "c = m.ΔT / Q", correct: false, image: null },
+      { text: "c = Q.m / ΔT", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một thùng đựng 20 lít nước ở nhiệt độ 20°C. Cho khối lượng riêng của nước là 1000 kg/m³ và nhiệt dung riêng của nước là 4200 J/kgK. Nhiệt lượng cần cung cấp cho nước trong thùng để nhiệt độ của nó tăng lên tới 70°C là:",
+    qImage: null,
+    answers: [
+      { text: "294 kJ", correct: false, image: null },
+      { text: "4200 kJ", correct: true, image: null },
+      { text: "5880 kJ", correct: false, image: null },
+      { text: "1680 kJ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Biết nhiệt dung riêng của nước và của nước đá lần lượt là 4200 J/kg.K và 2100 J/kg.K. Phát biểu nào dưới đây không đúng?",
+    qImage: null,
+    answers: [
+      { text: "Để 1 kg nước tăng thêm 1°C thì cần cung cấp cho nước nhiệt lượng 4200 J.", correct: false, image: null },
+      { text: "Để 1 kg nước đá tăng thêm 1°C thì cần cung cấp cho nước đá nhiệt lượng 2100 J.", correct: false, image: null },
+      { text: "Với cùng một khối lượng, khi cung cấp nhiệt lượng như nhau thì độ tăng nhiệt độ của nước đá và nước như nhau.", correct: true, image: null },
+      { text: "Nếu được cung cấp cùng một nhiệt lượng và độ tăng nhiệt độ của nước đá và nước là như nhau thì khối lượng nước đá gấp đôi khối lượng nước.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Đơn vị của nhiệt dung riêng là gì?",
+    qImage: null,
+    answers: [
+      { text: "J/kg", correct: false, image: null },
+      { text: "J/kg.K", correct: true, image: null },
+      { text: "J.kg/K", correct: false, image: null },
+      { text: "J/K", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Đâu là công thức tính nhiệt lượng trong quá trình truyền nhiệt để làm thay đổi nhiệt độ của vật?",
+    qImage: null,
+    answers: [
+      { text: "Q = U.I.t", correct: false, image: null },
+      { text: "Q = λ.m", correct: false, image: null },
+      { text: "Q = mcΔt", correct: true, image: null },
+      { text: "Q = L.m", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt dung riêng của nước là bao nhiêu?",
+    qImage: null,
+    answers: [
+      { text: "4200 J/kg.K", correct: true, image: null },
+      { text: "2100 J/kg.K", correct: false, image: null },
+      { text: "10000 J/kg.K", correct: false, image: null },
+      { text: "840 J/kg.K", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Phát biểu nào sau đây không đúng khi nói về nhiệt dung riêng của một chất?",
+    qImage: null,
+    answers: [
+      { text: "Được đo bằng đơn vị J/kg.K.", correct: false, image: null },
+      { text: "Nhiệt dung riêng được kí hiệu là Q.", correct: true, image: null },
+      { text: "Nhiệt lượng trong quá trình truyền nhiệt để làm thay đổi nhiệt độ của vật là: Q = mcΔt.", correct: false, image: null },
+      { text: "Vật làm bằng chất có nhiệt dung riêng nhỏ thì dễ nóng lên và cũng dễ nguội đi.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Để xác định nhiệt dung riêng của nước bằng thí nghiệm thì không cần đo đại lượng nào sau đây?",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt độ nước sau khi đun.", correct: false, image: null },
+      { text: "Thời gian đun nước.", correct: false, image: null },
+      { text: "Công suất dòng điện.", correct: false, image: null },
+      { text: "Cường độ dòng điện.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Người ta thực hiện thí nghiệm xác định nhiệt dung riêng của đồng với một miếng đồng kim loại có khối lượng 850 g. Lúc đầu, nhiệt độ của miếng đồng là 12°C. Ghi lại thời gian từ khi bật bộ phận đốt nóng đến khi nhiệt độ miếng đồng tăng tới 30°C. Công suất bộ phận đốt nóng là 40 W, thời gian đốt nóng là 146 s. Nhiệt dung riêng của đồng là:",
+    qImage: null,
+    answers: [
+      { text: "380 J/kg.K", correct: true, image: null },
+      { text: "880 J/kg.K", correct: false, image: null },
+      { text: "140 J/kg.K", correct: false, image: null },
+      { text: "800 J/kg.K", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một ấm đun nước bằng nhôm có khối lượng 0,4 kg, chứa được 3 lít nước đun trên bếp. Khi nhận được nhiệt lượng 740 kJ thì ấm đạt đến nhiệt độ 80°C. Biết nhiệt dung riêng của nhôm là 880 J/kg.K, nhiệt dung riêng của nước là 4200 J/kg.K. Nhiệt độ ban đầu của nước là:",
+    qImage: null,
+    answers: [
+      { text: "32°C", correct: false, image: null },
+      { text: "23°C", correct: true, image: null },
+      { text: "28°C", correct: false, image: null },
+      { text: "19°C", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt dung riêng của một chất cho biết điều gì?",
+    qImage: null,
+    answers: [
+      { text: "Khả năng tỏa nhiệt của chất đó.", correct: false, image: null },
+      { text: "Khối lượng của chất cần để đạt được nhiệt độ nhất định.", correct: false, image: null },
+      { text: "Lượng nhiệt cần thiết để làm tăng 1°C cho 1 kg chất đó.", correct: true, image: null },
+      { text: "Tốc độ truyền nhiệt của chất.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi đun nóng cùng một khối lượng nước và dầu ăn trong cùng khoảng thời gian với cùng một nguồn nhiệt, nhận xét nào sau đây đúng?",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt độ của nước cao hơn dầu ăn.", correct: false, image: null },
+      { text: "Dầu ăn có nhiệt dung riêng lớn hơn nước.", correct: false, image: null },
+      { text: "Nhiệt độ của dầu ăn cao hơn nước do dầu ăn có nhiệt dung riêng nhỏ hơn.", correct: true, image: null },
+      { text: "Nước và dầu ăn nóng lên với cùng một tốc độ.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao trong bộ tản nhiệt của máy biến thế người ta dùng dầu mà không dùng nước?",
+    qImage: null,
+    answers: [
+      { text: "Dầu có nhiệt dung riêng lớn hơn nước.", correct: false, image: null },
+      { text: "Dầu là chất cách điện, giải nhiệt tốt và chống ăn mòn kim loại.", correct: true, image: null },
+      { text: "Nước dễ bay hơi, không phù hợp cho máy biến thế.", correct: false, image: null },
+      { text: "Dầu dễ kiếm hơn nước.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hiện tượng gió biển vào ban ngày và gió đất vào ban đêm là do sự chênh lệch về yếu tố nào?",
+    qImage: null,
+    answers: [
+      { text: "Áp suất khí quyển.", correct: false, image: null },
+      { text: "Độ ẩm không khí.", correct: false, image: null },
+      { text: "Nhiệt dung riêng của đất và nước.", correct: true, image: null },
+      { text: "Khối lượng của đất và nước.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một vật có khối lượng 1 kg, nhiệt dung riêng 800 J/kg.K, được đun nóng từ 20°C lên 50°C. Nhiệt lượng vật thu vào là:",
+    qImage: null,
+    answers: [
+      { text: "16 kJ", correct: false, image: null },
+      { text: "24 kJ", correct: true, image: null },
+      { text: "40 kJ", correct: false, image: null },
+      { text: "56 kJ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Yếu tố nào sau đây không phải là một trong các yếu tố ảnh hưởng đến nhiệt lượng cần cung cấp cho vật để làm thay đổi nhiệt độ của nó?",
+    qImage: null,
+    answers: [
+      { text: "Khối lượng của vật.", correct: false, image: null },
+      { text: "Độ tăng nhiệt độ của vật.", correct: false, image: null },
+      { text: "Công suất nguồn nhiệt.", correct: true, image: null },
+      { text: "Tính chất của chất làm vật.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong bảng nhiệt dung riêng, chất nào có nhiệt dung riêng nhỏ nhất?",
+    qImage: null,
+    answers: [
+      { text: "Thủy ngân", correct: false, image: null },
+      { text: "Đồng", correct: false, image: null },
+      { text: "Chì", correct: true, image: null },
+      { text: "Sắt", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong thí nghiệm xác định nhiệt dung riêng của nước, cân điện tử dùng để đo đại lượng nào?",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt độ ban đầu của nước.", correct: false, image: null },
+      { text: "Khối lượng của nước.", correct: true, image: null },
+      { text: "Công suất của điện trở nhiệt.", correct: false, image: null },
+      { text: "Thời gian đun nước.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi một vật tỏa nhiệt, giá trị ΔT trong công thức Q = mcΔT sẽ là:",
+    qImage: null,
+    answers: [
+      { text: "Dương.", correct: false, image: null },
+      { text: "Âm.", correct: true, image: null },
+      { text: "Bằng không.", correct: false, image: null },
+      { text: "Phụ thuộc vào nhiệt dung riêng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một miếng nhôm khối lượng 0.5 kg được nung nóng. Sau khi nhận 17600 J nhiệt lượng, nhiệt độ của nó tăng thêm 40°C. Nhiệt dung riêng của nhôm là:",
+    qImage: null,
+    answers: [
+      { text: "440 J/kg.K", correct: false, image: null },
+      { text: "880 J/kg.K", correct: true, image: null },
+      { text: "1760 J/kg.K", correct: false, image: null },
+      { text: "352 J/kg.K", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Để nước trong bình nhiệt lượng kế nóng đều trong thí nghiệm, người ta thường thực hiện thao tác nào?",
+    qImage: null,
+    answers: [
+      { text: "Đun với công suất lớn nhất.", correct: false, image: null },
+      { text: "Thêm đá vào nước.", correct: false, image: null },
+      { text: "Khuấy liên tục.", correct: true, image: null },
+      { text: "Đậy kín nắp bình.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một thiết bị điện có công suất 1 kW đun nóng 2 kg nước từ 20°C lên 70°C. Bỏ qua mọi mất mát nhiệt. Thời gian đun là bao nhiêu? (c_nước = 4200 J/kg.K)",
+    qImage: null,
+    answers: [
+      { text: "120 s", correct: false, image: null },
+      { text: "210 s", correct: false, image: null },
+      { text: "420 s", correct: true, image: null },
+      { text: "840 s", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi một vật tỏa nhiệt, nhiệt lượng tỏa ra có giá trị:",
+    qImage: null,
+    answers: [
+      { text: "Dương.", correct: false, image: null },
+      { text: "Âm.", correct: true, image: null },
+      { text: "Bằng không nếu không có sự thay đổi nhiệt độ.", correct: false, image: null },
+      { text: "Luôn dương vì là năng lượng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao đất nóng lên nhanh hơn nước biển vào ban ngày?",
+    qImage: null,
+    answers: [
+      { text: "Đất hấp thụ ánh nắng mặt trời tốt hơn nước.", correct: false, image: null },
+      { text: "Đất có nhiệt dung riêng lớn hơn nước.", correct: false, image: null },
+      { text: "Đất có nhiệt dung riêng nhỏ hơn nước.", correct: true, image: null },
+      { text: "Nước biển có sự đối lưu.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong công thức Q = mcΔT, đại lượng ΔT là gì?",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt độ ban đầu của vật.", correct: false, image: null },
+      { text: "Nhiệt độ cuối cùng của vật.", correct: false, image: null },
+      { text: "Độ thay đổi nhiệt độ của vật.", correct: true, image: null },
+      { text: "Nhiệt độ môi trường.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nếu hai vật có cùng khối lượng và nhận cùng một lượng nhiệt, vật nào có nhiệt dung riêng lớn hơn sẽ:",
+    qImage: null,
+    answers: [
+      { text: "Nóng lên nhanh hơn.", correct: false, image: null },
+      { text: "Nóng lên chậm hơn.", correct: true, image: null },
+      { text: "Không thay đổi nhiệt độ.", correct: false, image: null },
+      { text: "Tỏa nhiệt nhanh hơn.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hệ thống làm nóng nước bằng năng lượng mặt trời chuyển đổi từ năng lượng nào sang năng lượng nào?",
+    qImage: null,
+    answers: [
+      { text: "Cơ năng thành nhiệt năng.", correct: false, image: null },
+      { text: "Điện năng thành nhiệt năng.", correct: false, image: null },
+      { text: "Năng lượng mặt trời (quang năng) thành nhiệt năng.", correct: true, image: null },
+      { text: "Hóa năng thành điện năng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Để xác định nhiệt lượng Q cung cấp cho nước trong thí nghiệm đo nhiệt dung riêng, nếu biết công suất P của điện trở nhiệt và thời gian t đun, công thức nào được sử dụng?",
+    qImage: null,
+    answers: [
+      { text: "Q = P / t", correct: false, image: null },
+      { text: "Q = P * t", correct: true, image: null },
+      { text: "Q = P + t", correct: false, image: null },
+      { text: "Q = P - t", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nếu nhiệt dung riêng của một chất là rất nhỏ, điều gì có thể xảy ra khi truyền một lượng nhỏ nhiệt cho nó?",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt độ của chất đó sẽ tăng lên rất ít.", correct: false, image: null },
+      { text: "Nhiệt độ của chất đó sẽ tăng lên rất nhiều.", correct: true, image: null },
+      { text: "Chất đó sẽ không thay đổi nhiệt độ.", correct: false, image: null },
+      { text: "Chất đó sẽ chuyển sang trạng thái khác ngay lập tức.", correct: false, image: null }
+    ]
+  }
+];
+
+// True/False questions [D/S] (5 main reading passages, 4 T/F sub-questions each)
+const trueFalseQuestions = [
+  {
+    q: "Nhiệt dung riêng của một chất là lượng nhiệt cần cung cấp cho 1 kg chất đó để nhiệt độ của nó tăng thêm 1°C. Nhiệt lượng Q mà một vật thu vào hay tỏa ra khi nhiệt độ thay đổi được tính bằng công thức Q = mcΔT, trong đó m là khối lượng, c là nhiệt dung riêng và ΔT là độ thay đổi nhiệt độ. Các yếu tố ảnh hưởng đến nhiệt lượng cần cung cấp bao gồm khối lượng, độ tăng nhiệt độ và tính chất của chất làm vật.",
+    qImage: null,
+    answers: [
+      { text: "Đơn vị đo của nhiệt dung riêng là J/kg.K.", correct: true, image: null },
+      { text: "Nếu khối lượng vật càng lớn thì nhiệt lượng cần cung cấp để tăng nhiệt độ một độ sẽ càng ít.", correct: false, image: null },
+      { text: "Công thức Q = mcΔT chỉ áp dụng khi vật nhận nhiệt lượng.", correct: false, image: null },
+      { text: "Tính chất của chất làm vật không ảnh hưởng đến nhiệt lượng cần cung cấp để thay đổi nhiệt độ.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong một thí nghiệm, đun nóng cùng một khối lượng dầu ăn và nước trong cùng khoảng thời gian với cùng một nguồn nhiệt. Kết quả cho thấy nhiệt độ của dầu ăn cao hơn nhiệt độ của nước. Điều này được giải thích là do dầu và nước khác nhau về bản chất, lượng dầu cần ít năng lượng nhiệt hơn so với nước để tăng lên 1°C, tức là dầu ăn có nhiệt dung riêng nhỏ hơn nước.",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt độ của nước sẽ cao hơn dầu ăn sau khi đun nóng cùng thời gian.", correct: false, image: null },
+      { text: "Dầu ăn cần nhiều nhiệt lượng hơn nước để tăng nhiệt độ lên 1°C cho cùng một khối lượng.", correct: false, image: null },
+      { text: "Sự khác biệt về nhiệt dung riêng giữa dầu và nước là nguyên nhân chính dẫn đến sự chênh lệch nhiệt độ.", correct: true, image: null },
+      { text: "Lượng năng lượng nhiệt mà dầu ăn và nước nhận được từ đèn cồn là như nhau trong cùng khoảng thời gian.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt dung riêng của đất nhỏ hơn nước biển khoảng 5 lần. Ban ngày, khi Mặt Trời mọc, mặt đất nóng lên nhanh hơn nước biển. Không khí trên đất liền nóng lên, nở ra, áp suất giảm, tạo ra gió mát thổi từ biển vào đất liền. Ngược lại, ban đêm, đất nguội đi nhanh hơn nước biển, làm cho không khí trên đất liền nguội đi, áp suất tăng, tạo ra gió ấm thổi từ đất liền ra biển.",
+    qImage: null,
+    answers: [
+      { text: "Ban ngày, đất nguội đi chậm hơn nước biển, gây ra gió biển.", correct: false, image: null },
+      { text: "Sự chênh lệch nhiệt dung riêng giữa đất và nước là nguyên nhân của hiện tượng gió biển và gió đất.", correct: true, image: null },
+      { text: "Ban đêm, không khí trên biển nóng lên nhanh hơn không khí trên đất liền.", correct: false, image: null },
+      { text: "Gió thổi từ nơi có áp suất cao hơn đến nơi có áp suất thấp hơn.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Để xác định nhiệt dung riêng của nước bằng thực nghiệm, người ta sử dụng các dụng cụ như cân điện tử, nhiệt kế điện tử, oát kế, và nhiệt lượng kế bằng nhựa. Các bước tiến hành bao gồm xác định khối lượng nước, cắm nhiệt kế, nối oát kế và nguồn điện, bật nguồn, khuấy nước và đọc các giá trị công suất, nhiệt độ theo thời gian. Nhiệt lượng cung cấp cho nước được xác định bằng điện năng đã cung cấp cho dây điện trở nhiệt.",
+    qImage: null,
+    answers: [
+      { text: "Mục đích của thí nghiệm là xác định khối lượng riêng của nước.", correct: false, image: null },
+      { text: "Điện trở nhiệt phải chìm hoàn toàn trong nước để đảm bảo nước nhận được toàn bộ nhiệt lượng.", correct: true, image: null },
+      { text: "Oát kế được sử dụng để đo nhiệt độ của nước.", correct: false, image: null },
+      { text: "Điện năng cung cấp cho dây điện trở nhiệt chính là nhiệt lượng mà nước thu được.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Một hệ làm nóng nước bằng năng lượng mặt trời có hiệu suất chuyển đổi 25%; cường độ bức xạ mặt trời lên bộ thu nhiệt là 1000 W/m²; diện tích bộ thu là 4 m². Nhiệt dung riêng của nước là 4200 J/kg.K.",
+    qImage: null,
+    answers: [
+      { text: "Công suất bức xạ chiếu lên bộ thu nhiệt là 4000 W.", correct: true, image: null },
+      { text: "Trong 1h, năng lượng mặt trời chiếu lên bộ thu nhiệt là 14,4 MJ.", correct: true, image: null },
+      { text: "Trong 1h, phần năng lượng chuyển thành năng lượng nhiệt là 36 MJ.", correct: false, image: null },
+      { text: "Nếu hệ thống đó, làm nóng 30 kg nước thì trong khoảng thời gian 1 giờ nhiệt độ của nước tăng thêm 28,6°C.", correct: true, image: null }
+    ]
+  }
+];
+
+// Essay questions [TL]
+const essayQuestions = [
+  {
+    q: "Trình bày khái niệm nhiệt dung riêng và ý nghĩa của nó trong thực tế.",
+    qImage: null,
+    answerRef: "Nhiệt dung riêng của một chất là nhiệt lượng cần cung cấp cho một đơn vị khối lượng chất đó (thường là 1 kg) để nhiệt độ của nó tăng lên 1°C (hoặc 1 K). Đơn vị của nhiệt dung riêng là J/kg.K.\n\nÝ nghĩa trong thực tế:\n- Nhiệt dung riêng thể hiện khả năng 'lưu trữ' năng lượng nhiệt của một chất. Chất có nhiệt dung riêng lớn thì cần nhiều nhiệt lượng hơn để tăng nhiệt độ, và ngược lại.\n- Nó giải thích các hiện tượng tự nhiên như gió biển - gió đất (nước có nhiệt dung riêng lớn hơn đất nên nóng/nguội chậm hơn, gây ra sự chênh lệch nhiệt độ và áp suất, tạo thành gió).\n- Trong công nghiệp, việc chọn vật liệu tản nhiệt (ví dụ: nước làm mát động cơ, dầu trong máy biến thế) dựa trên nhiệt dung riêng và các tính chất khác (cách điện, chống ăn mòn).\n- Giải thích tại sao một số vật liệu giữ nhiệt tốt (như gạch chịu nhiệt) và một số vật liệu lại nhanh nóng nhanh nguội (như kim loại).",
+    answerRefImage: null
+  },
+  {
+    q: "Trình bày các yếu tố ảnh hưởng đến nhiệt lượng mà vật thu vào hoặc tỏa ra khi thay đổi nhiệt độ, và viết công thức liên hệ.",
+    qImage: null,
+    answerRef: "Nhiệt lượng mà một vật thu vào hoặc tỏa ra khi nhiệt độ của nó thay đổi phụ thuộc vào ba yếu tố chính:\n1.  **Khối lượng của vật (m):** Vật có khối lượng càng lớn thì cần nhiệt lượng càng nhiều để làm thay đổi nhiệt độ của nó một lượng nhất định.\n2.  **Độ thay đổi nhiệt độ (ΔT):** Nhiệt độ của vật thay đổi càng nhiều thì nhiệt lượng trao đổi càng lớn.\n3.  **Tính chất của chất làm vật (nhiệt dung riêng c):** Các chất khác nhau có khả năng hấp thụ và tỏa nhiệt khác nhau. Chất có nhiệt dung riêng lớn sẽ cần nhiều nhiệt lượng hơn để tăng cùng một độ, và ngược lại.\n\nCông thức liên hệ:\n**Q = mcΔT**\nTrong đó:\n- Q là nhiệt lượng thu vào hoặc tỏa ra (J)\n- m là khối lượng của vật (kg)\n- c là nhiệt dung riêng của chất làm vật (J/kg.K)\n- ΔT là độ thay đổi nhiệt độ của vật (ΔT = T_sau - T_đầu, tính bằng °C hoặc K)",
+    answerRefImage: null
+  },
+  {
+    q: "Dựa vào ví dụ về hiện tượng gió biển và gió đất, hãy phân tích vai trò của nhiệt dung riêng trong việc hình thành hiện tượng này.",
+    qImage: null,
+    answerRef: "Hiện tượng gió biển và gió đất là một ứng dụng thực tế rõ ràng của khái niệm nhiệt dung riêng.\n\n**Vào ban ngày:**\n- Nhiệt dung riêng của đất (cát) nhỏ hơn nhiều so với nước biển (khoảng 5 lần).\n- Khi Mặt Trời chiếu sáng, cả đất liền và nước biển đều nhận năng lượng nhiệt. Tuy nhiên, do nhiệt dung riêng nhỏ, đất liền nóng lên nhanh hơn và đạt nhiệt độ cao hơn đáng kể so với nước biển trong cùng một khoảng thời gian.\n- Không khí trên mặt đất nóng lên, nở ra và trở nên nhẹ hơn, tạo thành vùng áp suất thấp.\n- Ngược lại, không khí trên mặt biển mát hơn, nặng hơn, tạo thành vùng áp suất cao.\n- Sự chênh lệch áp suất này làm cho gió thổi từ biển (áp suất cao) vào đất liền (áp suất thấp), tạo thành **gió biển** mát mẻ.\n\n**Vào ban đêm:**\n- Khi Mặt Trời lặn, cả đất liền và nước biển đều tỏa nhiệt ra môi trường.\n- Do nhiệt dung riêng nhỏ, đất liền nguội đi nhanh hơn nhiều so với nước biển.\n- Không khí trên mặt đất nguội đi, co lại, trở nên nặng hơn, tạo thành vùng áp suất cao.\n- Trong khi đó, nước biển vẫn giữ được nhiệt độ tương đối cao, làm cho không khí trên mặt biển ấm hơn và có áp suất thấp hơn.\n- Kết quả là gió thổi từ đất liền (áp suất cao) ra biển (áp suất thấp), tạo thành **gió đất** ấm hơn.",
+    answerRefImage: null
+  }
+];
+
+  // --- UTILITY FUNCTIONS ---
+  function shuffleArray(arr) {
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/</g, "‹")
+      .replace(/>/g, "›")
+      .replace(/"/g, "'");
+  }
+
+  // --- DOM ELEMENTS ---
+  const btnMulti = document.getElementById('btn-multi');
+  const btnTrueFalse = document.getElementById('btn-truefalse');
+  const btnEssay = document.getElementById('btn-essay');
+  const toggleThemeBtn = document.getElementById('toggle-theme');
+  const btnExit = document.getElementById('btn-exit'); 
+  const btnBackHomeInQuiz = document.getElementById('btn-back-home-in-quiz'); // Nút Back Home trong quiz
+  const btnDownload = document.getElementById('btn-download');
+
+  const quizSection = document.getElementById('quiz-section');
+  const questionBlock = document.getElementById('question-block');
+  const answersBlock = document.getElementById('answers-block');
+  const essayInputBlock = document.getElementById('essay-input-block');
+  const essayAnswerTextarea = document.getElementById('essay-answer');
+  const btnEssaySubmit = document.getElementById('btn-essay-submit');
+  const btnNext = document.getElementById('btn-next');
+
+  const timerSpan = document.getElementById('timer');
+  const doneCountSpan = document.getElementById('done-count');
+  const correctCountSpan = document.getElementById('correct-count');
+  const wrongCountSpan = document.getElementById('wrong-count');
+
+  const resultSection = document.getElementById('result-section');
+  const resultTime = document.getElementById('result-time');
+  const resultTotal = document.getElementById('result-total');
+  const resultCorrect = document.getElementById('result-correct');
+  const resultWrong = document.getElementById('result-wrong');
+  const starRating = document.getElementById('star-rating');
+
+  // const btnRestart = document.getElementById('btn-restart'); // Đã xóa khỏi HTML, nên bỏ dòng này hoặc comment lại
+  const btnHome = document.getElementById('btn-home');
+
+  // --- STATE VARIABLES ---
+  let quizType = null; // 'multi', 'truefalse', 'essay'
+  let questions = [];
+  let currentQIdx = 0;
+  let timerInterval = null;
+  let timeSeconds = 0;
+  let doneCount = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let currentTFAnswerIdx = 0;
+
+  // --- TIMER FUNCTIONS ---
+  function startTimer() {
+    timeSeconds = 0;
+    timerSpan.textContent = formatTime(timeSeconds);
+    if(timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeSeconds++;
+      timerSpan.textContent = formatTime(timeSeconds);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if(timerInterval) clearInterval(timerInterval);
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s/60);
+    const sec = s % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (sec < 10 ? '0' + sec : sec);
+  }
+
+  // --- QUIZ FUNCTIONS ---
+  function resetStats() {
+    doneCount = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    doneCountSpan.textContent = "0";
+    correctCountSpan.textContent = "0";
+    wrongCountSpan.textContent = "0";
+  }
+
+  function initQuiz(type) {
+    quizType = type;
+    currentQIdx = 0;
+    resetStats();
+
+    if(type === 'multi') {
+      questions = multiChoiceQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+    } else if(type === 'truefalse') {
+      questions = trueFalseQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+      currentTFAnswerIdx = 0;
+    } else if(type === 'essay') {
+      questions = essayQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answerRef: q.answerRef,
+        answerRefImage: q.answerRefImage
+      }));
+      shuffleArray(questions);
+    }
+    
+    quizSection.style.display = 'block';
+    resultSection.style.display = 'none';
+    btnMulti.style.display = 'none';
+    btnTrueFalse.style.display = 'none';
+    btnEssay.style.display = 'none';
+    btnExit.style.display = 'none'; // Ẩn nút Exit khi bắt đầu quiz
+    toggleThemeBtn.style.display = 'none'; // Ẩn nút chuyển theme khi vào quiz
+    btnDownload.style.display = 'none';
+
+    showQuestion();
+    startTimer();
+  }
+
+  function showQuestion() {
+    // Ẩn nút "Tiếp tục" nếu nó đang hiển thị
+    btnNext.style.display = 'none'; 
+    // Nếu là dạng tự luận, nút "Xong" (submit) sẽ được hiển thị, ngược lại ẩn
+    btnEssaySubmit.style.display = (quizType === 'essay') ? 'block' : 'none';
+    // Đảm bảo nút "Xong" được kích hoạt lại cho câu hỏi tự luận mới
+    btnEssaySubmit.disabled = false; 
+
+    answersBlock.innerHTML = ''; // Xóa các câu trả lời cũ
+    essayInputBlock.style.display = 'none'; // Ẩn khung nhập tự luận
+    essayAnswerTextarea.value = ''; // Xóa nội dung cũ trong khung tự luận
+    
+    if (currentQIdx >= questions.length) {
+      endQuiz();
+      return;
+    }
+
+    const currentQ = questions[currentQIdx];
+    
+    // Display question text and image (if any)
+    let questionHTML = `
+      <div style="color: var(--orange); font-weight: bold; margin-bottom: 15px;">
+        Câu ${currentQIdx + 1}: ${escapeHtml(currentQ.q)}
+      </div>
+    `;
+    
+    if (currentQ.qImage) {
+      questionHTML += `
+        <div style="text-align: center; margin: 15px 0;">
+          <img src="${currentQ.qImage}" 
+               style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;"
+               onerror="this.style.display='none'">
+        </div>
+      `;
+    }
+    
+    questionBlock.innerHTML = questionHTML;
+
+    if (quizType === 'multi') {
+      // Multiple choice questions
+      answersBlock.style.display = 'block';
+      currentQ.answers.forEach((ans, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        
+        let answerContent = `${String.fromCharCode(65 + i)}. ${escapeHtml(ans.text)}`;
+        
+        if (ans.image) {
+          answerContent += `
+            <div style="margin-top: 8px; text-align: center;">
+              <img src="${ans.image}" 
+                   style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 3px;"
+                   onerror="this.style.display='none'">
+            </div>
+          `;
+        }
+        
+        btn.innerHTML = answerContent;
+        btn.onclick = () => handleMultiAnswerClick(btn, ans.correct, currentQ.answers);
+        answersBlock.appendChild(btn);
+      });
+
+    } else if (quizType === 'truefalse') {
+      // True/False questions
+      answersBlock.style.display = 'block';
+      currentTFAnswerIdx = 0;
+      showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+      
+    } else if (quizType === 'essay') {
+      // Essay questions
+      essayInputBlock.style.display = 'block';
+    }
+  }
+
+  function handleMultiAnswerClick(btn, isCorrect, allAnswers) {
+    Array.from(answersBlock.children).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(isCorrect) {
+      btn.classList.add('correct');
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+    } else {
+      btn.classList.add('incorrect');
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      // Highlight correct answer
+      const correctAns = allAnswers.find(a => a.correct);
+      for(let b of answersBlock.children) {
+        // Cẩn thận với việc so sánh textContent trực tiếp nếu có hình ảnh
+        // Cần lấy chỉ phần text của câu trả lời
+        const btnText = b.childNodes[0].nodeType === 3 ? b.childNodes[0].nodeValue.substring(3).trim() : ''; // Lấy text trước hình ảnh
+        const correctText = escapeHtml(correctAns.text);
+
+        if(btnText === correctText && correctAns.correct) {
+          b.classList.add('correct');
+          break;
+        }
+      }
+    }
+    btnNext.style.display = 'inline-block';
+  }
+
+  function showTrueFalseAnswer(answerObj) {
+    answersBlock.innerHTML = '';
+
+    const label = document.createElement('div');
+    label.style.marginBottom = '10px';
+    label.style.fontWeight = 'bold';
+    label.textContent = `Câu hỏi phụ ${currentTFAnswerIdx + 1}: ${answerObj.text}`;
+    answersBlock.appendChild(label);
+
+    if (answerObj.image) {
+      const imgDiv = document.createElement('div');
+      imgDiv.style.textAlign = 'center';
+      imgDiv.style.margin = '10px 0';
+      imgDiv.innerHTML = `<img src="${answerObj.image}" style="max-width: 100%; max-height: 200px; border: 1px solid #ccc; border-radius: 3px;" onerror="this.style.display='none'">`;
+      answersBlock.appendChild(imgDiv);
+    }
+
+    const btnTrue = document.createElement('button');
+    btnTrue.className = 'answer-btn';
+    btnTrue.textContent = 'Đúng';
+    btnTrue.onclick = () => handleTrueFalseAnswerClick(true, answerObj.correct);
+    answersBlock.appendChild(btnTrue);
+    
+    const btnFalse = document.createElement('button');
+    btnFalse.className = 'answer-btn';
+    btnFalse.textContent = 'Sai';
+    btnFalse.onclick = () => handleTrueFalseAnswerClick(false, answerObj.correct);
+    answersBlock.appendChild(btnFalse);
+  }
+
+  function handleTrueFalseAnswerClick(userAnswer, correctAnswer) {
+    Array.from(answersBlock.querySelectorAll('button')).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(userAnswer === correctAnswer) {
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    } else {
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('incorrect');
+        }
+        if(b.textContent.toLowerCase() === (correctAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    }
+
+    btnNext.style.display = 'inline-block';
+  }
+
+  // Essay submit handler
+  btnEssaySubmit.onclick = () => {
+    const userText = essayAnswerTextarea.value.trim();
+    if(userText.length === 0) {
+      alert('Hãy nhập câu trả lời trước khi nhấn "Xong"');
+      return;
+    }
+    btnEssaySubmit.disabled = true; // Vô hiệu hóa nút "Xong" sau khi submit
+    
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    const currentQ = questions[currentQIdx];
+    let answerRefHTML = `<br><br><em><strong>Đáp án tham khảo:</strong> ${currentQ.answerRef}</em>`;
+    
+    if(currentQ.answerRefImage) {
+      answerRefHTML += `<div style="margin: 15px 0; text-align: center;">
+        <img src="${currentQ.answerRefImage}" style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;">
+      </div>`;
+    }
+    
+    questionBlock.innerHTML += answerRefHTML;
+    btnNext.style.display = 'inline-block';
+  };
+
+  btnNext.onclick = () => {
+    // Ẩn nút "Tiếp tục"
+    btnNext.style.display = 'none';
+    // Đảm bảo nút "Xong" (essay) được kích hoạt lại
+    btnEssaySubmit.disabled = false; 
+
+    if(quizType === 'truefalse') {
+      currentTFAnswerIdx++;
+      const currentQ = questions[currentQIdx];
+      // Nếu còn câu hỏi phụ trong câu hỏi Đúng/Sai hiện tại
+      if(currentTFAnswerIdx < currentQ.answers.length) {
+        showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+        return; // Không chuyển sang câu hỏi tiếp theo mà hiển thị câu phụ
+      }
+    }
+
+    // Chuyển sang câu hỏi tiếp theo
+    currentQIdx++;
+    showQuestion();
+  };
+
+  function endQuiz() {
+    stopTimer();
+    quizSection.style.display = 'none';
+    resultSection.style.display = 'block';
+    toggleThemeBtn.style.display = 'block'; // Hiển thị lại nút chuyển theme
+
+    resultTime.textContent = formatTime(timeSeconds);
+    resultTotal.textContent = doneCount;
+    resultCorrect.textContent = correctCount;
+    resultWrong.textContent = wrongCount;
+
+    starRating.innerHTML = '';
+
+    // Logic tính sao đã được khôi phục và tinh chỉnh
+    if(quizType === 'multi' || quizType === 'truefalse') {
+      let starsGreen = 0;
+      let starsGray = 0;
+      
+      if(wrongCount === 0) { // Nếu không có câu sai
+        starsGreen = 3; // 3 sao xanh
+      } else if (wrongCount >= 1 && wrongCount <= 3) {
+        starsGreen = 2; // 2 sao xanh
+        starsGray = 1; // 1 sao xám
+      } else if (wrongCount >= 4 && wrongCount <= 9) {
+        starsGreen = 1; // 1 sao xanh
+        starsGray = 2; // 2 sao xám
+      } else { // wrongCount >= 10
+        starsGreen = 0; // 0 sao xanh
+        starsGray = 3; // 3 sao xám
+      }
+
+      for(let i = 1; i <= 3; i++) {
+        const star = document.createElement('span');
+        star.classList.add('star');
+        if(i <= starsGreen) star.classList.add('Green');
+        else if(i <= starsGray) star.classList.add('gray');
+        star.innerHTML = '&#9733;';
+        starRating.appendChild(star);
+      }
+    } else if (quizType === 'essay') {
+        // Đối với bài tự luận, không có điểm đúng/sai tự động
+        // Bạn có thể thêm logic chấm điểm thủ công hoặc hiển thị thông báo khác
+        const infoDiv = document.createElement('div');
+        infoDiv.textContent = "Bài Tự Luận Cần Được Giáo Viên Chấm Điểm.";
+        infoDiv.style.fontWeight = "bold";
+        infoDiv.style.marginTop = "20px";
+        starRating.appendChild(infoDiv);
+    }
+  }
+
+  // --- EVENT LISTENERS ---
+  // Đã xóa btnRestart.onclick và logic liên quan
+  // Nếu bạn muốn chức năng "làm lại" bài quiz, bạn cần tạo một nút mới với ID khác
+  // và thêm lại logic reset Stats vào event listener của nút đó.
+
+  // Nút Home (ở màn hình kết quả) - vẫn reload trang hiện tại
+  btnHome.onclick = () => {
+    location.reload(); 
+  };
+
+  btnMulti.onclick = () => initQuiz('multi');
+  btnTrueFalse.onclick = () => initQuiz('truefalse');
+  btnEssay.onclick = () => initQuiz('essay');
+  // New: Download button functionality
+  btnDownload.onclick = () => {
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'toancreator-default'; // Set the desired filename
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  };
+  
+  
+  // Xử lý sự kiện cho nút Exit mới
+  btnExit.onclick = () => {
+    window.location.href = '../index.html'; // Chuyển hướng về index.html
+  };
+
+  // Xử lý sự kiện cho nút Back to Home trong quiz
+  btnBackHomeInQuiz.onclick = () => {
+    if (confirm('Bạn có chắc chắn muốn thoát bài làm hiện tại?')) {
+      stopTimer(); // Dừng đồng hồ
+      location.reload(); // Tải lại trang promt-onlineV2.html
+    }
+  };
+
+  toggleThemeBtn.onclick = () => {
+    document.body.classList.toggle('dark');
+  };
+
+  // Ẩn/hiện nút toggle theme ban đầu
+  // Bạn có thể đặt nút toggle theme ở vị trí cố định thay vì ẩn/hiện tùy thuộc vào màn hình
+  // Hiện tại, nó sẽ luôn hiển thị trừ khi bị ẩn bởi CSS hoặc logic khác
+  toggleThemeBtn.style.display = 'block'; 
+})();
+</script>
+</body>
+</html>

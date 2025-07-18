@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toàn Creator - Online Lesson</title>
+<style>
+  :root {
+    --yellow: #f9d342;
+    --yellow-dark: #d4b833;
+    --Green: #2ecc71;
+    --starsGreen: #2ecc71;
+    --red: #d93025;
+    --green: #2ecc40;
+    --starsGray: #ccc;
+    --star-size: 30px;
+    --orange: #ff9800;
+  }
+  body {
+    margin:0; padding:0; font-family: Arial, sans-serif;
+    background: white; color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: black; color: white;
+  }
+  /* Existing #app rule */
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+/* Media query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+  #app {
+    max-width: 960px; /* Or any wider value you prefer, e.g., 900px, 1200px */
+    padding: 20px; /* Optional: Increase padding for more space on larger screens */
+  }
+
+  /* Optional: Adjust button widths for larger screens if they look too wide */
+  .btn {
+    max-width: 400px; /* Make main buttons a bit wider */
+  }
+
+  /* Optional: Adjust status bar layout for larger screens */
+  .status-bar {
+    font-size: 1.1em;
+  }
+}
+  h1, h3 {
+    text-align: center;
+    margin: 10px 0;
+  }
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+    color: #FF00FF;
+  }
+  hr {
+    border:none; border-bottom: 3px solid black;
+    margin: 5px 0 25px 0;
+  }
+  .btn {
+    background: #3399FF;
+    border-radius: 8px;
+    border:none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 15px;
+    width: 100%;
+    max-width: 350px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: 3px solid transparent;
+    user-select: none;
+  }
+  .btn:hover {
+    background: var(--yellow-dark);
+  }
+  .btn svg {
+    vertical-align: middle;
+  }
+  .question-container {
+    margin-bottom: 20px;
+    color: var(--orange) !important;
+    font-weight: bold;
+    font-size: 1.08em;
+    transition: color 0.3s;
+  }
+  body.dark .question-container {
+    color: var(--orange) !important;
+  }
+  .answers {
+    margin-top: 15px;
+  }
+  .answer-btn {
+    display: block;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 6px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
+    padding: 12px 10px;
+    margin: 7px 0;
+    cursor: pointer;
+    text-align: left;
+    user-select: none;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .answer-btn:hover:not(.disabled) {
+    background-color: #eee;
+  }
+  body.dark .answer-btn {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  body.dark .answer-btn:hover:not(.disabled) {
+    background-color: #444;
+  }
+  .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  body.dark .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  body.dark .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  .disabled {
+    pointer-events: none;
+  }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .star-container {
+    text-align: center;
+    margin: 20px 0 10px 0;
+  }
+  .star {
+    font-size: var(--star-size);
+    margin: 0 5px;
+    color: var(--starsGray);
+  }
+  .star.Green {
+    color: var(--Green);
+  }
+  .star.red {
+    color: var(--red);
+  }
+  .toggle-btn {
+    background: lime;
+    color: white;
+    font-size: 1.5em;
+    padding: 12px 0;
+    margin: 25px auto;
+    width: 150px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    display: block;
+  }
+  .input-textarea {
+    width: 100%;
+    min-height: 80px;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid black;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  body.dark .input-textarea {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  .btn-small {
+    background: #FF99CC;
+    width: auto;
+    padding: 8px 15px;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+  .answer-btn img {
+    max-width: 100%;
+    max-height: 150px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .question-container img {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  body.dark .answer-btn img,
+  body.dark .question-container img {
+    border-color: #555;
+  }
+  .question-container img, .answer-btn img {
+    display: block;
+    margin: 0 auto;
+    background: #f5f5f5;
+  }
+  body.dark .question-container img,
+  body.dark .answer-btn img {
+    background: #333;
+  }
+  /* Style for the header image placeholder */
+  .header-image-placeholder {
+    display: block;
+    width: 100%; /* Hoặc một chiều rộng cố định */
+    height: 100px; /* Điều chỉnh chiều cao này để phù hợp với kích thước bạn muốn */
+    background-color: #f0f0f0; /* Màu nền để dễ nhìn thấy placeholder */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 25px; /* Khoảng cách với tiêu đề bên dưới */
+    
+  }
+  body.dark .header-image-placeholder {
+    background-color: #333;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <img src="https://i.ibb.co/tMdHNdPH/Picsart-25-07-17-06-40-25-073.jpg" alt="Header Image" class="header-image-placeholder">
+  
+  <h2>LÝ - BÀI 2</h2>
+
+  <button class="btn" id="btn-exit" style="background: var(--red);">
+    <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+      <path d="M16 17v-4h-2V7h-4V4H6V2H4v2h2v4h4v6h2v4h4v2h2v-2h-2z"/>
+    </svg>
+    Thoát
+  </button>
+  <button class="btn" id="btn-multi">TRẮC NGHIỆM 4 PHƯƠNG ÁN</button>
+  <button class="btn" id="btn-truefalse">TRẮC NGHIỆM ĐÚNG/SAI</button>
+  <button class="btn" id="btn-essay">TỰ LUẬN</button>
+
+  <button class="toggle-btn" id="toggle-theme">💡</button>
+  <button class="toggle-btn" id="btn-download" style="background: orange; margin-top: -20px; margin-bottom: 25px;">
+    Tải xuống
+  </button>
+  <div id="quiz-section" style="display:none; margin-top: 10px;">
+    <div class="status-bar">
+      <div><span id="timer">00:00</span></div>
+      <div>ㅤㅤ <span id="done-count">0</span></div>
+      <div>✅<span id="correct-count">0</span> | <strong>⛔</strong><span id="wrong-count">0</span></div>
+    </div>
+
+    <div id="question-block" class="question-container"></div>
+    <div id="answers-block" class="answers"></div>
+
+    <div id="essay-input-block" style="display:none;">
+      <textarea id="essay-answer" class="input-textarea" placeholder="Nhập câu trả lời của bạn..."></textarea>
+      <button id="btn-essay-submit" class="btn-small">Xong</button>
+    </div>
+
+    <div style="display:flex; justify-content: space-between; margin-top: 20px;">
+      <button id="btn-back-home-in-quiz" class="btn btn-small" style="background: var(--Green); width: 48%;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+      <button id="btn-next" class="btn btn-small" style="width: 48%;">Tiếp tục</button>
+    </div>
+  </div>
+
+  <div id="result-section" style="display:none; text-align:center; margin-top: 30px;">
+    <h2>KẾT THÚC BÀI LÀM</h2>
+    <div><strong>Tổng thời gian làm bài:</strong> <span id="result-time"></span></div>
+    <div><strong>Tổng số câu đã làm:</strong> <span id="result-total"></span></div>
+    <div><strong>Đúng:</strong><span id="result-correct"></span><strong> | </strong><strong>Sai:</strong><span id="result-wrong"></span></div>
+    <div id="star-rating" class="star-container"></div>
+    <div style="margin-top: 25px;">
+      <button id="btn-home" class="btn" style="display:inline-block; width:120px;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg> 
+      </button>
+      </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // --- QUESTION DATA ---
+  // Multiple choice questions [ABCD]
+const multiChoiceQuestions = [
+  {
+    q: "Nội năng của một vật là gì?",
+    qImage: null,
+    answers: [
+      { text: "Tổng động năng và thế năng của các phân tử cấu tạo nên vật.", correct: true, image: null },
+      { text: "Chỉ là động năng của các phân tử trong vật.", correct: false, image: null },
+      { text: "Chỉ là thế năng của các phân tử trong vật.", correct: false, image: null },
+      { text: "Năng lượng mà vật thu được từ môi trường xung quanh.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Kí hiệu và đơn vị của nội năng là gì?",
+    qImage: null,
+    answers: [
+      { text: "F, Niu-tơn (N)", correct: false, image: null },
+      { text: "P, Oát (W)", correct: false, image: null },
+      { text: "U, Jun (J)", correct: true, image: null },
+      { text: "E, Vôn (V)", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Động năng phân tử phụ thuộc vào yếu tố nào?",
+    qImage: null,
+    answers: [
+      { text: "Khối lượng của phân tử.", correct: false, image: null },
+      { text: "Khoảng cách giữa các phân tử.", correct: false, image: null },
+      { text: "Tốc độ chuyển động của phân tử.", correct: true, image: null },
+      { text: "Áp suất tác dụng lên vật.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Thế năng phân tử phụ thuộc vào yếu tố nào?",
+    qImage: null,
+    answers: [
+      { text: "Tốc độ chuyển động của phân tử.", correct: false, image: null },
+      { text: "Nhiệt độ của vật.", correct: false, image: null },
+      { text: "Số lượng phân tử.", correct: false, image: null },
+      { text: "Khoảng cách giữa các phân tử.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Có bao nhiêu cách làm thay đổi nội năng của một vật?",
+    qImage: null,
+    answers: [
+      { text: "Một cách: truyền nhiệt.", correct: false, image: null },
+      { text: "Một cách: thực hiện công.", correct: false, image: null },
+      { text: "Hai cách: thực hiện công và truyền nhiệt.", correct: true, image: null },
+      { text: "Ba cách: thực hiện công, truyền nhiệt và thay đổi khối lượng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Ví dụ nào sau đây thể hiện cách thay đổi nội năng bằng cách thực hiện công?",
+    qImage: null,
+    answers: [
+      { text: "Đun sôi nước.", correct: false, image: null },
+      { text: "Phơi quần áo dưới nắng.", correct: false, image: null },
+      { text: "Mài dao.", correct: true, image: null },
+      { text: "Để một cốc nước nóng trong phòng lạnh.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Ví dụ nào sau đây thể hiện cách thay đổi nội năng bằng cách truyền nhiệt?",
+    qImage: null,
+    answers: [
+      { text: "Bơm xe đạp.", correct: false, image: null },
+      { text: "Đập búa vào đinh.", correct: false, image: null },
+      { text: "Nung sắt trong lò của thợ rèn.", correct: true, image: null },
+      { text: "Nén khí trong xi lanh.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Phát biểu nào sau đây đúng về Định luật I của Nhiệt động lực học?",
+    qImage: null,
+    answers: [
+      { text: "ΔU = A - Q", correct: false, image: null },
+      { text: "ΔU = A + Q", correct: true, image: null },
+      { text: "ΔU = Q / A", correct: false, image: null },
+      { text: "ΔU = Q - A", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Theo quy ước dấu của Định luật I Nhiệt động lực học, khi nào công A có giá trị dương (> 0)?",
+    qImage: null,
+    answers: [
+      { text: "Vật thực hiện công lên vật khác.", correct: false, image: null },
+      { text: "Vật nhận công từ vật khác.", correct: true, image: null },
+      { text: "Không có sự trao đổi công.", correct: false, image: null },
+      { text: "Khi nhiệt lượng Q có giá trị dương.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Theo quy ước dấu của Định luật I Nhiệt động lực học, khi nào nhiệt lượng Q có giá trị âm (< 0)?",
+    qImage: null,
+    answers: [
+      { text: "Vật nhận năng lượng nhiệt từ vật khác.", correct: false, image: null },
+      { text: "Vật truyền năng lượng nhiệt cho vật khác.", correct: true, image: null },
+      { text: "Không có sự trao đổi nhiệt.", correct: false, image: null },
+      { text: "Khi công A có giá trị dương.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một vật nhận nhiệt lượng 120 J và thực hiện công 30 J lên môi trường. Độ biến thiên nội năng của vật là bao nhiêu?",
+    qImage: null,
+    answers: [
+      { text: "ΔU = 150 J", correct: false, image: null },
+      { text: "ΔU = 90 J", correct: true, image: null },
+      { text: "ΔU = -90 J", correct: false, image: null },
+      { text: "ΔU = -150 J", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một khối khí bị nén, nhận công 80 J. Đồng thời, nó truyền nhiệt ra môi trường 20 J. Độ biến thiên nội năng của khối khí là?",
+    qImage: null,
+    answers: [
+      { text: "ΔU = 100 J", correct: false, image: null },
+      { text: "ΔU = 60 J", correct: true, image: null },
+      { text: "ΔU = -60 J", correct: false, image: null },
+      { text: "ΔU = -100 J", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hiện tượng nút bấc bật ra khi đun nóng ống nghiệm chứa nước cho thấy điều gì?",
+    qImage: null,
+    answers: [
+      { text: "Nước bay hơi làm tăng thể tích.", correct: false, image: null },
+      { text: "Áp suất hơi nước tăng do nhiệt độ tăng làm lực tác dụng lên nút tăng.", correct: true, image: null },
+      { text: "Nút bấc bị giãn nở do nhiệt.", correct: false, image: null },
+      { text: "Phản ứng hóa học xảy ra trong ống nghiệm.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi chưa đun nóng ống nghiệm có nút bấc, không khí trong ống nghiệm ở trạng thái nào?",
+    qImage: null,
+    answers: [
+      { text: "Các phân tử không chuyển động.", correct: false, image: null },
+      { text: "Các phân tử chuyển động hỗn loạn và va chạm vào thành ống, nút bấc.", correct: true, image: null },
+      { text: "Các phân tử chỉ dao động tại chỗ.", correct: false, image: null },
+      { text: "Các phân tử bị đông cứng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi một vật rắn đang nóng chảy, nội năng của nó thay đổi như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Giảm đi do mất nhiệt.", correct: false, image: null },
+      { text: "Không thay đổi.", correct: false, image: null },
+      { text: "Tăng lên do nhận nhiệt lượng để chuyển pha.", correct: true, image: null },
+      { text: "Chỉ có thế năng phân tử tăng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi hơi nước ngưng tụ ở nhiệt độ không đổi, nội năng của hơi nước thay đổi như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Tăng lên do nhận công.", correct: false, image: null },
+      { text: "Không thay đổi.", correct: false, image: null },
+      { text: "Giảm đi do truyền nhiệt ra môi trường.", correct: true, image: null },
+      { text: "Chỉ có động năng phân tử giảm.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Bộ phận nào trong động cơ nhiệt có vai trò nhận nhiệt từ nguồn nóng và giãn nở sinh công?",
+    qImage: null,
+    answers: [
+      { text: "Nguồn lạnh.", correct: false, image: null },
+      { text: "Bình ngưng hơi.", correct: false, image: null },
+      { text: "Tác nhân (chất khí/hơi).", correct: true, image: null },
+      { text: "Pít-tông.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Động cơ nhiệt hoạt động dựa trên nguyên tắc biến đổi năng lượng nào thành cơ năng?",
+    qImage: null,
+    answers: [
+      { text: "Thế năng trọng trường.", correct: false, image: null },
+      { text: "Động năng của vật.", correct: false, image: null },
+      { text: "Nội năng của nhiên liệu.", correct: true, image: null },
+      { text: "Năng lượng ánh sáng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi nén khí trong xi lanh bằng tay (thực hiện công), nội năng của khí thay đổi như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Giảm đi.", correct: false, image: null },
+      { text: "Không thay đổi.", correct: false, image: null },
+      { text: "Tăng lên.", correct: true, image: null },
+      { text: "Có thể tăng hoặc giảm tùy thuộc vào nhiệt độ ban đầu.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao nhiệt độ càng cao thì tốc độ chuyển động của phân tử càng tăng?",
+    qImage: null,
+    answers: [
+      { text: "Vì nhiệt độ là thước đo của thế năng phân tử.", correct: false, image: null },
+      { text: "Vì nhiệt độ là thước đo của động năng trung bình của phân tử.", correct: true, image: null },
+      { text: "Vì các phân tử bị giãn nở do nhiệt.", correct: false, image: null },
+      { text: "Vì có lực hút giữa các phân tử tăng lên.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi một lượng khí dãn nở và thực hiện công, nội năng của nó thường ____?",
+    qImage: null,
+    answers: [
+      { text: "Tăng.", correct: false, image: null },
+      { text: "Giảm.", correct: true, image: null },
+      { text: "Không đổi.", correct: false, image: null },
+      { text: "Có thể tăng hoặc giảm tùy thuộc vào nhiệt độ.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nếu một vật nhận công từ vật khác và cũng nhận nhiệt lượng, thì độ biến thiên nội năng của vật đó sẽ:",
+    qImage: null,
+    answers: [
+      { text: "ΔU = A + Q với A<0 và Q<0", correct: false, image: null },
+      { text: "ΔU = A + Q với A>0 và Q>0", correct: true, image: null },
+      { text: "ΔU = A + Q với A<0 và Q>0", correct: false, image: null },
+      { text: "ΔU = A + Q với A>0 và Q<0", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong công thức ΔU = A + Q, nếu ΔU = Q (A = 0) và Q < 0, điều này mô tả quá trình nào?",
+    qImage: null,
+    answers: [
+      { text: "Vật nhận nhiệt lượng và nội năng tăng.", correct: false, image: null },
+      { text: "Vật truyền nhiệt lượng và nội năng giảm.", correct: true, image: null },
+      { text: "Vật thực hiện công và nội năng giảm.", correct: false, image: null },
+      { text: "Vật nhận công và nội năng tăng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong thí nghiệm đun nóng ống nghiệm có nút bấc, sau khi đun nóng, nhiệt độ của không khí trong ống nghiệm tăng lên, dẫn đến:",
+    qImage: null,
+    answers: [
+      { text: "Động năng của các phân tử giảm.", correct: false, image: null },
+      { text: "Thế năng của các phân tử tăng.", correct: false, image: null },
+      { text: "Động năng của các phân tử tăng, làm tăng lực tác dụng lên nút.", correct: true, image: null },
+      { text: "Cả động năng và thế năng của các phân tử đều giảm.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi nút bấc bật ra khỏi ống nghiệm, nội năng của không khí trong ống nghiệm thay đổi như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Tăng lên do không khí thoát ra ngoài.", correct: false, image: null },
+      { text: "Giảm đi do không khí thực hiện công và một phần thoát ra ngoài.", correct: true, image: null },
+      { text: "Không thay đổi vì đã ngừng đun.", correct: false, image: null },
+      { text: "Chỉ thay đổi thế năng, động năng không đổi.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Điều gì xảy ra với thế năng phân tử của khí khi thể tích của nó giảm trong quá trình nén đẳng nhiệt?",
+    qImage: null,
+    answers: [
+      { text: "Tăng lên.", correct: false, image: null },
+      { text: "Giảm đi.", correct: true, image: null },
+      { text: "Không thay đổi.", correct: false, image: null },
+      { text: "Chuyển thành động năng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Định luật I của Nhiệt động lực học là sự mở rộng của định luật bảo toàn năng lượng cho các quá trình liên quan đến:",
+    qImage: null,
+    answers: [
+      { text: "Chỉ cơ năng.", correct: false, image: null },
+      { text: "Chỉ nhiệt năng.", correct: false, image: null },
+      { text: "Nội năng, công và nhiệt lượng.", correct: true, image: null },
+      { text: "Khối lượng và vận tốc.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một lượng khí nhận nhiệt lượng 50 J do được đun nóng; đồng thời nhận công 30 J do bị nén. Độ tăng nội năng của lượng khí này là:",
+    qImage: null,
+    answers: [
+      { text: "50 J", correct: false, image: null },
+      { text: "30 J", correct: false, image: null },
+      { text: "80 J", correct: true, image: null },
+      { text: "-20 J", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một lượng khí bị nén đã nhận được công là 105 kJ. Khí nóng lên và đã tỏa nhiệt lượng 75 kJ ra môi trường. Độ biến thiên nội năng của lượng khí này là:",
+    qImage: null,
+    answers: [
+      { text: "30 kJ", correct: true, image: null },
+      { text: "180 kJ", correct: false, image: null },
+      { text: "-30 kJ", correct: false, image: null },
+      { text: "105 kJ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nước đá đang tan. Sự thay đổi nội năng của nước đá là:",
+    qImage: null,
+    answers: [
+      { text: "Giảm vì nhiệt độ không tăng.", correct: false, image: null },
+      { text: "Không đổi vì nhiệt độ không đổi.", correct: false, image: null },
+      { text: "Tăng vì nhận nhiệt lượng để tan.", correct: true, image: null },
+      { text: "Giảm vì một phần chuyển thành nước lỏng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong động cơ đốt trong, sự tăng nhiệt độ của khí sau khi đốt cháy nhiên liệu là do:",
+    qImage: null,
+    answers: [
+      { text: "Khí thực hiện công.", correct: false, image: null },
+      { text: "Khí truyền nhiệt ra môi trường.", correct: false, image: null },
+      { text: "Năng lượng nhiệt tỏa ra từ quá trình đốt cháy nhiên liệu.", correct: true, image: null },
+      { text: "Pít-tông nén khí.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nếu một hệ thực hiện công và đồng thời truyền nhiệt ra môi trường, nội năng của hệ sẽ:",
+    qImage: null,
+    answers: [
+      { text: "Luôn tăng.", correct: false, image: null },
+      { text: "Luôn giảm.", correct: true, image: null },
+      { text: "Không đổi.", correct: false, image: null },
+      { text: "Có thể tăng hoặc giảm tùy thuộc vào giá trị công và nhiệt lượng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một đồng xu được tung lên cao. Sự thay đổi nội năng của đồng xu là do yếu tố nào?",
+    qImage: null,
+    answers: [
+      { text: "Truyền nhiệt.", correct: false, image: null },
+      { text: "Thực hiện công.", correct: true, image: null },
+      { text: "Cả hai yếu tố trên.", correct: false, image: null },
+      { text: "Không có sự thay đổi nội năng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Điều gì xảy ra với nội năng của một vật khi nó nhận công mà không có trao đổi nhiệt?",
+    qImage: null,
+    answers: [
+      { text: "Nội năng tăng.", correct: true, image: null },
+      { text: "Nội năng giảm.", correct: false, image: null },
+      { text: "Nội năng không đổi.", correct: false, image: null },
+      { text: "Không xác định được.", correct: false, image: null }
+    ]
+  }
+];
+
+// True/False questions [D/S] (5 main reading passages, 4 T/F sub-questions each)
+const trueFalseQuestions = [
+  {
+    q: "Nội năng của một vật là tổng động năng và thế năng của các phân tử cấu tạo nên vật đó. Động năng của các phân tử phụ thuộc vào tốc độ chuyển động của chúng, còn thế năng phân tử phụ thuộc vào khoảng cách giữa các phân tử. Do đó, nhiệt độ và thể tích là hai yếu tố chính ảnh hưởng đến nội năng của vật.",
+    qImage: null,
+    answers: [
+      { text: "Nội năng chỉ bao gồm động năng của các phân tử.", correct: false, image: null },
+      { text: "Tốc độ chuyển động của phân tử ảnh hưởng đến thế năng phân tử.", correct: false, image: null },
+      { text: "Nhiệt độ tăng làm tăng tốc độ chuyển động của phân tử, từ đó làm tăng nội năng.", correct: true, image: null },
+      { text: "Thay đổi thể tích của vật sẽ làm thay đổi khoảng cách giữa các phân tử, ảnh hưởng đến thế năng phân tử.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Có hai cách chính để làm thay đổi nội năng của một vật: thực hiện công và truyền nhiệt. Thực hiện công là quá trình mà có sự trao đổi năng lượng dưới dạng cơ học giữa vật và môi trường. Truyền nhiệt là quá trình trao đổi năng lượng dưới dạng nhiệt giữa vật và môi trường do sự chênh lệch nhiệt độ.",
+    qImage: null,
+    answers: [
+      { text: "Việc đập búa vào đinh là một ví dụ của việc thay đổi nội năng bằng cách truyền nhiệt.", correct: false, image: null },
+      { text: "Khi bơm xe đạp, không khí trong lốp nóng lên do công được thực hiện lên nó.", correct: true, image: null },
+      { text: "Việc đặt một vật lạnh vào nước nóng chỉ làm thay đổi nhiệt độ của vật, không ảnh hưởng đến nội năng.", correct: false, image: null },
+      { text: "Quá trình phơi quần áo là một ví dụ của việc thay đổi nội năng bằng truyền nhiệt từ môi trường.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Định luật I của Nhiệt động lực học phát biểu rằng độ biến thiên nội năng (ΔU) của một hệ bằng tổng nhiệt lượng (Q) mà hệ nhận được và công (A) mà hệ nhận được từ bên ngoài. Theo quy ước dấu, Q > 0 khi hệ nhận nhiệt, Q < 0 khi hệ truyền nhiệt; A > 0 khi hệ nhận công, A < 0 khi hệ thực hiện công.",
+    qImage: null,
+    answers: [
+      { text: "Nếu một hệ thực hiện công lên môi trường, giá trị A trong công thức ΔU = A + Q sẽ là dương.", correct: false, image: null },
+      { text: "Khi một hệ truyền năng lượng nhiệt ra bên ngoài, giá trị Q sẽ là dương.", correct: false, image: null },
+      { text: "Nếu ΔU = 150 J và Q = 100 J, thì công A mà hệ nhận được là 50 J.", correct: true, image: null },
+      { text: "Một vật đang nguội đi và không có công nào được thực hiện lên nó, nội năng của vật sẽ tăng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong một thí nghiệm, một khối khí được nén trong một xilanh làm thể tích giảm và nhiệt độ khối khí tăng lên. Sự tăng nhiệt độ này chủ yếu do công của lực pít-tông thực hiện lên khối khí. Lượng nhiệt sinh ra do ma sát giữa pít-tông và xilanh là rất nhỏ, không đáng kể.",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt độ của khối khí tăng chủ yếu do quá trình truyền nhiệt từ bên ngoài.", correct: false, image: null },
+      { text: "Lực ma sát giữa pít-tông và xilanh đóng vai trò quan trọng nhất trong việc tăng nhiệt độ khối khí.", correct: false, image: null },
+      { text: "Công mà pít-tông thực hiện lên khối khí làm tăng nội năng của khối khí.", correct: true, image: null },
+      { text: "Nếu thể tích khí không đổi, nhiệt độ khối khí vẫn sẽ tăng đáng kể trong thí nghiệm này.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Động cơ nhiệt là thiết bị biến đổi nội năng của nhiên liệu thành cơ năng. Mỗi động cơ nhiệt đều có ba bộ phận chính: nguồn nóng, bộ phận phát động (tác nhân), và nguồn lạnh. Nguồn nóng cung cấp nhiệt, tác nhân nhận nhiệt từ nguồn nóng, giãn nở sinh công, và cuối cùng truyền nhiệt cho nguồn lạnh.",
+    qImage: null,
+    answers: [
+      { text: "Mục đích chính của động cơ nhiệt là chuyển hóa cơ năng thành nội năng.", correct: false, image: null },
+      { text: "Nguồn lạnh có vai trò cung cấp nhiệt cho tác nhân trong động cơ nhiệt.", correct: false, image: null },
+      { text: "Tác nhân trong động cơ nhiệt giãn nở sinh công.", correct: true, image: null },
+      { text: "Nhiệt lượng do động cơ tỏa ra được nhận bởi nguồn nóng.", correct: false, image: null }
+    ]
+  }
+];
+
+// Essay questions [TL]
+const essayQuestions = [
+  {
+    q: "Trình bày khái niệm nội năng của vật và giải thích vì sao nội năng lại phụ thuộc vào nhiệt độ và thể tích của vật.",
+    qImage: null,
+    answerRef: "Nội năng của một vật là tổng động năng và thế năng của các phân tử cấu tạo nên vật đó. Nội năng phụ thuộc vào nhiệt độ vì nhiệt độ cao hơn làm tăng tốc độ chuyển động của các phân tử, từ đó tăng động năng phân tử. Nội năng phụ thuộc vào thể tích vì thay đổi thể tích (ví dụ nén hoặc giãn nở) làm thay đổi khoảng cách giữa các phân tử, từ đó thay đổi thế năng phân tử.",
+    answerRefImage: null
+  },
+  {
+    q: "Mô tả hai cách làm thay đổi nội năng của một vật, kèm theo ít nhất hai ví dụ minh họa cho mỗi cách.",
+    qImage: null,
+    answerRef: "Có hai cách làm thay đổi nội năng của một vật: \n1. Thực hiện công: Là quá trình truyền năng lượng dưới dạng cơ học. Ví dụ: Bơm xe đạp (không khí trong lốp nóng lên), mài dao (lưỡi dao nóng lên).\n2. Truyền nhiệt: Là quá trình truyền năng lượng dưới dạng nhiệt do sự chênh lệch nhiệt độ. Ví dụ: Đun sôi nước (nước nhận nhiệt và nóng lên), phơi quần áo (quần áo nhận nhiệt từ mặt trời và khô).",
+    answerRefImage: null
+  },
+  {
+    q: "Phát biểu Định luật I của Nhiệt động lực học và giải thích quy ước về dấu của các đại lượng trong công thức.",
+    qImage: null,
+    answerRef: "Định luật I của Nhiệt động lực học phát biểu rằng: Độ biến thiên nội năng (ΔU) của một hệ bằng tổng nhiệt lượng (Q) mà hệ nhận được và công (A) mà hệ nhận được từ bên ngoài (ΔU = A + Q).\nQuy ước về dấu:\n- A > 0: Vật nhận công từ vật khác.\n- A < 0: Vật thực hiện công tác dụng lên vật khác.\n- Q > 0: Vật nhận năng lượng nhiệt từ vật khác.\n- Q < 0: Vật truyền năng lượng nhiệt cho vật khác.",
+    answerRefImage: null
+  },
+  {
+    q: "Dựa vào thí nghiệm đun nóng ống nghiệm có nút bấc, hãy giải thích hiện tượng nút bấc bật ra và sự thay đổi nội năng của không khí trong ống nghiệm trước và sau khi nút bật ra.",
+    qImage: null,
+    answerRef: "Trong thí nghiệm đun nóng ống nghiệm có nút bấc:\n- Hiện tượng nút bấc bật ra: Khi đun nóng, không khí bên trong ống nghiệm nhận nhiệt lượng, nhiệt độ tăng lên. Điều này làm tăng tốc độ chuyển động hỗn loạn của các phân tử khí, dẫn đến tăng số lần va chạm và lực tác dụng của chúng lên thành ống nghiệm và nút bấc. Khi lực tác dụng này đủ lớn để thắng lực ma sát giữa nút bấc và thành ống nghiệm, nút bấc sẽ bị bật ra.\n- Sự thay đổi nội năng của không khí:\n  + Trước khi nút bật ra (trong quá trình đun nóng): Không khí nhận nhiệt lượng từ đèn cồn, nhiệt độ tăng, động năng phân tử tăng. Do thể tích ống nghiệm không đổi nên thế năng phân tử không đổi. Nội năng của không khí tăng lên.\n  + Sau khi nút bật ra: Không khí trong ống nghiệm thực hiện công đẩy nút bấc bay ra, đồng thời một phần không khí thoát ra ngoài. Khi thực hiện công, động năng của các phân tử khí giảm. Khi không khí thoát ra ngoài, thế năng phân tử cũng thay đổi (giảm). Do đó, nội năng của không khí còn lại trong ống nghiệm giảm.",
+    answerRefImage: null
+  },
+  {
+    q: "Trình bày sơ lược nguyên tắc cấu tạo và hoạt động của máy hơi nước.",
+    qImage: null,
+    answerRef: "Máy hơi nước hoạt động dựa trên nguyên tắc biến đổi nhiệt năng thành cơ năng, bao gồm ba bộ phận chính:\n1. Nguồn nóng (nồi súp de): Cung cấp nhiệt lượng để đun sôi nước tạo thành hơi nước có nhiệt độ và áp suất cao.\n2. Bộ phận phát động (xi lanh và pít-tông, với tác nhân là hơi nước): Hơi nước nhận nhiệt từ nguồn nóng, giãn nở trong xi lanh, đẩy pít-tông và sinh công cơ học.\n3. Nguồn lạnh (bình ngưng hơi): Hơi nước sau khi sinh công sẽ truyền nhiệt cho nguồn lạnh và ngưng tụ trở lại thành nước, sau đó được đưa về nồi súp de để bắt đầu chu trình mới. Quá trình này giúp giảm nhiệt độ và áp suất của hơi nước để pít-tông có thể trở về vị trí ban đầu.",
+    answerRefImage: null
+  }
+];
+
+  // --- UTILITY FUNCTIONS ---
+  function shuffleArray(arr) {
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/</g, "‹")
+      .replace(/>/g, "›")
+      .replace(/"/g, "'");
+  }
+
+  // --- DOM ELEMENTS ---
+  const btnMulti = document.getElementById('btn-multi');
+  const btnTrueFalse = document.getElementById('btn-truefalse');
+  const btnEssay = document.getElementById('btn-essay');
+  const toggleThemeBtn = document.getElementById('toggle-theme');
+  const btnExit = document.getElementById('btn-exit'); 
+  const btnBackHomeInQuiz = document.getElementById('btn-back-home-in-quiz'); // Nút Back Home trong quiz
+  const btnDownload = document.getElementById('btn-download');
+
+  const quizSection = document.getElementById('quiz-section');
+  const questionBlock = document.getElementById('question-block');
+  const answersBlock = document.getElementById('answers-block');
+  const essayInputBlock = document.getElementById('essay-input-block');
+  const essayAnswerTextarea = document.getElementById('essay-answer');
+  const btnEssaySubmit = document.getElementById('btn-essay-submit');
+  const btnNext = document.getElementById('btn-next');
+
+  const timerSpan = document.getElementById('timer');
+  const doneCountSpan = document.getElementById('done-count');
+  const correctCountSpan = document.getElementById('correct-count');
+  const wrongCountSpan = document.getElementById('wrong-count');
+
+  const resultSection = document.getElementById('result-section');
+  const resultTime = document.getElementById('result-time');
+  const resultTotal = document.getElementById('result-total');
+  const resultCorrect = document.getElementById('result-correct');
+  const resultWrong = document.getElementById('result-wrong');
+  const starRating = document.getElementById('star-rating');
+
+  // const btnRestart = document.getElementById('btn-restart'); // Đã xóa khỏi HTML, nên bỏ dòng này hoặc comment lại
+  const btnHome = document.getElementById('btn-home');
+
+  // --- STATE VARIABLES ---
+  let quizType = null; // 'multi', 'truefalse', 'essay'
+  let questions = [];
+  let currentQIdx = 0;
+  let timerInterval = null;
+  let timeSeconds = 0;
+  let doneCount = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let currentTFAnswerIdx = 0;
+
+  // --- TIMER FUNCTIONS ---
+  function startTimer() {
+    timeSeconds = 0;
+    timerSpan.textContent = formatTime(timeSeconds);
+    if(timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeSeconds++;
+      timerSpan.textContent = formatTime(timeSeconds);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if(timerInterval) clearInterval(timerInterval);
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s/60);
+    const sec = s % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (sec < 10 ? '0' + sec : sec);
+  }
+
+  // --- QUIZ FUNCTIONS ---
+  function resetStats() {
+    doneCount = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    doneCountSpan.textContent = "0";
+    correctCountSpan.textContent = "0";
+    wrongCountSpan.textContent = "0";
+  }
+
+  function initQuiz(type) {
+    quizType = type;
+    currentQIdx = 0;
+    resetStats();
+
+    if(type === 'multi') {
+      questions = multiChoiceQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+    } else if(type === 'truefalse') {
+      questions = trueFalseQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+      currentTFAnswerIdx = 0;
+    } else if(type === 'essay') {
+      questions = essayQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answerRef: q.answerRef,
+        answerRefImage: q.answerRefImage
+      }));
+      shuffleArray(questions);
+    }
+    
+    quizSection.style.display = 'block';
+    resultSection.style.display = 'none';
+    btnMulti.style.display = 'none';
+    btnTrueFalse.style.display = 'none';
+    btnEssay.style.display = 'none';
+    btnExit.style.display = 'none'; // Ẩn nút Exit khi bắt đầu quiz
+    toggleThemeBtn.style.display = 'none'; // Ẩn nút chuyển theme khi vào quiz
+    btnDownload.style.display = 'none';
+
+    showQuestion();
+    startTimer();
+  }
+
+  function showQuestion() {
+    // Ẩn nút "Tiếp tục" nếu nó đang hiển thị
+    btnNext.style.display = 'none'; 
+    // Nếu là dạng tự luận, nút "Xong" (submit) sẽ được hiển thị, ngược lại ẩn
+    btnEssaySubmit.style.display = (quizType === 'essay') ? 'block' : 'none';
+    // Đảm bảo nút "Xong" được kích hoạt lại cho câu hỏi tự luận mới
+    btnEssaySubmit.disabled = false; 
+
+    answersBlock.innerHTML = ''; // Xóa các câu trả lời cũ
+    essayInputBlock.style.display = 'none'; // Ẩn khung nhập tự luận
+    essayAnswerTextarea.value = ''; // Xóa nội dung cũ trong khung tự luận
+    
+    if (currentQIdx >= questions.length) {
+      endQuiz();
+      return;
+    }
+
+    const currentQ = questions[currentQIdx];
+    
+    // Display question text and image (if any)
+    let questionHTML = `
+      <div style="color: var(--orange); font-weight: bold; margin-bottom: 15px;">
+        Câu ${currentQIdx + 1}: ${escapeHtml(currentQ.q)}
+      </div>
+    `;
+    
+    if (currentQ.qImage) {
+      questionHTML += `
+        <div style="text-align: center; margin: 15px 0;">
+          <img src="${currentQ.qImage}" 
+               style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;"
+               onerror="this.style.display='none'">
+        </div>
+      `;
+    }
+    
+    questionBlock.innerHTML = questionHTML;
+
+    if (quizType === 'multi') {
+      // Multiple choice questions
+      answersBlock.style.display = 'block';
+      currentQ.answers.forEach((ans, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        
+        let answerContent = `${String.fromCharCode(65 + i)}. ${escapeHtml(ans.text)}`;
+        
+        if (ans.image) {
+          answerContent += `
+            <div style="margin-top: 8px; text-align: center;">
+              <img src="${ans.image}" 
+                   style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 3px;"
+                   onerror="this.style.display='none'">
+            </div>
+          `;
+        }
+        
+        btn.innerHTML = answerContent;
+        btn.onclick = () => handleMultiAnswerClick(btn, ans.correct, currentQ.answers);
+        answersBlock.appendChild(btn);
+      });
+
+    } else if (quizType === 'truefalse') {
+      // True/False questions
+      answersBlock.style.display = 'block';
+      currentTFAnswerIdx = 0;
+      showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+      
+    } else if (quizType === 'essay') {
+      // Essay questions
+      essayInputBlock.style.display = 'block';
+    }
+  }
+
+  function handleMultiAnswerClick(btn, isCorrect, allAnswers) {
+    Array.from(answersBlock.children).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(isCorrect) {
+      btn.classList.add('correct');
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+    } else {
+      btn.classList.add('incorrect');
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      // Highlight correct answer
+      const correctAns = allAnswers.find(a => a.correct);
+      for(let b of answersBlock.children) {
+        // Cẩn thận với việc so sánh textContent trực tiếp nếu có hình ảnh
+        // Cần lấy chỉ phần text của câu trả lời
+        const btnText = b.childNodes[0].nodeType === 3 ? b.childNodes[0].nodeValue.substring(3).trim() : ''; // Lấy text trước hình ảnh
+        const correctText = escapeHtml(correctAns.text);
+
+        if(btnText === correctText && correctAns.correct) {
+          b.classList.add('correct');
+          break;
+        }
+      }
+    }
+    btnNext.style.display = 'inline-block';
+  }
+
+  function showTrueFalseAnswer(answerObj) {
+    answersBlock.innerHTML = '';
+
+    const label = document.createElement('div');
+    label.style.marginBottom = '10px';
+    label.style.fontWeight = 'bold';
+    label.textContent = `Câu hỏi phụ ${currentTFAnswerIdx + 1}: ${answerObj.text}`;
+    answersBlock.appendChild(label);
+
+    if (answerObj.image) {
+      const imgDiv = document.createElement('div');
+      imgDiv.style.textAlign = 'center';
+      imgDiv.style.margin = '10px 0';
+      imgDiv.innerHTML = `<img src="${answerObj.image}" style="max-width: 100%; max-height: 200px; border: 1px solid #ccc; border-radius: 3px;" onerror="this.style.display='none'">`;
+      answersBlock.appendChild(imgDiv);
+    }
+
+    const btnTrue = document.createElement('button');
+    btnTrue.className = 'answer-btn';
+    btnTrue.textContent = 'Đúng';
+    btnTrue.onclick = () => handleTrueFalseAnswerClick(true, answerObj.correct);
+    answersBlock.appendChild(btnTrue);
+    
+    const btnFalse = document.createElement('button');
+    btnFalse.className = 'answer-btn';
+    btnFalse.textContent = 'Sai';
+    btnFalse.onclick = () => handleTrueFalseAnswerClick(false, answerObj.correct);
+    answersBlock.appendChild(btnFalse);
+  }
+
+  function handleTrueFalseAnswerClick(userAnswer, correctAnswer) {
+    Array.from(answersBlock.querySelectorAll('button')).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(userAnswer === correctAnswer) {
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    } else {
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('incorrect');
+        }
+        if(b.textContent.toLowerCase() === (correctAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    }
+
+    btnNext.style.display = 'inline-block';
+  }
+
+  // Essay submit handler
+  btnEssaySubmit.onclick = () => {
+    const userText = essayAnswerTextarea.value.trim();
+    if(userText.length === 0) {
+      alert('Hãy nhập câu trả lời trước khi nhấn "Xong"');
+      return;
+    }
+    btnEssaySubmit.disabled = true; // Vô hiệu hóa nút "Xong" sau khi submit
+    
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    const currentQ = questions[currentQIdx];
+    let answerRefHTML = `<br><br><em><strong>Đáp án tham khảo:</strong> ${currentQ.answerRef}</em>`;
+    
+    if(currentQ.answerRefImage) {
+      answerRefHTML += `<div style="margin: 15px 0; text-align: center;">
+        <img src="${currentQ.answerRefImage}" style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;">
+      </div>`;
+    }
+    
+    questionBlock.innerHTML += answerRefHTML;
+    btnNext.style.display = 'inline-block';
+  };
+
+  btnNext.onclick = () => {
+    // Ẩn nút "Tiếp tục"
+    btnNext.style.display = 'none';
+    // Đảm bảo nút "Xong" (essay) được kích hoạt lại
+    btnEssaySubmit.disabled = false; 
+
+    if(quizType === 'truefalse') {
+      currentTFAnswerIdx++;
+      const currentQ = questions[currentQIdx];
+      // Nếu còn câu hỏi phụ trong câu hỏi Đúng/Sai hiện tại
+      if(currentTFAnswerIdx < currentQ.answers.length) {
+        showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+        return; // Không chuyển sang câu hỏi tiếp theo mà hiển thị câu phụ
+      }
+    }
+
+    // Chuyển sang câu hỏi tiếp theo
+    currentQIdx++;
+    showQuestion();
+  };
+
+  function endQuiz() {
+    stopTimer();
+    quizSection.style.display = 'none';
+    resultSection.style.display = 'block';
+    toggleThemeBtn.style.display = 'block'; // Hiển thị lại nút chuyển theme
+
+    resultTime.textContent = formatTime(timeSeconds);
+    resultTotal.textContent = doneCount;
+    resultCorrect.textContent = correctCount;
+    resultWrong.textContent = wrongCount;
+
+    starRating.innerHTML = '';
+
+    // Logic tính sao đã được khôi phục và tinh chỉnh
+    if(quizType === 'multi' || quizType === 'truefalse') {
+      let starsGreen = 0;
+      let starsGray = 0;
+      
+      if(wrongCount === 0) { // Nếu không có câu sai
+        starsGreen = 3; // 3 sao xanh
+      } else if (wrongCount >= 1 && wrongCount <= 3) {
+        starsGreen = 2; // 2 sao xanh
+        starsGray = 1; // 1 sao xám
+      } else if (wrongCount >= 4 && wrongCount <= 9) {
+        starsGreen = 1; // 1 sao xanh
+        starsGray = 2; // 2 sao xám
+      } else { // wrongCount >= 10
+        starsGreen = 0; // 0 sao xanh
+        starsGray = 3; // 3 sao xám
+      }
+
+      for(let i = 1; i <= 3; i++) {
+        const star = document.createElement('span');
+        star.classList.add('star');
+        if(i <= starsGreen) star.classList.add('Green');
+        else if(i <= starsGray) star.classList.add('gray');
+        star.innerHTML = '&#9733;';
+        starRating.appendChild(star);
+      }
+    } else if (quizType === 'essay') {
+        // Đối với bài tự luận, không có điểm đúng/sai tự động
+        // Bạn có thể thêm logic chấm điểm thủ công hoặc hiển thị thông báo khác
+        const infoDiv = document.createElement('div');
+        infoDiv.textContent = "Bài Tự Luận Cần Được Giáo Viên Chấm Điểm.";
+        infoDiv.style.fontWeight = "bold";
+        infoDiv.style.marginTop = "20px";
+        starRating.appendChild(infoDiv);
+    }
+  }
+
+  // --- EVENT LISTENERS ---
+  // Đã xóa btnRestart.onclick và logic liên quan
+  // Nếu bạn muốn chức năng "làm lại" bài quiz, bạn cần tạo một nút mới với ID khác
+  // và thêm lại logic reset Stats vào event listener của nút đó.
+
+  // Nút Home (ở màn hình kết quả) - vẫn reload trang hiện tại
+  btnHome.onclick = () => {
+    location.reload(); 
+  };
+
+  btnMulti.onclick = () => initQuiz('multi');
+  btnTrueFalse.onclick = () => initQuiz('truefalse');
+  btnEssay.onclick = () => initQuiz('essay');
+  // New: Download button functionality
+  btnDownload.onclick = () => {
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'toancreator-default'; // Set the desired filename
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  };
+  
+  
+  // Xử lý sự kiện cho nút Exit mới
+  btnExit.onclick = () => {
+    window.location.href = '../index.html'; // Chuyển hướng về index.html
+  };
+
+  // Xử lý sự kiện cho nút Back to Home trong quiz
+  btnBackHomeInQuiz.onclick = () => {
+    if (confirm('Bạn có chắc chắn muốn thoát bài làm hiện tại?')) {
+      stopTimer(); // Dừng đồng hồ
+      location.reload(); // Tải lại trang promt-onlineV2.html
+    }
+  };
+
+  toggleThemeBtn.onclick = () => {
+    document.body.classList.toggle('dark');
+  };
+
+  // Ẩn/hiện nút toggle theme ban đầu
+  // Bạn có thể đặt nút toggle theme ở vị trí cố định thay vì ẩn/hiện tùy thuộc vào màn hình
+  // Hiện tại, nó sẽ luôn hiển thị trừ khi bị ẩn bởi CSS hoặc logic khác
+  toggleThemeBtn.style.display = 'block'; 
+})();
+</script>
+</body>
+</html>
