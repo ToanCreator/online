@@ -19,13 +19,13 @@ const subjects = [
         id: 1,
         title: "Toán Học",
         image: "https://i.ibb.co/k2YXTgMW/retouch-2025060606131334.jpg",
-        lessons: ["TOAN-12-U1","TOAN-12-U2"]
+        lessons: ["TOAN-12-U1"]
     },
     {
         id: 2,
         title: "Vật Lý",
         image: "https://i.ibb.co/sddMYYvR/retouch-2025060606155524.jpg",
-        lessons: ["LY-12-U1"]
+        lessons: ["LY-12-U1","LY-12-U2","LY-12-U3","LY-12-U4"]
     },
     {
         id: 3,
