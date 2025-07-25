@@ -25,7 +25,7 @@ const subjects = [
         id: 2,
         title: "Vật Lý",
         image: "https://i.ibb.co/sddMYYvR/retouch-2025060606155524.jpg",
-        lessons: ["LY-12-U1","LY-12-U2","LY-12-U3","LY-12-U4"]
+        lessons: []
     },
     {
         id: 3,
@@ -61,7 +61,7 @@ const subjects = [
             id: 8,
             title: "Khác",
             image: "https://i.ibb.co/BVdRPgtn/wmremove-transformed.jpg",
-            lessons: ["BỘ 30 ĐỀ THI TN TIN 2025","Bí Kíp Gia Truyền","SQL PYTHON"]
+            lessons: ["BỘ 30 ĐỀ THI TN TIN 2025","Bí Kíp Gia Truyền"]
     }
 ];
 
@@ -364,7 +364,6 @@ function downloadLesson() {
             
             // Môn Khác (id:8)
             "BỘ 30 ĐỀ THI TN TIN 2025": "https://is.gd/0Byez9",
-            "SQL PYTHON": "https://is.gd/VF8MV9",
             
         };
         

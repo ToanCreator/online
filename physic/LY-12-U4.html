@@ -253,7 +253,7 @@
 <div id="app">
   <img src="https://i.ibb.co/tMdHNdPH/Picsart-25-07-17-06-40-25-073.jpg" alt="Header Image" class="header-image-placeholder">
   
-  <h2>TIN - BÀI 1</h2>
+  <h2>LÝ - BÀI 4</h2>
 
   <button class="btn" id="btn-exit" style="background: var(--red);">
     <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
@@ -271,9 +271,9 @@
   </button>
   <div id="quiz-section" style="display:none; margin-top: 10px;">
     <div class="status-bar">
-      <div> <span id="timer">00:00</span></div>
-      <div>Câu đã làm:<span id="done-count">0</span></div>
-      <div>Đúng:<span id="correct-count">0</span> | <strong>Sai:</strong><span id="wrong-count">0</span></div>
+      <div><span id="timer">00:00</span></div>
+      <div>ㅤㅤ <span id="done-count">0</span></div>
+      <div>✅<span id="correct-count">0</span> | <strong>⛔</strong><span id="wrong-count">0</span></div>
     </div>
 
     <div id="question-block" class="question-container"></div>
@@ -313,458 +313,383 @@
 <script>
 (() => {
   // --- QUESTION DATA ---
-  // Trắc nghiệm 4 phương án [ABCD]
-  const multiChoiceQuestions = [
+  // Multiple choice questions [ABCD]
+const multiChoiceQuestions = [
   {
-    q: "Trí tuệ nhân tạo (AI) được nhắc đến lần đầu tiên vào năm nào?",
+    q: "Nhiệt lượng cần cung cấp cho vật để làm tăng nhiệt độ của nó không phụ thuộc vào yếu tố nào sau đây?",
+    qImage: null,
     answers: [
-      { text: "1950", correct: true },
-      { text: "1960", correct: false },
-      { text: "1970", correct: false },
-      { text: "1980", correct: false }
+      { text: "khối lượng của vật.", correct: false, image: null },
+      { text: "độ tăng nhiệt độ của vật.", correct: false, image: null },
+      { text: "tính chất của chất làm vật.", correct: false, image: null },
+      { text: "kích thước ban đầu của vật.", correct: true, image: null }
     ]
   },
   {
-    q: "AI là viết tắt của từ gì?",
+    q: "Một vật có khối lượng m (kg) được làm bằng chất có nhiệt dung riêng c (J/kg.K), nhận nhiệt lượng Q (J) thì nhiệt độ của vật tăng thêm ΔT (K). Hệ thức nào sau đây đúng?",
+    qImage: null,
     answers: [
-      { text: "Artificial Intelligence", correct: true },
-      { text: "Automated Integration", correct: false },
-      { text: "Advanced Intelligence", correct: false },
-      { text: "Artificial Integration", correct: false }
+      { text: "Q = mc.ΔT.", correct: true, image: null },
+      { text: "Q = c.ΔT / m", correct: false, image: null },
+      { text: "c = m.ΔT / Q", correct: false, image: null },
+      { text: "c = Q.m / ΔT", correct: false, image: null }
     ]
   },
   {
-    q: "Ai là người đã đề cập đến khái niệm AI đầu tiên?",
+    q: "Một thùng đựng 20 lít nước ở nhiệt độ 20°C. Cho khối lượng riêng của nước là 1000 kg/m³ và nhiệt dung riêng của nước là 4200 J/kgK. Nhiệt lượng cần cung cấp cho nước trong thùng để nhiệt độ của nó tăng lên tới 70°C là:",
+    qImage: null,
     answers: [
-      { text: "John McCarthy", correct: true },
-      { text: "Alan Turing", correct: false },
-      { text: "Elon Musk", correct: false },
-      { text: "Bill Gates", correct: false }
+      { text: "294 kJ", correct: false, image: null },
+      { text: "4200 kJ", correct: true, image: null },
+      { text: "5880 kJ", correct: false, image: null },
+      { text: "1680 kJ", correct: false, image: null }
     ]
   },
   {
-    q: "Hội thảo đánh dấu sự ra đời của lĩnh vực AI được tổ chức vào năm nào?",
+    q: "Biết nhiệt dung riêng của nước và của nước đá lần lượt là 4200 J/kg.K và 2100 J/kg.K. Phát biểu nào dưới đây không đúng?",
+    qImage: null,
     answers: [
-      { text: "1956", correct: true },
-      { text: "1950", correct: false },
-      { text: "1952", correct: false },
-      { text: "1954", correct: false }
+      { text: "Để 1 kg nước tăng thêm 1°C thì cần cung cấp cho nước nhiệt lượng 4200 J.", correct: false, image: null },
+      { text: "Để 1 kg nước đá tăng thêm 1°C thì cần cung cấp cho nước đá nhiệt lượng 2100 J.", correct: false, image: null },
+      { text: "Với cùng một khối lượng, khi cung cấp nhiệt lượng như nhau thì độ tăng nhiệt độ của nước đá và nước như nhau.", correct: true, image: null },
+      { text: "Nếu được cung cấp cùng một nhiệt lượng và độ tăng nhiệt độ của nước đá và nước là như nhau thì khối lượng nước đá gấp đôi khối lượng nước.", correct: false, image: null }
     ]
   },
   {
-    q: "Ứng dụng nào sau đây không phải là ứng dụng của AI?",
+    q: "Đơn vị của nhiệt dung riêng là gì?",
+    qImage: null,
     answers: [
-      { text: "Guồng nước ở vùng quê", correct: true },
-      { text: "Google Translate", correct: false },
-      { text: "Robot Asimo", correct: false },
-      { text: "Trợ lý ảo Siri", correct: false }
+      { text: "J/kg", correct: false, image: null },
+      { text: "J/kg.K", correct: true, image: null },
+      { text: "J.kg/K", correct: false, image: null },
+      { text: "J/K", correct: false, image: null }
     ]
   },
   {
-    q: "Khả năng học của AI là gì?",
+    q: "Đâu là công thức tính nhiệt lượng trong quá trình truyền nhiệt để làm thay đổi nhiệt độ của vật?",
+    qImage: null,
     answers: [
-      { text: "Nắm bắt thông tin từ dữ liệu và điều chỉnh hành vi", correct: true },
-      { text: "Tự động hóa mọi công việc mà không cần dữ liệu", correct: false },
-      { text: "Thay thế con người hoàn toàn", correct: false },
-      { text: "Chỉ hoạt động dựa trên lập trình cứng", correct: false }
+      { text: "Q = U.I.t", correct: false, image: null },
+      { text: "Q = λ.m", correct: false, image: null },
+      { text: "Q = mcΔt", correct: true, image: null },
+      { text: "Q = L.m", correct: false, image: null }
     ]
   },
   {
-    q: "Khả năng suy luận của AI liên quan đến điều gì?",
+    q: "Nhiệt dung riêng của nước là bao nhiêu?",
+    qImage: null,
     answers: [
-      { text: "Vận dụng logic và tri thức để ra quyết định", correct: true },
-      { text: "Nhận dạng hình ảnh mà không cần logic", correct: false },
-      { text: "Tự động hóa các tác vụ vật lý", correct: false },
-      { text: "Học dữ liệu mà không cần tri thức", correct: false }
+      { text: "4200 J/kg.K", correct: true, image: null },
+      { text: "2100 J/kg.K", correct: false, image: null },
+      { text: "10000 J/kg.K", correct: false, image: null },
+      { text: "840 J/kg.K", correct: false, image: null }
     ]
   },
   {
-    q: "Khả năng nhận thức của AI bao gồm việc gì?",
+    q: "Phát biểu nào sau đây không đúng khi nói về nhiệt dung riêng của một chất?",
+    qImage: null,
     answers: [
-      { text: "Cảm nhận và hiểu môi trường qua cảm biến và dữ liệu", correct: true },
-      { text: "Chỉ thực hiện các tác vụ đơn giản", correct: false },
-      { text: "Ra quyết định mà không cần dữ liệu", correct: false },
-      { text: "Tự động hóa công việc thủ công", correct: false }
+      { text: "Được đo bằng đơn vị J/kg.K.", correct: false, image: null },
+      { text: "Nhiệt dung riêng được kí hiệu là Q.", correct: true, image: null },
+      { text: "Nhiệt lượng trong quá trình truyền nhiệt để làm thay đổi nhiệt độ của vật là: Q = mcΔt.", correct: false, image: null },
+      { text: "Vật làm bằng chất có nhiệt dung riêng nhỏ thì dễ nóng lên và cũng dễ nguội đi.", correct: false, image: null }
     ]
   },
   {
-    q: "Khả năng hiểu ngôn ngữ của AI là gì?",
+    q: "Để xác định nhiệt dung riêng của nước bằng thí nghiệm thì không cần đo đại lượng nào sau đây?",
+    qImage: null,
     answers: [
-      { text: "Hiểu và xử lý ngôn ngữ tự nhiên của con người", correct: true },
-      { text: "Chỉ hiểu ngôn ngữ lập trình", correct: false },
-      { text: "Không thể xử lý văn bản", correct: false },
-      { text: "Chỉ nhận diện âm thanh", correct: false }
+      { text: "Nhiệt độ nước sau khi đun.", correct: false, image: null },
+      { text: "Thời gian đun nước.", correct: false, image: null },
+      { text: "Công suất dòng điện.", correct: false, image: null },
+      { text: "Cường độ dòng điện.", correct: true, image: null }
     ]
   },
   {
-    q: "Khả năng giải quyết vấn đề của AI liên quan đến điều gì?",
+    q: "Người ta thực hiện thí nghiệm xác định nhiệt dung riêng của đồng với một miếng đồng kim loại có khối lượng 850 g. Lúc đầu, nhiệt độ của miếng đồng là 12°C. Ghi lại thời gian từ khi bật bộ phận đốt nóng đến khi nhiệt độ miếng đồng tăng tới 30°C. Công suất bộ phận đốt nóng là 40 W, thời gian đốt nóng là 146 s. Nhiệt dung riêng của đồng là:",
+    qImage: null,
     answers: [
-      { text: "Tìm cách giải quyết tình huống phức tạp dựa trên thông tin", correct: true },
-      { text: "Chỉ giải quyết các vấn đề đơn giản", correct: false },
-      { text: "Không cần thông tin để giải quyết vấn đề", correct: false },
-      { text: "Tự động hóa mà không cần suy nghĩ", correct: false }
+      { text: "380 J/kg.K", correct: true, image: null },
+      { text: "880 J/kg.K", correct: false, image: null },
+      { text: "140 J/kg.K", correct: false, image: null },
+      { text: "800 J/kg.K", correct: false, image: null }
     ]
   },
   {
-    q: "AI hẹp (Narrow AI) có đặc điểm gì?",
+    q: "Một ấm đun nước bằng nhôm có khối lượng 0,4 kg, chứa được 3 lít nước đun trên bếp. Khi nhận được nhiệt lượng 740 kJ thì ấm đạt đến nhiệt độ 80°C. Biết nhiệt dung riêng của nhôm là 880 J/kg.K, nhiệt dung riêng của nước là 4200 J/kg.K. Nhiệt độ ban đầu của nước là:",
+    qImage: null,
     answers: [
-      { text: "Được thiết kế để thực hiện một nhiệm vụ cụ thể", correct: true },
-      { text: "Có khả năng thực hiện mọi công việc như con người", correct: false },
-      { text: "Không cần dữ liệu để hoạt động", correct: false },
-      { text: "Tự thích nghi mà không cần lập trình", correct: false }
+      { text: "32°C", correct: false, image: null },
+      { text: "23°C", correct: true, image: null },
+      { text: "28°C", correct: false, image: null },
+      { text: "19°C", correct: false, image: null }
     ]
   },
   {
-    q: "AI tổng quát (General AI) có đặc điểm gì?",
+    q: "Nhiệt dung riêng của một chất cho biết điều gì?",
+    qImage: null,
     answers: [
-      { text: "Có khả năng tự học và thực hiện nhiều công việc như con người", correct: true },
-      { text: "Chỉ thực hiện một nhiệm vụ cụ thể", correct: false },
-      { text: "Không thể hiểu ngôn ngữ tự nhiên", correct: false },
-      { text: "Không cần dữ liệu để hoạt động", correct: false }
+      { text: "Khả năng tỏa nhiệt của chất đó.", correct: false, image: null },
+      { text: "Khối lượng của chất cần để đạt được nhiệt độ nhất định.", correct: false, image: null },
+      { text: "Lượng nhiệt cần thiết để làm tăng 1°C cho 1 kg chất đó.", correct: true, image: null },
+      { text: "Tốc độ truyền nhiệt của chất.", correct: false, image: null }
     ]
   },
   {
-    q: "Hệ chuyên gia MYCIN được sử dụng trong lĩnh vực nào?",
+    q: "Khi đun nóng cùng một khối lượng nước và dầu ăn trong cùng khoảng thời gian với cùng một nguồn nhiệt, nhận xét nào sau đây đúng?",
+    qImage: null,
     answers: [
-      { text: "Y học", correct: true },
-      { text: "Giao thông", correct: false },
-      { text: "Giáo dục", correct: false },
-      { text: "Thể thao", correct: false }
+      { text: "Nhiệt độ của nước cao hơn dầu ăn.", correct: false, image: null },
+      { text: "Dầu ăn có nhiệt dung riêng lớn hơn nước.", correct: false, image: null },
+      { text: "Nhiệt độ của dầu ăn cao hơn nước do dầu ăn có nhiệt dung riêng nhỏ hơn.", correct: true, image: null },
+      { text: "Nước và dầu ăn nóng lên với cùng một tốc độ.", correct: false, image: null }
     ]
   },
   {
-    q: "Robot Asimo là sản phẩm của công ty nào?",
+    q: "Tại sao trong bộ tản nhiệt của máy biến thế người ta dùng dầu mà không dùng nước?",
+    qImage: null,
     answers: [
-      { text: "Honda", correct: true },
-      { text: "Tesla", correct: false },
-      { text: "Google", correct: false },
-      { text: "Microsoft", correct: false }
+      { text: "Dầu có nhiệt dung riêng lớn hơn nước.", correct: false, image: null },
+      { text: "Dầu là chất cách điện, giải nhiệt tốt và chống ăn mòn kim loại.", correct: true, image: null },
+      { text: "Nước dễ bay hơi, không phù hợp cho máy biến thế.", correct: false, image: null },
+      { text: "Dầu dễ kiếm hơn nước.", correct: false, image: null }
     ]
   },
   {
-    q: "Google Translate chủ yếu được sử dụng để làm gì?",
+    q: "Hiện tượng gió biển vào ban ngày và gió đất vào ban đêm là do sự chênh lệch về yếu tố nào?",
+    qImage: null,
     answers: [
-      { text: "Dịch thuật", correct: true },
-      { text: "Nhận dạng khuôn mặt", correct: false },
-      { text: "Dự báo thời tiết", correct: false },
-      { text: "Hỗ trợ lái xe", correct: false }
+      { text: "Áp suất khí quyển.", correct: false, image: null },
+      { text: "Độ ẩm không khí.", correct: false, image: null },
+      { text: "Nhiệt dung riêng của đất và nước.", correct: true, image: null },
+      { text: "Khối lượng của đất và nước.", correct: false, image: null }
     ]
   },
   {
-    q: "Ứng dụng nhận dạng khuôn mặt thường được dùng trong lĩnh vực nào?",
+    q: "Một vật có khối lượng 1 kg, nhiệt dung riêng 800 J/kg.K, được đun nóng từ 20°C lên 50°C. Nhiệt lượng vật thu vào là:",
+    qImage: null,
     answers: [
-      { text: "An ninh", correct: true },
-      { text: "Y tế", correct: false },
-      { text: "Dịch thuật", correct: false },
-      { text: "Giáo dục", correct: false }
+      { text: "16 kJ", correct: false, image: null },
+      { text: "24 kJ", correct: true, image: null },
+      { text: "40 kJ", correct: false, image: null },
+      { text: "56 kJ", correct: false, image: null }
     ]
   },
   {
-    q: "Nhận dạng chữ viết tay thường được ứng dụng trong việc gì?",
+    q: "Yếu tố nào sau đây không phải là một trong các yếu tố ảnh hưởng đến nhiệt lượng cần cung cấp cho vật để làm thay đổi nhiệt độ của nó?",
+    qImage: null,
     answers: [
-      { text: "Xử lý hóa đơn và tài liệu", correct: true },
-      { text: "Dịch thuật ngôn ngữ", correct: false },
-      { text: "Nhận diện âm thanh", correct: false },
-      { text: "Dự báo thời tiết", correct: false }
+      { text: "Khối lượng của vật.", correct: false, image: null },
+      { text: "Độ tăng nhiệt độ của vật.", correct: false, image: null },
+      { text: "Công suất nguồn nhiệt.", correct: true, image: null },
+      { text: "Tính chất của chất làm vật.", correct: false, image: null }
     ]
   },
   {
-    q: "Trợ lý ảo như Siri được thiết kế để làm gì?",
+    q: "Trong bảng nhiệt dung riêng, chất nào có nhiệt dung riêng nhỏ nhất?",
+    qImage: null,
     answers: [
-      { text: "Hỗ trợ và tương tác với người dùng", correct: true },
-      { text: "Dự báo thời tiết", correct: false },
-      { text: "Nhận dạng khuôn mặt", correct: false },
-      { text: "Lái xe tự động", correct: false }
+      { text: "Thủy ngân", correct: false, image: null },
+      { text: "Đồng", correct: false, image: null },
+      { text: "Chì", correct: true, image: null },
+      { text: "Sắt", correct: false, image: null }
     ]
   },
   {
-    q: "Netflix sử dụng AI để làm gì?",
+    q: "Trong thí nghiệm xác định nhiệt dung riêng của nước, cân điện tử dùng để đo đại lượng nào?",
+    qImage: null,
     answers: [
-      { text: "Đề xuất phim dựa trên sở thích người dùng", correct: true },
-      { text: "Nhận diện chữ viết tay", correct: false },
-      { text: "Dịch thuật ngôn ngữ", correct: false },
-      { text: "Hỗ trợ y tế", correct: false }
+      { text: "Nhiệt độ ban đầu của nước.", correct: false, image: null },
+      { text: "Khối lượng của nước.", correct: true, image: null },
+      { text: "Công suất của điện trở nhiệt.", correct: false, image: null },
+      { text: "Thời gian đun nước.", correct: false, image: null }
     ]
   },
   {
-    q: "MasterCard sử dụng AI để làm gì?",
+    q: "Khi một vật tỏa nhiệt, giá trị ΔT trong công thức Q = mcΔT sẽ là:",
+    qImage: null,
     answers: [
-      { text: "Phát hiện gian lận trong giao dịch", correct: true },
-      { text: "Dự báo thời tiết", correct: false },
-      { text: "Đề xuất phim", correct: false },
-      { text: "Hỗ trợ lái xe", correct: false }
+      { text: "Dương.", correct: false, image: null },
+      { text: "Âm.", correct: true, image: null },
+      { text: "Bằng không.", correct: false, image: null },
+      { text: "Phụ thuộc vào nhiệt dung riêng.", correct: false, image: null }
     ]
   },
   {
-    q: "Cambio Health Care sử dụng AI để làm gì?",
+    q: "Một miếng nhôm khối lượng 0.5 kg được nung nóng. Sau khi nhận 17600 J nhiệt lượng, nhiệt độ của nó tăng thêm 40°C. Nhiệt dung riêng của nhôm là:",
+    qImage: null,
     answers: [
-      { text: "Hỗ trợ quyết định lâm sàng phòng ngừa đột quỵ", correct: true },
-      { text: "Nhận dạng khuôn mặt", correct: false },
-      { text: "Dịch thuật", correct: false },
-      { text: "Dự báo thời tiết", correct: false }
+      { text: "440 J/kg.K", correct: false, image: null },
+      { text: "880 J/kg.K", correct: true, image: null },
+      { text: "1760 J/kg.K", correct: false, image: null },
+      { text: "352 J/kg.K", correct: false, image: null }
     ]
   },
   {
-    q: "Hệ chuyên gia MYCIN sử dụng bao nhiêu luật suy diễn?",
+    q: "Để nước trong bình nhiệt lượng kế nóng đều trong thí nghiệm, người ta thường thực hiện thao tác nào?",
+    qImage: null,
     answers: [
-      { text: "Khoảng 600", correct: true },
-      { text: "Khoảng 100", correct: false },
-      { text: "Khoảng 1000", correct: false },
-      { text: "Khoảng 200", correct: false }
+      { text: "Đun với công suất lớn nhất.", correct: false, image: null },
+      { text: "Thêm đá vào nước.", correct: false, image: null },
+      { text: "Khuấy liên tục.", correct: true, image: null },
+      { text: "Đậy kín nắp bình.", correct: false, image: null }
     ]
   },
   {
-    q: "Robot Asimo có khả năng nào sau đây?",
+    q: "Một thiết bị điện có công suất 1 kW đun nóng 2 kg nước từ 20°C lên 70°C. Bỏ qua mọi mất mát nhiệt. Thời gian đun là bao nhiêu? (c_nước = 4200 J/kg.K)",
+    qImage: null,
     answers: [
-      { text: "Nhận dạng tiếng nói", correct: true },
-      { text: "Dự báo thời tiết", correct: false },
-      { text: "Dịch thuật", correct: false },
-      { text: "Phát hiện gian lận", correct: false }
+      { text: "120 s", correct: false, image: null },
+      { text: "210 s", correct: false, image: null },
+      { text: "420 s", correct: true, image: null },
+      { text: "840 s", correct: false, image: null }
     ]
   },
   {
-    q: "Google Translate có thể làm gì?",
+    q: "Khi một vật tỏa nhiệt, nhiệt lượng tỏa ra có giá trị:",
+    qImage: null,
     answers: [
-      { text: "Nhận dạng văn bản trong hình ảnh", correct: true },
-      { text: "Nhận dạng khuôn mặt", correct: false },
-      { text: "Dự báo thời tiết", correct: false },
-      { text: "Hỗ trợ lái xe", correct: false }
+      { text: "Dương.", correct: false, image: null },
+      { text: "Âm.", correct: true, image: null },
+      { text: "Bằng không nếu không có sự thay đổi nhiệt độ.", correct: false, image: null },
+      { text: "Luôn dương vì là năng lượng.", correct: false, image: null }
     ]
   },
   {
-    q: "AI có thể được ứng dụng trong lĩnh vực nào sau đây?",
+    q: "Tại sao đất nóng lên nhanh hơn nước biển vào ban ngày?",
+    qImage: null,
     answers: [
-      { text: "Tất cả các lĩnh vực", correct: true },
-      { text: "Chỉ trong y tế", correct: false },
-      { text: "Chỉ trong giáo dục", correct: false },
-      { text: "Chỉ trong giao thông", correct: false }
+      { text: "Đất hấp thụ ánh nắng mặt trời tốt hơn nước.", correct: false, image: null },
+      { text: "Đất có nhiệt dung riêng lớn hơn nước.", correct: false, image: null },
+      { text: "Đất có nhiệt dung riêng nhỏ hơn nước.", correct: true, image: null },
+      { text: "Nước biển có sự đối lưu.", correct: false, image: null }
     ]
   },
   {
-    q: "Hệ thống dự báo thời tiết sử dụng AI thuộc khả năng nào?",
+    q: "Trong công thức Q = mcΔT, đại lượng ΔT là gì?",
+    qImage: null,
     answers: [
-      { text: "Giải quyết vấn đề", correct: true },
-      { text: "Nhận dạng khuôn mặt", correct: false },
-      { text: "Dịch thuật", correct: false },
-      { text: "Lái xe tự động", correct: false }
+      { text: "Nhiệt độ ban đầu của vật.", correct: false, image: null },
+      { text: "Nhiệt độ cuối cùng của vật.", correct: false, image: null },
+      { text: "Độ thay đổi nhiệt độ của vật.", correct: true, image: null },
+      { text: "Nhiệt độ môi trường.", correct: false, image: null }
     ]
   },
   {
-    q: "Xe tự lái sử dụng AI thuộc khả năng nào?",
+    q: "Nếu hai vật có cùng khối lượng và nhận cùng một lượng nhiệt, vật nào có nhiệt dung riêng lớn hơn sẽ:",
+    qImage: null,
     answers: [
-      { text: "Nhận thức", correct: true },
-      { text: "Dịch thuật", correct: false },
-      { text: "Nhận dạng chữ viết tay", correct: false },
-      { text: "Dự báo thời tiết", correct: false }
+      { text: "Nóng lên nhanh hơn.", correct: false, image: null },
+      { text: "Nóng lên chậm hơn.", correct: true, image: null },
+      { text: "Không thay đổi nhiệt độ.", correct: false, image: null },
+      { text: "Tỏa nhiệt nhanh hơn.", correct: false, image: null }
     ]
   },
   {
-    q: "Trợ lý ảo như Alexa thuộc khả năng nào của AI?",
+    q: "Hệ thống làm nóng nước bằng năng lượng mặt trời chuyển đổi từ năng lượng nào sang năng lượng nào?",
+    qImage: null,
     answers: [
-      { text: "Hiểu ngôn ngữ", correct: true },
-      { text: "Nhận dạng khuôn mặt", correct: false },
-      { text: "Dự báo thời tiết", correct: false },
-      { text: "Lái xe tự động", correct: false }
+      { text: "Cơ năng thành nhiệt năng.", correct: false, image: null },
+      { text: "Điện năng thành nhiệt năng.", correct: false, image: null },
+      { text: "Năng lượng mặt trời (quang năng) thành nhiệt năng.", correct: true, image: null },
+      { text: "Hóa năng thành điện năng.", correct: false, image: null }
     ]
   },
   {
-    q: "Hệ chuyên gia MYCIN được phát triển tại đâu?",
+    q: "Để xác định nhiệt lượng Q cung cấp cho nước trong thí nghiệm đo nhiệt dung riêng, nếu biết công suất P của điện trở nhiệt và thời gian t đun, công thức nào được sử dụng?",
+    qImage: null,
     answers: [
-      { text: "Đại học Stanford", correct: true },
-      { text: "Đại học Harvard", correct: false },
-      { text: "Đại học Cornell", correct: false },
-      { text: "Đại học New York", correct: false }
+      { text: "Q = P / t", correct: false, image: null },
+      { text: "Q = P * t", correct: true, image: null },
+      { text: "Q = P + t", correct: false, image: null },
+      { text: "Q = P - t", correct: false, image: null }
     ]
   },
   {
-    q: "AI có thể được chia thành mấy loại chính theo chức năng?",
+    q: "Nếu nhiệt dung riêng của một chất là rất nhỏ, điều gì có thể xảy ra khi truyền một lượng nhỏ nhiệt cho nó?",
+    qImage: null,
     answers: [
-      { text: "2", correct: true },
-      { text: "3", correct: false },
-      { text: "4", correct: false },
-      { text: "5", correct: false }
-    ]
-  },
-  {
-    q: "Ứng dụng nào sau đây thuộc về AI hẹp?",
-    answers: [
-      { text: "Google Translate", correct: true },
-      { text: "Robot có thể làm mọi việc như con người", correct: false },
-      { text: "Máy tính tự học mọi lĩnh vực", correct: false },
-      { text: "Hệ thống thay thế con người hoàn toàn", correct: false }
-    ]
-  },
-  {
-    q: "Khả năng nào không phải là đặc trưng chính của AI?",
-    answers: [
-      { text: "Cảm thụ văn học", correct: true },
-      { text: "Học", correct: false },
-      { text: "Suy luận", correct: false },
-      { text: "Nhận thức", correct: false }
-    ]
-  },
-  {
-    q: "Phần mềm kiểm tra lỗi chính tả thuộc khả năng nào của AI?",
-    answers: [
-      { text: "Hiểu ngôn ngữ", correct: true },
-      { text: "Nhận dạng khuôn mặt", correct: false },
-      { text: "Dự báo thời tiết", correct: false },
-      { text: "Lái xe tự động", correct: false }
-    ]
-  },
-  {
-    q: "AI được phát triển với mục tiêu gì?",
-    answers: [
-      { text: "Xây dựng hệ thống có đặc trưng trí tuệ như con người", correct: true },
-      { text: "Thay thế hoàn toàn con người", correct: false },
-      { text: "Chỉ tự động hóa các công việc đơn giản", correct: false },
-      { text: "Không cần sử dụng dữ liệu", correct: false }
-    ]
-  },
-  {
-    q: "Hệ thống khuyến nghị của YouTube thuộc khả năng nào của AI?",
-    answers: [
-      { text: "Học", correct: true },
-      { text: "Nhận dạng khuôn mặt", correct: false },
-      { text: "Dịch thuật", correct: false },
-      { text: "Lái xe tự động", correct: false }
-    ]
-  },
-  {
-    q: "Hệ thống chẩn đoán y tế dựa trên AI thuộc khả năng nào?",
-    answers: [
-      { text: "Suy luận", correct: true },
-      { text: "Nhận dạng chữ viết tay", correct: false },
-      { text: "Dịch thuật", correct: false },
-      { text: "Dự báo thời tiết", correct: false }
-    ]
-  },
-  {
-    q: "Ứng dụng nào sau đây sử dụng khả năng nhận thức của AI?",
-    answers: [
-      { text: "Xe tự lái", correct: true },
-      { text: "Guồng nước", correct: false },
-      { text: "Máy giặt tự động", correct: false },
-      { text: "Đèn tự sáng khi trời tối", correct: false }
-    ]
-  },
-  {
-    q: "AI có thể được ứng dụng trong lĩnh vực nào sau đây?",
-    answers: [
-      { text: "Khoa học và đời sống", correct: true },
-      { text: "Chỉ trong công nghệ", correct: false },
-      { text: "Chỉ trong y tế", correct: false },
-      { text: "Chỉ trong giáo dục", correct: false }
-    ]
-  },
-  {
-    q: "Robot Asimo có khả năng nào sau đây?",
-    answers: [
-      { text: "Nhận dạng hình ảnh", correct: true },
-      { text: "Dự báo thời tiết", correct: false },
-      { text: "Dịch thuật", correct: false },
-      { text: "Phát hiện gian lận", correct: false }
-    ]
-  },
-  {
-    q: "Google Translate có thể tự động làm gì?",
-    answers: [
-      { text: "Phát hiện ngôn ngữ", correct: true },
-      { text: "Nhận dạng khuôn mặt", correct: false },
-      { text: "Dự báo thời tiết", correct: false },
-      { text: "Hỗ trợ lái xe", correct: false }
-    ]
-  },
-  {
-    q: "Ứng dụng nhận dạng khuôn mặt có thể được dùng để làm gì?",
-    answers: [
-      { text: "Mở khóa điện thoại", correct: true },
-      { text: "Dịch thuật", correct: false },
-      { text: "Dự báo thời tiết", correct: false },
-      { text: "Nhận dạng chữ viết tay", correct: false }
-    ]
-  },
-  {
-    q: "Trợ lý ảo như Cortana có thể làm gì?",
-    answers: [
-      { text: "Gọi điện thoại theo tên trong danh bạ", correct: true },
-      { text: "Nhận dạng khuôn mặt", correct: false },
-      { text: "Dự báo thời tiết", correct: false },
-      { text: "Lái xe tự động", correct: false }
+      { text: "Nhiệt độ của chất đó sẽ tăng lên rất ít.", correct: false, image: null },
+      { text: "Nhiệt độ của chất đó sẽ tăng lên rất nhiều.", correct: true, image: null },
+      { text: "Chất đó sẽ không thay đổi nhiệt độ.", correct: false, image: null },
+      { text: "Chất đó sẽ chuyển sang trạng thái khác ngay lập tức.", correct: false, image: null }
     ]
   }
 ];
 
-  // Trắc nghiệm đúng/sai [DS]
-  const trueFalseQuestions = [
+// True/False questions [D/S] (5 main reading passages, 4 T/F sub-questions each)
+const trueFalseQuestions = [
   {
-    q: "Trí tuệ nhân tạo (AI) là khả năng của máy tính thực hiện các công việc mang tính trí tuệ của con người như đọc chữ, hiểu tiếng nói, dịch thuật, lái xe hay học và ra quyết định. AI có các đặc trưng chính như khả năng học, suy luận, nhận thức, hiểu ngôn ngữ và giải quyết vấn đề.",
+    q: "Nhiệt dung riêng của một chất là lượng nhiệt cần cung cấp cho 1 kg chất đó để nhiệt độ của nó tăng thêm 1°C. Nhiệt lượng Q mà một vật thu vào hay tỏa ra khi nhiệt độ thay đổi được tính bằng công thức Q = mcΔT, trong đó m là khối lượng, c là nhiệt dung riêng và ΔT là độ thay đổi nhiệt độ. Các yếu tố ảnh hưởng đến nhiệt lượng cần cung cấp bao gồm khối lượng, độ tăng nhiệt độ và tính chất của chất làm vật.",
+    qImage: null,
     answers: [
-      { text: "AI có khả năng học từ dữ liệu", correct: true },
-      { text: "AI không thể hiểu ngôn ngữ tự nhiên", correct: false },
-      { text: "AI chỉ có thể thực hiện các công việc đơn giản", correct: false },
-      { text: "AI có khả năng nhận thức môi trường xung quanh", correct: true }
+      { text: "Đơn vị đo của nhiệt dung riêng là J/kg.K.", correct: true, image: null },
+      { text: "Nếu khối lượng vật càng lớn thì nhiệt lượng cần cung cấp để tăng nhiệt độ một độ sẽ càng ít.", correct: false, image: null },
+      { text: "Công thức Q = mcΔT chỉ áp dụng khi vật nhận nhiệt lượng.", correct: false, image: null },
+      { text: "Tính chất của chất làm vật không ảnh hưởng đến nhiệt lượng cần cung cấp để thay đổi nhiệt độ.", correct: false, image: null }
     ]
   },
   {
-    q: "Hệ chuyên gia MYCIN là một hệ thống AI trong lĩnh vực y học, được phát triển để chẩn đoán bệnh và đề xuất sử dụng kháng sinh. MYCIN sử dụng khoảng 600 luật suy diễn để đưa ra kết luận dựa trên triệu chứng.",
+    q: "Trong một thí nghiệm, đun nóng cùng một khối lượng dầu ăn và nước trong cùng khoảng thời gian với cùng một nguồn nhiệt. Kết quả cho thấy nhiệt độ của dầu ăn cao hơn nhiệt độ của nước. Điều này được giải thích là do dầu và nước khác nhau về bản chất, lượng dầu cần ít năng lượng nhiệt hơn so với nước để tăng lên 1°C, tức là dầu ăn có nhiệt dung riêng nhỏ hơn nước.",
+    qImage: null,
     answers: [
-      { text: "MYCIN là một ứng dụng của AI trong y học", correct: true },
-      { text: "MYCIN không thể suy luận", correct: false },
-      { text: "MYCIN sử dụng hơn 1000 luật suy diễn", correct: false },
-      { text: "MYCIN có thể đề xuất liều lượng kháng sinh", correct: true }
+      { text: "Nhiệt độ của nước sẽ cao hơn dầu ăn sau khi đun nóng cùng thời gian.", correct: false, image: null },
+      { text: "Dầu ăn cần nhiều nhiệt lượng hơn nước để tăng nhiệt độ lên 1°C cho cùng một khối lượng.", correct: false, image: null },
+      { text: "Sự khác biệt về nhiệt dung riêng giữa dầu và nước là nguyên nhân chính dẫn đến sự chênh lệch nhiệt độ.", correct: true, image: null },
+      { text: "Lượng năng lượng nhiệt mà dầu ăn và nước nhận được từ đèn cồn là như nhau trong cùng khoảng thời gian.", correct: true, image: null }
     ]
   },
   {
-    q: "Robot Asimo là robot hình người đầu tiên trên thế giới, tích hợp nhiều ứng dụng AI như tự động điều khiển, nhận dạng hình ảnh và tiếng nói. Asimo có thể tương tác với con người nhờ các khả năng học, nhận thức và hiểu ngôn ngữ.",
+    q: "Nhiệt dung riêng của đất nhỏ hơn nước biển khoảng 5 lần. Ban ngày, khi Mặt Trời mọc, mặt đất nóng lên nhanh hơn nước biển. Không khí trên đất liền nóng lên, nở ra, áp suất giảm, tạo ra gió mát thổi từ biển vào đất liền. Ngược lại, ban đêm, đất nguội đi nhanh hơn nước biển, làm cho không khí trên đất liền nguội đi, áp suất tăng, tạo ra gió ấm thổi từ đất liền ra biển.",
+    qImage: null,
     answers: [
-      { text: "Asimo là robot hình người", correct: true },
-      { text: "Asimo không thể nhận dạng tiếng nói", correct: false },
-      { text: "Asimo có khả năng học", correct: true },
-      { text: "Asimo chỉ thực hiện một nhiệm vụ duy nhất", correct: false }
+      { text: "Ban ngày, đất nguội đi chậm hơn nước biển, gây ra gió biển.", correct: false, image: null },
+      { text: "Sự chênh lệch nhiệt dung riêng giữa đất và nước là nguyên nhân của hiện tượng gió biển và gió đất.", correct: true, image: null },
+      { text: "Ban đêm, không khí trên biển nóng lên nhanh hơn không khí trên đất liền.", correct: false, image: null },
+      { text: "Gió thổi từ nơi có áp suất cao hơn đến nơi có áp suất thấp hơn.", correct: true, image: null }
     ]
   },
   {
-    q: "Google Translate là một ứng dụng dịch thuật sử dụng AI để nhận dạng văn bản, tự động phát hiện ngôn ngữ và dịch trực tiếp. Nó có khả năng học, suy luận và nhận thức để cải thiện độ chính xác của bản dịch.",
+    q: "Để xác định nhiệt dung riêng của nước bằng thực nghiệm, người ta sử dụng các dụng cụ như cân điện tử, nhiệt kế điện tử, oát kế, và nhiệt lượng kế bằng nhựa. Các bước tiến hành bao gồm xác định khối lượng nước, cắm nhiệt kế, nối oát kế và nguồn điện, bật nguồn, khuấy nước và đọc các giá trị công suất, nhiệt độ theo thời gian. Nhiệt lượng cung cấp cho nước được xác định bằng điện năng đã cung cấp cho dây điện trở nhiệt.",
+    qImage: null,
     answers: [
-      { text: "Google Translate có thể nhận dạng văn bản trong hình ảnh", correct: true },
-      { text: "Google Translate không sử dụng AI", correct: false },
-      { text: "Google Translate có khả năng học từ dữ liệu", correct: true },
-      { text: "Google Translate chỉ dịch được một ngôn ngữ", correct: false }
+      { text: "Mục đích của thí nghiệm là xác định khối lượng riêng của nước.", correct: false, image: null },
+      { text: "Điện trở nhiệt phải chìm hoàn toàn trong nước để đảm bảo nước nhận được toàn bộ nhiệt lượng.", correct: true, image: null },
+      { text: "Oát kế được sử dụng để đo nhiệt độ của nước.", correct: false, image: null },
+      { text: "Điện năng cung cấp cho dây điện trở nhiệt chính là nhiệt lượng mà nước thu được.", correct: true, image: null }
     ]
   },
   {
-    q: "Trợ lý ảo như Siri, Cortana và Alexa là các ứng dụng AI hỗ trợ người dùng qua việc trò chuyện, tìm kiếm thông tin, gọi điện thoại và nhiều tính năng khác. Chúng sử dụng AI để hiểu ngôn ngữ tự nhiên và phản hồi phù hợp.",
+    q: "Một hệ làm nóng nước bằng năng lượng mặt trời có hiệu suất chuyển đổi 25%; cường độ bức xạ mặt trời lên bộ thu nhiệt là 1000 W/m²; diện tích bộ thu là 4 m². Nhiệt dung riêng của nước là 4200 J/kg.K.",
+    qImage: null,
     answers: [
-      { text: "Trợ lý ảo có thể trò chuyện với người dùng", correct: true },
-      { text: "Trợ lý ảo không thể hiểu tiếng nói", correct: false },
-      { text: "Trợ lý ảo có thể tìm kiếm thông tin", correct: true },
-      { text: "Trợ lý ảo chỉ hoạt động trên máy tính", correct: false }
+      { text: "Công suất bức xạ chiếu lên bộ thu nhiệt là 4000 W.", correct: true, image: null },
+      { text: "Trong 1h, năng lượng mặt trời chiếu lên bộ thu nhiệt là 14,4 MJ.", correct: true, image: null },
+      { text: "Trong 1h, phần năng lượng chuyển thành năng lượng nhiệt là 36 MJ.", correct: false, image: null },
+      { text: "Nếu hệ thống đó, làm nóng 30 kg nước thì trong khoảng thời gian 1 giờ nhiệt độ của nước tăng thêm 28,6°C.", correct: true, image: null }
     ]
   }
 ];
 
-  // Tự luận [TL]
-  const essayQuestions = [
+// Essay questions [TL]
+const essayQuestions = [
   {
-    q: "Trí tuệ nhân tạo (AI) là gì? Hãy nêu các đặc trưng chính của AI.",
-    answerRef: "Trí tuệ nhân tạo (AI) là khả năng của máy tính thực hiện các công việc mang tính trí tuệ của con người như đọc chữ, hiểu tiếng nói, dịch thuật, lái xe, học và ra quyết định. Các đặc trưng chính của AI bao gồm: khả năng học, khả năng suy luận, khả năng nhận thức, khả năng hiểu ngôn ngữ và khả năng giải quyết vấn đề."
+    q: "Trình bày khái niệm nhiệt dung riêng và ý nghĩa của nó trong thực tế.",
+    qImage: null,
+    answerRef: "Nhiệt dung riêng của một chất là nhiệt lượng cần cung cấp cho một đơn vị khối lượng chất đó (thường là 1 kg) để nhiệt độ của nó tăng lên 1°C (hoặc 1 K). Đơn vị của nhiệt dung riêng là J/kg.K.\n\nÝ nghĩa trong thực tế:\n- Nhiệt dung riêng thể hiện khả năng 'lưu trữ' năng lượng nhiệt của một chất. Chất có nhiệt dung riêng lớn thì cần nhiều nhiệt lượng hơn để tăng nhiệt độ, và ngược lại.\n- Nó giải thích các hiện tượng tự nhiên như gió biển - gió đất (nước có nhiệt dung riêng lớn hơn đất nên nóng/nguội chậm hơn, gây ra sự chênh lệch nhiệt độ và áp suất, tạo thành gió).\n- Trong công nghiệp, việc chọn vật liệu tản nhiệt (ví dụ: nước làm mát động cơ, dầu trong máy biến thế) dựa trên nhiệt dung riêng và các tính chất khác (cách điện, chống ăn mòn).\n- Giải thích tại sao một số vật liệu giữ nhiệt tốt (như gạch chịu nhiệt) và một số vật liệu lại nhanh nóng nhanh nguội (như kim loại).",
+    answerRefImage: null
   },
   {
-    q: "Phân biệt giữa AI hẹp và AI tổng quát.",
-    answerRef: "AI hẹp (Narrow AI) là AI được thiết kế để thực hiện một nhiệm vụ cụ thể như nhận dạng khuôn mặt hoặc dịch thuật. AI tổng quát (General AI) là AI có khả năng tự học, tự thích nghi và thực hiện nhiều công việc giống con người, ví dụ như một robot đa năng."
+    q: "Trình bày các yếu tố ảnh hưởng đến nhiệt lượng mà vật thu vào hoặc tỏa ra khi thay đổi nhiệt độ, và viết công thức liên hệ.",
+    qImage: null,
+    answerRef: "Nhiệt lượng mà một vật thu vào hoặc tỏa ra khi nhiệt độ của nó thay đổi phụ thuộc vào ba yếu tố chính:\n1.  **Khối lượng của vật (m):** Vật có khối lượng càng lớn thì cần nhiệt lượng càng nhiều để làm thay đổi nhiệt độ của nó một lượng nhất định.\n2.  **Độ thay đổi nhiệt độ (ΔT):** Nhiệt độ của vật thay đổi càng nhiều thì nhiệt lượng trao đổi càng lớn.\n3.  **Tính chất của chất làm vật (nhiệt dung riêng c):** Các chất khác nhau có khả năng hấp thụ và tỏa nhiệt khác nhau. Chất có nhiệt dung riêng lớn sẽ cần nhiều nhiệt lượng hơn để tăng cùng một độ, và ngược lại.\n\nCông thức liên hệ:\n**Q = mcΔT**\nTrong đó:\n- Q là nhiệt lượng thu vào hoặc tỏa ra (J)\n- m là khối lượng của vật (kg)\n- c là nhiệt dung riêng của chất làm vật (J/kg.K)\n- ΔT là độ thay đổi nhiệt độ của vật (ΔT = T_sau - T_đầu, tính bằng °C hoặc K)",
+    answerRefImage: null
   },
   {
-    q: "Hãy nêu một số ứng dụng thực tế của AI mà bạn biết.",
-    answerRef: "Một số ứng dụng thực tế của AI bao gồm: hệ chuyên gia MYCIN (chẩn đoán y học), robot Asimo (tương tác với con người), Google Translate (dịch thuật), nhận dạng khuôn mặt (an ninh), nhận dạng chữ viết tay (xử lý tài liệu), trợ lý ảo như Siri, hệ thống đề xuất phim của Netflix, và hệ thống phát hiện gian lận của MasterCard."
-  },
-  {
-    q: "Tại sao AI lại quan trọng trong xã hội ngày nay?",
-    answerRef: "AI quan trọng vì nó giúp tự động hóa công việc, nâng cao hiệu suất, hỗ trợ ra quyết định và giải quyết các vấn đề phức tạp trong nhiều lĩnh vực như y tế, giáo dục, tài chính, an ninh. AI có tiềm năng cải thiện chất lượng cuộc sống và thay đổi cách chúng ta làm việc."
-  },
-  {
-    q: "Bạn nghĩ AI có thể thay thế hoàn toàn con người trong tương lai không? Giải thích lý do.",
-    answerRef: "AI có thể thay thế con người trong một số công việc lặp lại hoặc xử lý dữ liệu lớn, nhưng khó thay thế hoàn toàn vì nó thiếu khả năng cảm xúc, sáng tạo và xử lý các tình huống phức tạp như con người. AI có thể hỗ trợ con người hiệu quả hơn là thay thế hoàn toàn."
+    q: "Dựa vào ví dụ về hiện tượng gió biển và gió đất, hãy phân tích vai trò của nhiệt dung riêng trong việc hình thành hiện tượng này.",
+    qImage: null,
+    answerRef: "Hiện tượng gió biển và gió đất là một ứng dụng thực tế rõ ràng của khái niệm nhiệt dung riêng.\n\n**Vào ban ngày:**\n- Nhiệt dung riêng của đất (cát) nhỏ hơn nhiều so với nước biển (khoảng 5 lần).\n- Khi Mặt Trời chiếu sáng, cả đất liền và nước biển đều nhận năng lượng nhiệt. Tuy nhiên, do nhiệt dung riêng nhỏ, đất liền nóng lên nhanh hơn và đạt nhiệt độ cao hơn đáng kể so với nước biển trong cùng một khoảng thời gian.\n- Không khí trên mặt đất nóng lên, nở ra và trở nên nhẹ hơn, tạo thành vùng áp suất thấp.\n- Ngược lại, không khí trên mặt biển mát hơn, nặng hơn, tạo thành vùng áp suất cao.\n- Sự chênh lệch áp suất này làm cho gió thổi từ biển (áp suất cao) vào đất liền (áp suất thấp), tạo thành **gió biển** mát mẻ.\n\n**Vào ban đêm:**\n- Khi Mặt Trời lặn, cả đất liền và nước biển đều tỏa nhiệt ra môi trường.\n- Do nhiệt dung riêng nhỏ, đất liền nguội đi nhanh hơn nhiều so với nước biển.\n- Không khí trên mặt đất nguội đi, co lại, trở nên nặng hơn, tạo thành vùng áp suất cao.\n- Trong khi đó, nước biển vẫn giữ được nhiệt độ tương đối cao, làm cho không khí trên mặt biển ấm hơn và có áp suất thấp hơn.\n- Kết quả là gió thổi từ đất liền (áp suất cao) ra biển (áp suất thấp), tạo thành **gió đất** ấm hơn.",
+    answerRefImage: null
   }
 ];
 

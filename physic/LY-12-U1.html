@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toàn Creator - Online Lesson</title>
+<style>
+  :root {
+    --yellow: #f9d342;
+    --yellow-dark: #d4b833;
+    --Green: #2ecc71;
+    --starsGreen: #2ecc71;
+    --red: #d93025;
+    --green: #2ecc40;
+    --starsGray: #ccc;
+    --star-size: 30px;
+    --orange: #ff9800;
+  }
+  body {
+    margin:0; padding:0; font-family: Arial, sans-serif;
+    background: white; color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: black; color: white;
+  }
+  /* Existing #app rule */
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+/* Media query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+  #app {
+    max-width: 960px; /* Or any wider value you prefer, e.g., 900px, 1200px */
+    padding: 20px; /* Optional: Increase padding for more space on larger screens */
+  }
+
+  /* Optional: Adjust button widths for larger screens if they look too wide */
+  .btn {
+    max-width: 400px; /* Make main buttons a bit wider */
+  }
+
+  /* Optional: Adjust status bar layout for larger screens */
+  .status-bar {
+    font-size: 1.1em;
+  }
+}
+  h1, h3 {
+    text-align: center;
+    margin: 10px 0;
+  }
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+    color: #FF00FF;
+  }
+  hr {
+    border:none; border-bottom: 3px solid black;
+    margin: 5px 0 25px 0;
+  }
+  .btn {
+    background: #3399FF;
+    border-radius: 8px;
+    border:none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 15px;
+    width: 100%;
+    max-width: 350px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: 3px solid transparent;
+    user-select: none;
+  }
+  .btn:hover {
+    background: var(--yellow-dark);
+  }
+  .btn svg {
+    vertical-align: middle;
+  }
+  .question-container {
+    margin-bottom: 20px;
+    color: var(--orange) !important;
+    font-weight: bold;
+    font-size: 1.08em;
+    transition: color 0.3s;
+  }
+  body.dark .question-container {
+    color: var(--orange) !important;
+  }
+  .answers {
+    margin-top: 15px;
+  }
+  .answer-btn {
+    display: block;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 6px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
+    padding: 12px 10px;
+    margin: 7px 0;
+    cursor: pointer;
+    text-align: left;
+    user-select: none;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .answer-btn:hover:not(.disabled) {
+    background-color: #eee;
+  }
+  body.dark .answer-btn {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  body.dark .answer-btn:hover:not(.disabled) {
+    background-color: #444;
+  }
+  .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  body.dark .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  body.dark .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  .disabled {
+    pointer-events: none;
+  }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .star-container {
+    text-align: center;
+    margin: 20px 0 10px 0;
+  }
+  .star {
+    font-size: var(--star-size);
+    margin: 0 5px;
+    color: var(--starsGray);
+  }
+  .star.Green {
+    color: var(--Green);
+  }
+  .star.red {
+    color: var(--red);
+  }
+  .toggle-btn {
+    background: lime;
+    color: white;
+    font-size: 1.5em;
+    padding: 12px 0;
+    margin: 25px auto;
+    width: 150px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    display: block;
+  }
+  .input-textarea {
+    width: 100%;
+    min-height: 80px;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid black;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  body.dark .input-textarea {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  .btn-small {
+    background: #FF99CC;
+    width: auto;
+    padding: 8px 15px;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+  .answer-btn img {
+    max-width: 100%;
+    max-height: 150px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .question-container img {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  body.dark .answer-btn img,
+  body.dark .question-container img {
+    border-color: #555;
+  }
+  .question-container img, .answer-btn img {
+    display: block;
+    margin: 0 auto;
+    background: #f5f5f5;
+  }
+  body.dark .question-container img,
+  body.dark .answer-btn img {
+    background: #333;
+  }
+  /* Style for the header image placeholder */
+  .header-image-placeholder {
+    display: block;
+    width: 100%; /* Hoặc một chiều rộng cố định */
+    height: 100px; /* Điều chỉnh chiều cao này để phù hợp với kích thước bạn muốn */
+    background-color: #f0f0f0; /* Màu nền để dễ nhìn thấy placeholder */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 25px; /* Khoảng cách với tiêu đề bên dưới */
+    
+  }
+  body.dark .header-image-placeholder {
+    background-color: #333;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <img src="https://i.ibb.co/tMdHNdPH/Picsart-25-07-17-06-40-25-073.jpg" alt="Header Image" class="header-image-placeholder">
+  
+  <h2>LÝ - BÀI 1</h2>
+
+  <button class="btn" id="btn-exit" style="background: var(--red);">
+    <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+      <path d="M16 17v-4h-2V7h-4V4H6V2H4v2h2v4h4v6h2v4h4v2h2v-2h-2z"/>
+    </svg>
+    Thoát
+  </button>
+  <button class="btn" id="btn-multi">TRẮC NGHIỆM 4 PHƯƠNG ÁN</button>
+  <button class="btn" id="btn-truefalse">TRẮC NGHIỆM ĐÚNG/SAI</button>
+  <button class="btn" id="btn-essay">TỰ LUẬN</button>
+
+  <button class="toggle-btn" id="toggle-theme">💡</button>
+  <button class="toggle-btn" id="btn-download" style="background: orange; margin-top: -20px; margin-bottom: 25px;">
+    Tải xuống
+  </button>
+  <div id="quiz-section" style="display:none; margin-top: 10px;">
+    <div class="status-bar">
+      <div><span id="timer">00:00</span></div>
+      <div>ㅤㅤ <span id="done-count">0</span></div>
+      <div>✅<span id="correct-count">0</span> | <strong>⛔</strong><span id="wrong-count">0</span></div>
+    </div>
+
+    <div id="question-block" class="question-container"></div>
+    <div id="answers-block" class="answers"></div>
+
+    <div id="essay-input-block" style="display:none;">
+      <textarea id="essay-answer" class="input-textarea" placeholder="Nhập câu trả lời của bạn..."></textarea>
+      <button id="btn-essay-submit" class="btn-small">Xong</button>
+    </div>
+
+    <div style="display:flex; justify-content: space-between; margin-top: 20px;">
+      <button id="btn-back-home-in-quiz" class="btn btn-small" style="background: var(--Green); width: 48%;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+      <button id="btn-next" class="btn btn-small" style="width: 48%;">Tiếp tục</button>
+    </div>
+  </div>
+
+  <div id="result-section" style="display:none; text-align:center; margin-top: 30px;">
+    <h2>KẾT THÚC BÀI LÀM</h2>
+    <div><strong>Tổng thời gian làm bài:</strong> <span id="result-time"></span></div>
+    <div><strong>Tổng số câu đã làm:</strong> <span id="result-total"></span></div>
+    <div><strong>Đúng:</strong><span id="result-correct"></span><strong> | </strong><strong>Sai:</strong><span id="result-wrong"></span></div>
+    <div id="star-rating" class="star-container"></div>
+    <div style="margin-top: 25px;">
+      <button id="btn-home" class="btn" style="display:inline-block; width:120px;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg> 
+      </button>
+      </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // --- QUESTION DATA ---
+  // Multiple choice questions [ABCD]
+const multiChoiceQuestions = [
+  {
+    q: "Câu nào sau đây nói về chuyển động của phân tử là không đúng?",
+    qImage: "media/anh7",
+    answers: [
+      { text: "Chuyển động của phân tử là do lực tương tác phân tử gây ra.", correct: true, image: null },
+      { text: "Các phân tử chuyển động không ngừng.", correct: false, image: null },
+      { text: "Các phân tử chuyển động càng nhanh thì nhiệt độ của vật càng cao.", correct: false, image: null },
+      { text: "Các phân tử khí không dao động quanh vị trí cân bằng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Câu nào sau đây nói về lực tương tác phân tử là không đúng?",
+    qImage: null,
+    answers: [
+      { text: "Lực phân tử chỉ đáng kể khi các phân tử ở rất gần nhau.", correct: false, image: null },
+      { text: "Lực hút phân tử có thể lớn hơn lực đẩy phân tử.", correct: false, image: null },
+      { text: "Lực hút phân tử không thể lớn hơn lực đẩy phân tử.", correct: true, image: null },
+      { text: "Lực hút phân tử có thể bằng lực đẩy phân tử.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong các tính chất sau, tính chất nào là của các phân tử chất rắn?",
+    qImage: null,
+    answers: [
+      { text: "Không có hình dạng cố định.", correct: false, image: null },
+      { text: "Chiếm toàn bộ thể tích của bình chứa.", correct: false, image: null },
+      { text: "Có lực tương tác phân tử lớn", correct: true, image: null },
+      { text: "Chuyển động hỗn loạn không ngừng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Điều nào sau đây đúng khi nói về cấu tạo chất?",
+    qImage: null,
+    answers: [
+      { text: "Các chất được cấu tạo từ các nguyên tử, phân tử.", correct: false, image: null },
+      { text: "Các nguyên tử, phân tử chuyển động hỗn độn không ngừng, các nguyên tử, phân tử chuyển động càng nhanh thì nhiệt độ của vật càng cao.", correct: false, image: null },
+      { text: "Các nguyên tử, phân tử đồng thời hút nhau và đẩy nhau.", correct: false, image: null },
+      { text: "Cả A, B, C đều đúng.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Đổ vào ba bình có cùng diện tích đáy một lượng nước như nhau, đun ở điều kiện như nhau thì:",
+    qImage: "media/anh1.png", // need image (Hình 1.1)
+    answers: [
+      { text: "Bình A sôi nhanh nhất.", correct: true, image: null },
+      { text: "Bình B sôi nhanh nhất.", correct: false, image: null },
+      { text: "Bình C sôi nhanh nhất.", correct: false, image: null },
+      { text: "Ba bình sôi cùng nhau vì có cùng diện tích đáy.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Các tính chất nào sau đây là tính chất của các phân tử chất lỏng?",
+    qImage: "media/anh3.png",
+    answers: [
+      { text: "Chuyển động không ngừng theo mọi phương", correct: false, image: null },
+      { text: "Hình dạng phụ thuộc bình chứa", correct: true, image: null },
+      { text: "Lực tương tác phân tử yếu.", correct: false, image: null },
+      { text: "Các tính chất A, B, C.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao khi cầm vào vỏ bình ga mini đang sử dụng ta thường thấy có một lớp nước rất mỏng trên đó?",
+    qImage: "media/anh12.png", // need image
+    answers: [
+      { text: "Do hơi nước từ tay ta bốc ra.", correct: false, image: null },
+      { text: "Nước từ trong bình ga thấm ra.", correct: false, image: null },
+      { text: "Do vỏ bình ga lạnh hơn nhiệt độ môi trường nên hơi nước trong không khí ngưng tụ trên đó.", correct: true, image: null },
+      { text: "Cả B và C đều đúng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Các tính chất nào sau đây là tính chất của các phân tử chất rắn?",
+    qImage: "media/anh24.png", // need image
+    answers: [
+      { text: "Dao động quanh vị trí cân bằng", correct: true, image: null },
+      { text: "Lực tương tác phân tử mạnh.", correct: false, image: null }, // Following the provided solution key in the document
+      { text: "Có hình dạng và thể tích xác định", correct: false, image: null },
+      { text: "Các tính chất A, B, C.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chất rắn vô định hình có đặc tính sau:",
+    qImage: "media/anh57.jpg",
+    answers: [
+      { text: "Đẳng hướng và nóng chảy ở nhiệt độ không xác định", correct: true, image: null },
+      { text: "Dị hướng và nóng chảy ở nhiệt độ xác định", correct: false, image: null },
+      { text: "Dị hướng và nóng chảy ở nhiệt độ không xác định", correct: false, image: null },
+      { text: "Đẳng hướng và nóng chảy ở nhiệt độ xác định", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong các hiện tượng sau đây, hiện tượng nào không liên quan đến sự đông đặc?",
+    qImage: null, // need image
+    answers: [
+      { text: "Tuyết rơi", correct: false, image: "media/anh23.png" },
+      { text: "Đúc tượng đồng", correct: false, image: "media/anh22.png" },
+      { text: "Làm đá trong tủ lạnh", correct: false, image: "media/anh21.png" },
+      { text: "Rèn thép trong lò rèn", correct: true, image: "media/anh20.png" }
+    ]
+  },
+  {
+    q: "Chất rắn nào dưới đây là chất rắn vô định hình?",
+    qImage: null, // need image
+    answers: [
+      { text: "Thủy tinh", correct: true, image: "media/anh19.png" },
+      { text: "Băng phiến", correct: false, image: "media/anh18.png" },
+      { text: "Hợp kim", correct: false, image: "media/anh17.png" },
+      { text: "Kim loại", correct: false, image: "media/anh16.png" }
+    ]
+  },
+  {
+    q: "Đặc điểm và tính chất nào dưới đây liên quan đến chất rắn vô định hình ?",
+    qImage: null,
+    answers: [
+      { text: "Có dạng hình học xác định.", correct: false, image: null },
+      { text: "Có cấu trúc tinh thể.", correct: false, image: null },
+      { text: "có tính dị hướng.", correct: false, image: null },
+      { text: "không có nhiệt độ nóng chảy xác định.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Cho đồ thị biểu diễn sự thay đổi nhiệt độ theo thời gian của nước đá như hình vẽ. Thời gian nước đá tan từ phút nào:",
+    qImage: "media/anh15.png", // need image
+    answers: [
+      { text: "Từ phút thứ 6 đến phút thứ 10", correct: true, image: null },
+      { text: "Từ phút thứ 10 trở đi", correct: false, image: null },
+      { text: "Từ 0 đến phút thứ 6", correct: false, image: null },
+      { text: "Từ phút thứ 10 đến phút thứ 15", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong suốt thời gian sôi, nhiệt độ của chất lỏng",
+    qImage: "media/anh13.png",
+    answers: [
+      { text: "tăng dần lên", correct: false, image: null },
+      { text: "giảm dần đi", correct: false, image: null },
+      { text: "khi tăng khi giảm", correct: false, image: null },
+      { text: "không thay đổi", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Điều nào sau đây là sai khi nói về sự đông đặc?",
+    qImage: "media/anh14.png",
+    answers: [
+      { text: "Sự đông đặc là quá trình chuyển từ thể lỏng sang thể rắn.", correct: false, image: null },
+      { text: "Với một chất rắn, nhiệt độ đông đặc luôn nhỏ hơn nhiệt độ nóng chảy.", correct: true, image: null }, // This statement is incorrect, so it's the answer to "điều sai"
+      { text: "Trong suốt quá trình đông đặc, nhiệt độ của vật không thay đổi.", correct: false, image: null },
+      { text: "Nhiệt độ đông đặc của các chất thay đổi theo áp suất bên ngoài.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tốc độ bay hơi của chất lỏng không phụ thuộc vào yếu tố nào sau đây?",
+    qImage: null,
+    answers: [
+      { text: "Thể tích của chất lỏng.", correct: true, image: null },
+      { text: "Gió.", correct: false, image: null },
+      { text: "Nhiệt độ.", correct: false, image: null },
+      { text: "Diện tích mặt thoáng của chất lỏng", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chọn câu trả lời đúng. Trong sự nóng chảy và đông đặc của các chất rắn:",
+    qImage: null,
+    answers: [
+      { text: "Mỗi chất rắn nóng chảy ở một nhiệt độ xác định, không phụ thuộc vào áp suất bên ngoài.", correct: false, image: null },
+      { text: "Nhiệt độ đông đặc của chất rắn kết tinh không phụ thuộc áp suất bên ngoài", correct: false, image: null },
+      { text: "Mỗi chất rắn kết tinh nóng chảy và đông đặc ở cùng một nhiệt độ xác định trong điều kiện áp suất xác định.", correct: true, image: null },
+      { text: "Mỗi chất rắn nóng chảy ở nhiệt độ nào thì cũng sẽ đông đặc ở nhiệt độ đó.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tính chất nào sau đây không phải là của phân tử?",
+    qImage: null,
+    answers: [
+      { text: "Có lúc đứng yên, có lúc chuyển động.", correct: true, image: null },
+      { text: "Chuyển động không ngừng.", correct: false, image: null },
+      { text: "Chuyển động càng nhanh thì nhiệt độ của vật càng cao.", correct: false, image: null },
+      { text: "Va chạm vào thành bình, gây áp suất lên thành bình.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Các tính chất nào sau đây không là tính chất của các phân tử chất lỏng?",
+    qImage: null,
+    answers: [
+      { text: "Chuyển động không ngừng theo mọi phương", correct: false, image: null },
+      { text: "Hình dạng phụ thuộc bình chứa", correct: true, image: null }, // This is a macroscopic property, not molecular. So it is NOT a property of molecules.
+      { text: "Lực tương tác phân tử lớn hơn chất khí.", correct: false, image: null },
+      { text: "Lực tương tác phân tử nhỏ hơn chất rắn", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chọn phương án đúng khi nói về các tính chất của chất khí",
+    qImage: null,
+    answers: [
+      { text: "Bành trướng là chiếm một phần thể tích của bình chứa", correct: false, image: null },
+      { text: "Khi áp suất tác dụng lên một lượng khí tăng thì thể tích của khí tăng đáng kể", correct: false, image: null },
+      { text: "Chất khí có tính dễ nén", correct: true, image: null },
+      { text: "Chất khí có khối lượng riêng lớn so với chất rắn và chất lỏng", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chọn phương án sai khi nói về các tính chất của chất khí",
+    qImage: null,
+    answers: [
+      { text: "Bành trưởng là chiếm một phần thể tích của bình chứa", correct: true, image: null }, // This statement is false, so it's the answer for "chọn sai"
+      { text: "Khi áp suất tác dụng lên một lượng khí tăng thì thể tích của khí giảm đáng kể.", correct: false, image: null },
+      { text: "Chất khí có tính dễ nén", correct: false, image: null },
+      { text: "Chất khí có khối lượng riêng nhỏ so với chất rắn và chất lỏng", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Vật rắn tinh thể có đặc tính nào sau đây?",
+    qImage: null,
+    answers: [
+      { text: "Có cấu trúc tinh thể, có tính dị hướng, có nhiệt độ nóng chảy xác định.", correct: false, image: null },
+      { text: "Có cấu trúc tinh thể, có tính đẳng hướng, có nhiệt độ nóng chảy xác định.", correct: false, image: null },
+      { text: "Có cấu trúc tinh thể, có tính đẳng hướng hoặc dị hướng, không có nhiệt độ nóng chảy xác định.", correct: false, image: null },
+      { text: "Có cấu trúc mạng tinh thể, có tính đẳng hướng hoặc dị hướng, có nhiệt độ nóng chảy xác định.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Vật nào sau đây không có cấu trúc tinh thể?",
+    qImage: null,
+    answers: [
+      { text: "Chiếc cốc thuỷ tinh.", correct: true, image: "media/anh35.png" },
+      { text: "Hạt muối ăn.", correct: false, image: "media/anh34.png" },
+      { text: "Viên kim cương.", correct: false, image: "media/anh33.png" },
+      { text: "Miếng thạch anh.", correct: false, image: "media/anh32.png" }
+    ]
+  },
+  {
+    q: "Hiện tượng vào mùa đông ở các nước vùng băng tuyết thường xảy ra sự cố vỡ đường ống nước là do:",
+    qImage: "media/anh31.png", // need image
+    answers: [
+      { text: "tuyết rơi nhiều đè nặng thành ống.", correct: false, image: null },
+      { text: "thể tích nước khi đông đặc tăng lên gây ra áp lực lớn lên thành ống.", correct: true, image: null },
+      { text: "trời lạnh làm đường ống bị cứng dòn và rạn nứt.", correct: false, image: null },
+      { text: "các phương án đưa ra đều sai.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong các câu so sánh nhiệt độ nóng chảy và nhiệt độ đông đặc của nước dưới đây, câu nào đúng?",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt độ nóng chảy cao hơn nhiệt độ đông đặc.", correct: false, image: null },
+      { text: "Nhiệt độ nóng chảy thấp hơn nhiệt độ đông đặc.", correct: false, image: null },
+      { text: "Nhiệt độ nóng chảy có thể cao hơn, cũng có thể thấp hơn nhiệt độ đông đặc.", correct: false, image: null },
+      { text: "Nhiệt độ nóng chảy bằng nhiệt độ đông đặc.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt độ đông đảo của rượu là -117°C, của thủy ngân là -38,83°C. Ở nước lạnh người ta dùng nhiệt kế rượu hay nhiệt kế thủy ngân? Vì sao?",
+    qImage: "media/anh37.png", // need image
+    answers: [
+      { text: "Dùng nhiệt kế thủy ngân vì nhiệt kế thủy ngân rất chính xác.", correct: false, image: null },
+      { text: "Dùng nhiệt kế thủy ngân vì nhiệt độ đông đặc của thủy ngân cao hơn nhiệt độ đông đặc của rượu.", correct: false, image: null },
+      { text: "Dùng nhiệt kế thủy ngân vì ở âm vài chục °C rượu bay hơi hết.", correct: false, image: null },
+      { text: "Dùng nhiệt kế rượu vì nhiệt kế rượu có thể đo nhiệt độ môi trường -50°C.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Khi trời lạnh, ô tô có bật điều hòa và đóng kín cửa, hành khách ngồi trên ô tô thấy hiện tượng gì?",
+    qImage: "media/anh29.png", // need image
+    answers: [
+      { text: "Nước bốc hơi trên xe.", correct: false, image: null },
+      { text: "Hơi nước ngưng tụ tạo thành giọt nước phía trong kính xe.", correct: true, image: null },
+      { text: "Hơi nước ngưng tụ tạo thành giọt nước phía ngoài kính xe.", correct: false, image: null },
+      { text: "Không có hiện tượng gì", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trường hợp nào sau đây không liên quan đến sự nóng chảy và đông đặc?",
+    qImage: null, // need image
+    answers: [
+      { text: "Ngọn nến vừa tắt", correct: false, image: "media/anh45.png" },
+      { text: "Ngọn nến đang cháy", correct: false, image: "media/anh44.png" },
+      { text: "Cục nước đá lấy ra khỏi tủ lạnh", correct: false, image: "media/anh43.png" },
+      { text: "ngọn đèn dầu đang cháy", correct: true, image: "media/anh42.png" }
+    ]
+  },
+  {
+    q: "Mây được tạo thành từ?",
+    qImage: null, // need image
+    answers: [
+      { text: "Nước bay hơi", correct: false, image: "media/anh41.png" },
+      { text: "Khói", correct: false, image: "media/anh40.png" },
+      { text: "Nước đông đặc", correct: false, image: "media/anh39.png" },
+      { text: "Hơi nước ngưng tụ", correct: true, image: "media/anh38.png" }
+    ]
+  },
+  {
+    q: "Các chất được cấu tạo từ những hạt riêng biệt nào?",
+    qImage: "media/anh6.png",
+    answers: [
+      { text: "Phân tử", correct: true, image: null }, // Based on "I – TÓM TẮT LÝ THUYẾT", section 1, page 1
+      { text: "Nguyên tử", correct: false, image: null },
+      { text: "Ion", correct: false, image: null },
+      { text: "Electron", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi nhiệt độ của một chất tăng, tốc độ chuyển động của các phân tử cấu tạo nên chất đó sẽ như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Giảm", correct: false, image: null },
+      { text: "Tăng", correct: true, image: null },
+      { text: "Không thay đổi", correct: false, image: null },
+      { text: "Dao động", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Giữa các phân tử có lực gì?",
+    qImage: "media/anh6.png",
+    answers: [
+      { text: "Lực đẩy", correct: false, image: null },
+      { text: "Lực liên kết phân tử", correct: true, image: null },
+      { text: "Lực trọng trường", correct: false, image: null },
+      { text: "Lực hút", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khoảng cách giữa các phân tử trong chất khí như thế nào so với chất rắn?",
+    qImage: "media/anh5.png",
+    answers: [
+      { text: "Lớn hơn nhiều", correct: true, image: null },
+      { text: "Nhỏ hơn nhiều", correct: false, image: null },
+      { text: "Bằng nhau", correct: false, image: null },
+      { text: "Không xác định", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi các phân tử chất lỏng nhận đủ năng lượng để bứt ra khỏi khối chất lỏng, quá trình gì xảy ra?",
+    qImage: null,
+    answers: [
+      { text: "Sôi", correct: true, image: null },
+      { text: "Bay hơi", correct: false, image: null },
+      { text: "Đông đặc", correct: false, image: null },
+      { text: "Ngưng tụ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong chất rắn, các phân tử chuyển động như thế nào?",
+    qImage: "media/anh4.png",
+    answers: [
+      { text: "Dao động quanh vị trí cân bằng cố định", correct: true, image: null },
+      { text: "Chuyển động hỗn loạn", correct: false, image: null },
+      { text: "Di chuyển tự do", correct: false, image: null },
+      { text: "Chuyển động theo hình tròn", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Quá trình chuyển từ thể lỏng sang thể khí được gọi là gì?",
+    qImage: null,
+    answers: [
+      { text: "Hóa hơi", correct: true, image: null },
+      { text: "Đông đặc", correct: false, image: null },
+      { text: "Nóng chảy", correct: false, image: null },
+      { text: "Ngưng tụ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi các phân tử chất lỏng nhận năng lượng đủ lớn để thắng lực hút của các phân tử khác và thoát ra khỏi mặt thoáng của chất lỏng, quá trình gì xảy ra?",
+    qImage: null,
+    answers: [
+      { text: "Bay hơi", correct: true, image: null },
+      { text: "Sôi", correct: false, image: null },
+      { text: "Đông đặc", correct: false, image: null },
+      { text: "Ngưng tụ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chất nào dưới đây có khả năng chuyển trực tiếp từ thể rắn sang thể hơi khi nhận nhiệt?",
+    qImage: null,
+    answers: [
+      { text: "Nước", correct: false, image: null },
+      { text: "I-ốt", correct: true, image: null },
+      { text: "Kim loại", correct: false, image: null },
+      { text: "Nhựa", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Quá trình chuyển từ thể rắn sang thể lỏng được gọi là gì?",
+    qImage: null,
+    answers: [
+      { text: "Hóa hơi", correct: false, image: null },
+      { text: "Đông đặc", correct: false, image: null },
+      { text: "Nóng chảy", correct: true, image: null },
+      { text: "Ngưng tụ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Lực liên kết giữa các phân tử của chất rắn kết tinh mạnh hay yếu hơn so với chất lỏng?",
+    qImage: null,
+    answers: [
+      { text: "Mạnh hơn", correct: true, image: null },
+      { text: "Yếu hơn", correct: false, image: null },
+      { text: "Bằng nhau", correct: false, image: null },
+      { text: "Không xác định", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi nước sôi, sự hóa hơi xảy ra ở đâu?",
+    qImage: null,
+    answers: [
+      { text: "Chỉ ở bề mặt chất lỏng", correct: false, image: null },
+      { text: "Chỉ trong lòng chất lỏng", correct: false, image: null },
+      { text: "Chỉ ở mặt ngoài của vật chứa", correct: false, image: null },
+      { text: "Cả trong lòng và bề mặt chất lỏng", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Tại sao các phân tử trong chất khí có thể chuyển động tự do?",
+    qImage: null,
+    answers: [
+      { text: "Lực liên kết giữa các phân tử rất mạnh", correct: false, image: null },
+      { text: "Lực liên kết giữa các phân tử không tồn tại", correct: false, image: null },
+      { text: "Khoảng cách giữa các phân tử rất gần nhau", correct: false, image: null },
+      { text: "Khoảng cách giữa các phân tử rất xa nhau", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Quá trình chuyển từ thể rắn sang thể khí mà không qua thể lỏng được gọi là gì?",
+    qImage: null,
+    answers: [
+      { text: "Thăng hoa", correct: true, image: null },
+      { text: "Đông đặc", correct: false, image: null },
+      { text: "Hóa hơi", correct: false, image: null },
+      { text: "Ngưng tụ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi các phân tử chất rắn nhận nhiệt lượng và dao động mạnh lên, quá trình gì có thể xảy ra?",
+    qImage: null,
+    answers: [
+      { text: "Nóng chảy", correct: true, image: null },
+      { text: "Đông đặc", correct: false, image: null },
+      { text: "Hóa hơi", correct: false, image: null },
+      { text: "Ngưng tụ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong chất lỏng, các phân tử sắp xếp như thế nào so với chất rắn?",
+    qImage: null,
+    answers: [
+      { text: "Trật tự hơn", correct: false, image: null },
+      { text: "Kém trật tự hơn", correct: true, image: null },
+      { text: "Bằng nhau", correct: false, image: null },
+      { text: "Không có trật tự", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự chuyển từ thể lỏng sang thể rắn được gọi là gì?",
+    qImage: null,
+    answers: [
+      { text: "Đông đặc", correct: true, image: null },
+      { text: "Nóng chảy", correct: false, image: null },
+      { text: "Hóa hơi", correct: false, image: null },
+      { text: "Ngưng tụ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao chất rắn có thể duy trì hình dạng xác định?",
+    qImage: null,
+    answers: [
+      { text: "Do các phân tử sắp xếp không trật tự", correct: false, image: null },
+      { text: "Do không có lực liên kết giữa các phân tử", correct: false, image: null },
+      { text: "Do các phân tử chuyển động tự do", correct: false, image: null },
+      { text: "Do các phân tử sắp xếp trật tự và lực liên kết mạnh", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Chất rắn vô định hình khác với chất rắn kết tinh như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Không có cấu trúc tinh thể", correct: true, image: null },
+      { text: "Có nhiệt độ nóng chảy xác định", correct: false, image: null },
+      { text: "Có cấu trúc tinh thể", correct: false, image: null },
+      { text: "Có nhiệt độ sôi xác định", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi chất lỏng bị đun sôi, các phân tử nhận năng lượng và chuyển động mạnh hơn, bứt ra khỏi khối chất lỏng và trở thành gì?",
+    qImage: null,
+    answers: [
+      { text: "Phân tử rắn", correct: false, image: null },
+      { text: "Phân tử lỏng", correct: false, image: null },
+      { text: "Phân tử khí", correct: true, image: null },
+      { text: "Phân tử plasma", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự thăng hoa là hiện tượng chất rắn chuyển trực tiếp sang thể khí mà không qua pha lỏng, ví dụ như?",
+    qImage: null,
+    answers: [
+      { text: "I-ốt", correct: true, image: null },
+      { text: "Nước", correct: false, image: null },
+      { text: "Kim loại", correct: false, image: null },
+      { text: "Nhựa", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi nhiệt độ tăng, các phân tử trong chất rắn dao động như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Mạnh hơn", correct: true, image: null },
+      { text: "Yếu hơn", correct: false, image: null },
+      { text: "Không thay đổi", correct: false, image: null },
+      { text: "Giảm", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Lực liên kết giữa các phân tử trong chất khí có đặc điểm nào sau đây?",
+    qImage: null,
+    answers: [
+      { text: "Rất yếu", correct: true, image: null },
+      { text: "Rất mạnh", correct: false, image: null },
+      { text: "Trung bình", correct: false, image: null },
+      { text: "Không tồn tại", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Quá trình chuyển từ chất rắn sang chất lỏng được gọi là gì?",
+    qImage: null,
+    answers: [
+      { text: "Nóng chảy", correct: true, image: null },
+      { text: "Đông đặc", correct: false, image: null },
+      { text: "Hóa hơi", correct: false, image: null },
+      { text: "Ngưng tụ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần thiết để tăng nhiệt độ nước đá từ -10°C đến 0°C và sau đó làm tan chảy nó bao gồm những gì?",
+    qImage: null,
+    answers: [
+      { text: "Năng lượng để tăng nhiệt độ", correct: false, image: null },
+      { text: "Năng lượng để phá vỡ các liên kết tinh thể", correct: false, image: null },
+      { text: "Năng lượng để giảm nhiệt độ", correct: false, image: null },
+      { text: "Cả A và B", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Một chất lỏng trong bình đậy kín vẫn có thể bay hơi vì sao?",
+    qImage: null,
+    answers: [
+      { text: "Các phân tử nhận năng lượng và thoát ra khỏi chất lỏng", correct: true, image: null },
+      { text: "Các phân tử không thoát ra khỏi bình", correct: false, image: null },
+      { text: "Các phân tử không nhận năng lượng", correct: false, image: null },
+      { text: "Các phân tử thoát ra khỏi chất lỏng và bình", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi chất lỏng sôi, sự hóa hơi xảy ra ở đâu?",
+    qImage: null,
+    answers: [
+      { text: "Chỉ ở bề mặt chất lỏng", correct: false, image: null },
+      { text: "Chỉ trong lòng chất lỏng", correct: false, image: null },
+      { text: "Chỉ ở mặt ngoài của vật chứa", correct: false, image: null },
+      { text: "Cả trong lòng và bề mặt chất lỏng", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Sự đông đặc là hiện tượng chuyển từ thể nào sang thể nào?",
+    qImage: null,
+    answers: [
+      { text: "Lỏng sang rắn", correct: true, image: null },
+      { text: "Rắn sang lỏng", correct: false, image: null },
+      { text: "Khí sang lỏng", correct: false, image: null },
+      { text: "Lỏng sang khí", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Lực liên kết giữa các phân tử trong chất lỏng như thế nào so với chất khí và chất rắn?",
+    qImage: null,
+    answers: [
+      { text: "Mạnh hơn chất khí nhưng yếu hơn chất rắn", correct: true, image: null },
+      { text: "Mạnh hơn chất rắn nhưng yếu hơn chất khí", correct: false, image: null },
+      { text: "Bằng chất khí", correct: false, image: null },
+      { text: "Bằng chất rắn", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong mô hình động học phân tử, tại sao các phân tử khí ở trạng thái cân bằng không bao giờ ngừng chuyển động?",
+    qImage: null,
+    answers: [
+      { text: "Vì nhiệt độ không thể đạt đến giá trị tuyệt đối.", correct: true, image: null },
+      { text: "Vì các phân tử luôn có năng lượng nhiệt.", correct: false, image: null },
+      { text: "Vì lực liên kết giữa các phân tử khí không tồn tại.", correct: false, image: null },
+      { text: "Vì các phân tử khí có khối lượng rất nhỏ.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao khi nước sôi, sự hóa hơi xảy ra đồng thời ở cả bề mặt và trong lòng chất lỏng?",
+    qImage: null,
+    answers: [
+      { text: "Do sự giảm áp suất tại bề mặt chất lỏng.", correct: false, image: null },
+      { text: "Do nhiệt độ trong toàn bộ khối chất lỏng đạt điểm sôi.", correct: true, image: null },
+      { text: "Do áp suất trong lòng chất lỏng thấp hơn áp suất khí quyển.", correct: false, image: null },
+      { text: "Do các phân tử nước đồng thời nhận đủ năng lượng để chuyển sang thể khí.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự chênh lệch áp suất hơi bão hòa giữa các chất lỏng khác nhau phụ thuộc vào yếu tố nào?",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt độ.", correct: false, image: null },
+      { text: "Khối lượng phân tử.", correct: false, image: null },
+      { text: "Lực liên kết giữa các phân tử.", correct: true, image: null },
+      { text: "Áp suất khí quyển.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao trong quá trình thăng hoa, năng lượng cần thiết để chuyển trạng thái lại lớn hơn so với quá trình nóng chảy?",
+    qImage: null,
+    answers: [
+      { text: "Vì cần phá vỡ hoàn toàn lực liên kết trong cấu trúc rắn.", correct: true, image: null },
+      { text: "Vì phải cung cấp năng lượng để chuyển từ rắn sang lỏng trước rồi mới chuyển sang khí.", correct: false, image: null },
+      { text: "Vì các phân tử phải đạt mức năng lượng cao hơn để thoát ra khỏi bề mặt chất rắn.", correct: false, image: null },
+      { text: "Vì sự chuyển trạng thái đòi hỏi sự tăng nhiệt độ đáng kể.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tại sao áp suất hơi bão hòa của một chất lỏng phụ thuộc vào nhiệt độ nhưng không phụ thuộc vào thể tích của chất lỏng?",
+    qImage: null,
+    answers: [
+      { text: "Vì nhiệt độ ảnh hưởng trực tiếp đến động năng của các phân tử.", correct: true, image: null },
+      { text: "Vì thể tích không ảnh hưởng đến sự phân bố năng lượng của các phân tử.", correct: false, image: null },
+      { text: "Vì nhiệt độ ảnh hưởng đến tốc độ thoát hơi của các phân tử.", correct: false, image: null },
+      { text: "Vì thể tích không ảnh hưởng đến khả năng bão hòa hơi của chất lỏng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong hiện tượng ngưng tụ, tại sao các phân tử khí khi mất năng lượng lại chuyển sang thể lỏng?",
+    qImage: null,
+    answers: [
+      { text: "Vì lực liên kết giữa các phân tử trở nên mạnh hơn.", correct: false, image: null },
+      { text: "Vì động năng của các phân tử giảm xuống dưới mức cần thiết để duy trì trạng thái khí.", correct: true, image: null },
+      { text: "Vì nhiệt độ của hệ thống giảm xuống.", correct: false, image: null },
+      { text: "Vì các phân tử khí cần sắp xếp lại thành cấu trúc trật tự hơn.", correct: false, image: null }
+    ]
+  }
+];
+
+// True/False questions [D/S]
+const trueFalseQuestions = [
+  {
+    q: "Khi nhiệt độ tăng, điều gì xảy ra với các phân tử trong chất rắn?",
+    qImage: null,
+    answers: [
+      { text: "Chuyển động của các phân tử tăng lên", correct: true, image: null },
+      { text: "Lực hút giữa các phân tử giảm", correct: true, image: null },
+      { text: "Khoảng cách giữa các phân tử tăng lên đáng kể", correct: false, image: null },
+      { text: "Các phân tử ngừng chuyển động", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự bay hơi là quá trình gì?",
+    qImage: null,
+    answers: [
+      { text: "Sự hóa hơi xảy ra ở mặt thoáng của chất lỏng", correct: true, image: null },
+      { text: "Chất lỏng chuyển thành chất khí ở bề mặt", correct: true, image: null },
+      { text: "Chất lỏng chuyển thành chất rắn ở bề mặt", correct: false, image: null },
+      { text: "Sự hóa hơi xảy ra ở toàn bộ khối chất lỏng", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hiện tượng nào sau đây mô tả sự thăng hoa?",
+    qImage: null,
+    answers: [
+      { text: "Iodine chuyển từ rắn sang khí mà không qua pha lỏng", correct: true, image: null },
+      { text: "Băng khô (CO2 rắn) chuyển từ rắn sang khí", correct: true, image: null },
+      { text: "Nước đóng băng", correct: false, image: null },
+      { text: "Kim loại nóng chảy", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chất lỏng có đặc điểm nào sau đây?",
+    qImage: null,
+    answers: [
+      { text: "Hình dạng phụ thuộc vào bình chứa", correct: true, image: null },
+      { text: "Thể tích xác định", correct: true, image: null },
+      { text: "Hình dạng xác định", correct: false, image: null },
+      { text: "Thể tích thay đổi theo bình chứa", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự ngưng tụ là quá trình gì?",
+    qImage: null,
+    answers: [
+      { text: "Chuyển từ thể khí sang thể lỏng", correct: true, image: null },
+      { text: "Chuyển từ thể rắn sang thể khí", correct: false, image: null },
+      { text: "Chuyển từ thể lỏng sang thể khí", correct: false, image: null },
+      { text: "Chuyển từ thể khí sang thể rắn", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Lực liên kết giữa các phân tử chất lỏng có đặc điểm nào sau đây?",
+    qImage: null,
+    answers: [
+      { text: "Mạnh hơn chất khí", correct: true, image: null },
+      { text: "Yếu hơn chất rắn", correct: true, image: null },
+      { text: "Không tồn tại", correct: false, image: null },
+      { text: "Mạnh nhất trong các thể", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong quá trình nóng chảy, chất rắn:",
+    qImage: null,
+    answers: [
+      { text: "Nhận nhiệt lượng và các phân tử dao động mạnh hơn", correct: true, image: null },
+      { text: "Nhận nhiệt lượng và các phân tử sắp xếp trật tự hơn", correct: false, image: null },
+      { text: "Nhiệt độ tăng đến khi các phân tử thắng được lực liên kết", correct: true, image: null },
+      { text: "Nhiệt độ giảm xuống và các phân tử dao động yếu hơn", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chất rắn kết tinh khác với chất rắn vô định hình ở điểm nào?",
+    qImage: null,
+    answers: [
+      { text: "Có cấu trúc tinh thể", correct: true, image: null },
+      { text: "Có nhiệt độ nóng chảy xác định", correct: true, image: null },
+      { text: "Không có cấu trúc tinh thể", correct: false, image: null },
+      { text: "Không có nhiệt độ nóng chảy xác định", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi một lượng chất lỏng bị đun sôi, điều gì xảy ra với các phân tử của nó?",
+    qImage: null,
+    answers: [
+      { text: "Nhận năng lượng và chuyển động mạnh hơn", correct: true, image: null },
+      { text: "Bứt ra khỏi khối chất lỏng và trở thành phân tử khí", correct: true, image: null },
+      { text: "Tạo ra một cấu trúc tinh thể mới", correct: false, image: null },
+      { text: "Các phân tử sắp xếp có trật tự hơn", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hiện tượng nào sau đây là ví dụ của sự thăng hoa?",
+    qImage: null,
+    answers: [
+      { text: "Iodine chuyển từ rắn sang khí", correct: true, image: null },
+      { text: "Băng phiến chuyển từ rắn sang khí", correct: true, image: null },
+      { text: "Kim loại nóng chảy", correct: false, image: null },
+      { text: "Nước ngưng tụ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi nhiệt độ của một chất rắn tăng lên, điều gì xảy ra với các phân tử của nó?",
+    qImage: null,
+    answers: [
+      { text: "Dao động mạnh hơn", correct: true, image: null },
+      { text: "Khoảng cách giữa các phân tử tăng lên", correct: true, image: null },
+      { text: "Các phân tử ngừng chuyển động", correct: false, image: null },
+      { text: "Lực hút giữa các phân tử tăng lên", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Lực liên kết giữa các phân tử trong chất khí có đặc điểm nào sau đây?",
+    qImage: null,
+    answers: [
+      { text: "Rất yếu", correct: true, image: null },
+      { text: "Khoảng cách giữa các phân tử rất xa nhau", correct: true, image: null },
+      { text: "Mạnh hơn chất lỏng", correct: false, image: null },
+      { text: "Các phân tử sắp xếp có trật tự", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự chuyển thể từ chất rắn sang chất lỏng được gọi là gì?",
+    qImage: null,
+    answers: [
+      { text: "Sự nóng chảy", correct: true, image: null },
+      { text: "Sự đông đặc", correct: false, image: null },
+      { text: "Sự ngưng tụ", correct: false, image: null },
+      { text: "Sự thăng hoa", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Dựa vào đồ thị Hình 1.5",
+    qImage: "media/anh56.png", // need image
+    answers: [
+      { text: "Nhiệt độ của chất lỏng tăng cho đến khi sôi là 100°C.", correct: false, image: null }, // Actual: 80°C
+      { text: "Thời gian cung cấp nhiệt lượng kể từ lúc đầu cho đến khi sôi là 130 giây.", correct: false, image: null }, // Actual: 60 giây
+      { text: "Tại thời điểm 80 giây thì nước đang sôi", correct: true, image: null },
+      { text: "Thời gian nước sôi là 70 giây", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Một chất lỏng trong bình đậy kín có thể bay hơi không? Tại sao?",
+    qImage: null,
+    answers: [
+      { text: "Có, vì các phân tử vẫn có thể thoát ra khỏi mặt thoáng", correct: true, image: null },
+      { text: "Không, vì các phân tử không thể thoát ra khỏi mặt thoáng", correct: false, image: null },
+      { text: "Có, vì các phân tử nhận năng lượng và thoát ra khỏi chất lỏng", correct: true, image: null },
+      { text: "Không, vì các phân tử bị giới hạn trong bình", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi một chất lỏng sôi, sự hóa hơi xảy ra ở đâu?",
+    qImage: null,
+    answers: [
+      { text: "Ở bề mặt chất lỏng", correct: true, image: null }, // This is technically true, but not the *only* place
+      { text: "Ở toàn bộ khối chất lỏng", correct: true, image: null },
+      { text: "Chỉ ở đáy bình", correct: false, image: null },
+      { text: "Chỉ ở mặt thoáng chất lỏng", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hiện tượng nào sau đây là ví dụ của sự đông đặc?",
+    qImage: null,
+    answers: [
+      { text: "Nước chuyển từ thể lỏng sang thể rắn", correct: true, image: null },
+      { text: "Thạch cao chuyển từ thể lỏng sang thể rắn", correct: true, image: null },
+      { text: "Iodine chuyển từ rắn sang khí", correct: false, image: null },
+      { text: "Kim loại chuyển từ lỏng sang rắn", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Trong mô hình động học phân tử, tại sao các phân tử chất khí lại có thể chuyển động hỗn loạn?",
+    qImage: null,
+    answers: [
+      { text: "Vì không có lực hút và lực đẩy giữa các phân tử khí.", correct: false, image: null },
+      { text: "Vì khoảng cách giữa các phân tử khí rất xa.", correct: true, image: null },
+      { text: "Vì nhiệt độ của chất khí luôn cao.", correct: false, image: null },
+      { text: "Vì các phân tử khí có năng lượng nhiệt lớn.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Chất lỏng có thể duy trì hình dạng của mình trong điều kiện nào?",
+    qImage: null,
+    answers: [
+      { text: "Khi ở trong bình chứa.", correct: true, image: null },
+      { text: "Khi chịu tác động của lực hấp dẫn.", correct: false, image: null },
+      { text: "Khi không chịu tác động của lực nào khác.", correct: false, image: null },
+      { text: "Khi nhiệt độ không thay đổi.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Tại sao lực hút và lực đẩy giữa các phân tử lại quan trọng trong việc hình thành cấu trúc của chất rắn?",
+    qImage: null,
+    answers: [
+      { text: "Vì chúng giữ các phân tử ở vị trí cố định.", correct: true, image: null },
+      { text: "Vì chúng tạo ra nhiệt độ của chất rắn.", correct: false, image: null },
+      { text: "Vì chúng ngăn cản sự bay hơi của phân tử.", correct: false, image: null },
+      { text: "Vì chúng giữ các phân tử cách xa nhau.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong điều kiện nhiệt độ tăng cao, chất rắn sẽ có hiện tượng gì?",
+    qImage: null,
+    answers: [
+      { text: "Các phân tử dao động mạnh hơn.", correct: true, image: null },
+      { text: "Khoảng cách giữa các phân tử tăng lên.", correct: true, image: null },
+      { text: "Lực tương tác giữa các phân tử tăng lên.", correct: false, image: null },
+      { text: "Chất rắn sẽ chuyển thành chất lỏng.", correct: true, image: null }
+    ]
+  }
+];
+
+// Essay questions [TL]
+const essayQuestions = [
+  {
+    q: "Dựa vào đồ thị sau trả lời câu hỏi. Ở nhiệt độ bao nhiêu độ C chất rắn bắt đầu nóng chảy?",
+    qImage: "media/anh49.png", // need image
+    answerRef: "Chất rắn bắt đầu nóng chảy ở 0°C.",
+    answerRefImage: null
+  },
+  {
+    q: "Thời gian nóng chảy trong bao nhiêu phút?",
+    qImage: "media/anh49.png", // need image
+    answerRef: "Thời gian nóng chảy là 4 phút (từ phút thứ 6 đến phút thứ 10 trên đồ thị).",
+    answerRefImage: null
+  },
+  {
+    q: "Một chất có thể có tối đa bao nhiêu sự chuyển thể?",
+    qImage: null,
+    answerRef: "Một chất thường có thể trải qua 2 sự chuyển thể chính (rắn, lỏng, khí). Có tổng cộng 6 quá trình chuyển thể phổ biến (nóng chảy, hoá hơi, ngưng tụ, đông đặc, thăng hoa, ngưng kết).",
+    answerRefImage: null
+  },
+  {
+    q: "Dựa vào đồ thị hình 1.7. Em hãy cho biết chất lỏng nóng chảy hoàn toàn được bao nhiêu giây?. 10->20->60->80",
+    qImage: "media/anh28.png", // need image (Hình 1.7. Đồ thị sự thay đổi nhiệt độ của chất rắn kết tinh khi được làm nóng chảy)
+    answerRef: "Thời gian nóng chảy diễn ra là 40 giây (từ giây 20 đến giây 60).",
+    answerRefImage: null
+  },
+  {
+    q: "Dựa vào đồ thị Hình 1.5. Hãy cho biết để thời gian nước sôi là bao lâu? biết t1=60s, t2=?",
+    qImage: "media/anh27.png", // need image (Hình 1.5. Đồ thị về sự thay đổi nhiệt độ của nước theo thời gian khi được đun sôi)
+    answerRef: "Đồ thị hiển thị nước đạt 100°C (bắt đầu sôi) tại 60 giây",
+    answerRefImage: null
+  },
+  {
+    q: "Tại sao thí nghiệm của Brown được coi là một trong những thí nghiệm chứng tỏ các phân tử chuyển động hỗn loạn không ngừng?",
+    qImage: "media/anh46.png", // need image
+    answerRef: "Các phân tử nước chuyển động hỗn độn không ngừng va chạm vào các hạt phấn hoa từ mọi phía.",
+    answerRefImage: null
+  },
+  {
+    q: "Hãy giải thích tại sao khi nhiệt độ trái đất tăng lên, mực nước biển sẽ dâng cao?",
+    qImage: "media/anh55.png", // need image
+    answerRef: "Có hai lý do chính: 1. Nhiệt độ Trái đất tăng lên làm cho nước biển giãn nở do nhiệt. 2. Một lượng lớn băng ở hai đầu cực bị tan chảy.",
+    answerRefImage: null
+  },
+  {
+    q: "Để chống biến đổi khí hậu mỗi chúng ta cần phải làm gì?",
+    qImage: "media/anh54.png", // need image
+    answerRef: "Chúng ta cần: 1. Sử dụng tiết kiệm năng lượng. 2. Tiết kiệm điện năng. 3. Tăng tỉ lệ sử dụng năng lượng sạch.",
+    answerRefImage: "media/anh51.png"
+  },
+  {
+    q: "Bảng dưới đây ghi nhiệt độ nóng chảy (đông đặc) của một số chất. Ở nhiệt độ phòng (khoảng 25°C ), chất nào ở thể rắn?\nChất: Đồng (1), Vàng (2), Bạc (3), Nước (4), Thủy ngân (5), Rượu (6)\nNhiệt độ nóng chảy (°C): 1083, 1063, 960, 0, -39, -114",
+    qImage: "media/anh58.jpg", // need image
+    answerRef: "Ở nhiệt độ phòng (25°C), các chất ở thể rắn là: Đồng, Vàng, Bạc (vì nhiệt độ nóng chảy của chúng cao hơn 25°C).",
+    answerRefImage: null
+  }
+];
+
+  // --- UTILITY FUNCTIONS ---
+  function shuffleArray(arr) {
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/</g, "‹")
+      .replace(/>/g, "›")
+      .replace(/"/g, "'");
+  }
+
+  // --- DOM ELEMENTS ---
+  const btnMulti = document.getElementById('btn-multi');
+  const btnTrueFalse = document.getElementById('btn-truefalse');
+  const btnEssay = document.getElementById('btn-essay');
+  const toggleThemeBtn = document.getElementById('toggle-theme');
+  const btnExit = document.getElementById('btn-exit'); 
+  const btnBackHomeInQuiz = document.getElementById('btn-back-home-in-quiz'); // Nút Back Home trong quiz
+  const btnDownload = document.getElementById('btn-download');
+
+  const quizSection = document.getElementById('quiz-section');
+  const questionBlock = document.getElementById('question-block');
+  const answersBlock = document.getElementById('answers-block');
+  const essayInputBlock = document.getElementById('essay-input-block');
+  const essayAnswerTextarea = document.getElementById('essay-answer');
+  const btnEssaySubmit = document.getElementById('btn-essay-submit');
+  const btnNext = document.getElementById('btn-next');
+
+  const timerSpan = document.getElementById('timer');
+  const doneCountSpan = document.getElementById('done-count');
+  const correctCountSpan = document.getElementById('correct-count');
+  const wrongCountSpan = document.getElementById('wrong-count');
+
+  const resultSection = document.getElementById('result-section');
+  const resultTime = document.getElementById('result-time');
+  const resultTotal = document.getElementById('result-total');
+  const resultCorrect = document.getElementById('result-correct');
+  const resultWrong = document.getElementById('result-wrong');
+  const starRating = document.getElementById('star-rating');
+
+  // const btnRestart = document.getElementById('btn-restart'); // Đã xóa khỏi HTML, nên bỏ dòng này hoặc comment lại
+  const btnHome = document.getElementById('btn-home');
+
+  // --- STATE VARIABLES ---
+  let quizType = null; // 'multi', 'truefalse', 'essay'
+  let questions = [];
+  let currentQIdx = 0;
+  let timerInterval = null;
+  let timeSeconds = 0;
+  let doneCount = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let currentTFAnswerIdx = 0;
+
+  // --- TIMER FUNCTIONS ---
+  function startTimer() {
+    timeSeconds = 0;
+    timerSpan.textContent = formatTime(timeSeconds);
+    if(timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeSeconds++;
+      timerSpan.textContent = formatTime(timeSeconds);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if(timerInterval) clearInterval(timerInterval);
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s/60);
+    const sec = s % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (sec < 10 ? '0' + sec : sec);
+  }
+
+  // --- QUIZ FUNCTIONS ---
+  function resetStats() {
+    doneCount = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    doneCountSpan.textContent = "0";
+    correctCountSpan.textContent = "0";
+    wrongCountSpan.textContent = "0";
+  }
+
+  function initQuiz(type) {
+    quizType = type;
+    currentQIdx = 0;
+    resetStats();
+
+    if(type === 'multi') {
+      questions = multiChoiceQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+    } else if(type === 'truefalse') {
+      questions = trueFalseQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+      currentTFAnswerIdx = 0;
+    } else if(type === 'essay') {
+      questions = essayQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answerRef: q.answerRef,
+        answerRefImage: q.answerRefImage
+      }));
+      shuffleArray(questions);
+    }
+    
+    quizSection.style.display = 'block';
+    resultSection.style.display = 'none';
+    btnMulti.style.display = 'none';
+    btnTrueFalse.style.display = 'none';
+    btnEssay.style.display = 'none';
+    btnExit.style.display = 'none'; // Ẩn nút Exit khi bắt đầu quiz
+    toggleThemeBtn.style.display = 'none'; // Ẩn nút chuyển theme khi vào quiz
+    btnDownload.style.display = 'none';
+
+    showQuestion();
+    startTimer();
+  }
+
+  function showQuestion() {
+    // Ẩn nút "Tiếp tục" nếu nó đang hiển thị
+    btnNext.style.display = 'none'; 
+    // Nếu là dạng tự luận, nút "Xong" (submit) sẽ được hiển thị, ngược lại ẩn
+    btnEssaySubmit.style.display = (quizType === 'essay') ? 'block' : 'none';
+    // Đảm bảo nút "Xong" được kích hoạt lại cho câu hỏi tự luận mới
+    btnEssaySubmit.disabled = false; 
+
+    answersBlock.innerHTML = ''; // Xóa các câu trả lời cũ
+    essayInputBlock.style.display = 'none'; // Ẩn khung nhập tự luận
+    essayAnswerTextarea.value = ''; // Xóa nội dung cũ trong khung tự luận
+    
+    if (currentQIdx >= questions.length) {
+      endQuiz();
+      return;
+    }
+
+    const currentQ = questions[currentQIdx];
+    
+    // Display question text and image (if any)
+    let questionHTML = `
+      <div style="color: var(--orange); font-weight: bold; margin-bottom: 15px;">
+        Câu ${currentQIdx + 1}: ${escapeHtml(currentQ.q)}
+      </div>
+    `;
+    
+    if (currentQ.qImage) {
+      questionHTML += `
+        <div style="text-align: center; margin: 15px 0;">
+          <img src="${currentQ.qImage}" 
+               style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;"
+               onerror="this.style.display='none'">
+        </div>
+      `;
+    }
+    
+    questionBlock.innerHTML = questionHTML;
+
+    if (quizType === 'multi') {
+      // Multiple choice questions
+      answersBlock.style.display = 'block';
+      currentQ.answers.forEach((ans, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        
+        let answerContent = `${String.fromCharCode(65 + i)}. ${escapeHtml(ans.text)}`;
+        
+        if (ans.image) {
+          answerContent += `
+            <div style="margin-top: 8px; text-align: center;">
+              <img src="${ans.image}" 
+                   style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 3px;"
+                   onerror="this.style.display='none'">
+            </div>
+          `;
+        }
+        
+        btn.innerHTML = answerContent;
+        btn.onclick = () => handleMultiAnswerClick(btn, ans.correct, currentQ.answers);
+        answersBlock.appendChild(btn);
+      });
+
+    } else if (quizType === 'truefalse') {
+      // True/False questions
+      answersBlock.style.display = 'block';
+      currentTFAnswerIdx = 0;
+      showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+      
+    } else if (quizType === 'essay') {
+      // Essay questions
+      essayInputBlock.style.display = 'block';
+    }
+  }
+
+  function handleMultiAnswerClick(btn, isCorrect, allAnswers) {
+    Array.from(answersBlock.children).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(isCorrect) {
+      btn.classList.add('correct');
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+    } else {
+      btn.classList.add('incorrect');
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      // Highlight correct answer
+      const correctAns = allAnswers.find(a => a.correct);
+      for(let b of answersBlock.children) {
+        // Cẩn thận với việc so sánh textContent trực tiếp nếu có hình ảnh
+        // Cần lấy chỉ phần text của câu trả lời
+        const btnText = b.childNodes[0].nodeType === 3 ? b.childNodes[0].nodeValue.substring(3).trim() : ''; // Lấy text trước hình ảnh
+        const correctText = escapeHtml(correctAns.text);
+
+        if(btnText === correctText && correctAns.correct) {
+          b.classList.add('correct');
+          break;
+        }
+      }
+    }
+    btnNext.style.display = 'inline-block';
+  }
+
+  function showTrueFalseAnswer(answerObj) {
+    answersBlock.innerHTML = '';
+
+    const label = document.createElement('div');
+    label.style.marginBottom = '10px';
+    label.style.fontWeight = 'bold';
+    label.textContent = `Câu hỏi phụ ${currentTFAnswerIdx + 1}: ${answerObj.text}`;
+    answersBlock.appendChild(label);
+
+    if (answerObj.image) {
+      const imgDiv = document.createElement('div');
+      imgDiv.style.textAlign = 'center';
+      imgDiv.style.margin = '10px 0';
+      imgDiv.innerHTML = `<img src="${answerObj.image}" style="max-width: 100%; max-height: 200px; border: 1px solid #ccc; border-radius: 3px;" onerror="this.style.display='none'">`;
+      answersBlock.appendChild(imgDiv);
+    }
+
+    const btnTrue = document.createElement('button');
+    btnTrue.className = 'answer-btn';
+    btnTrue.textContent = 'Đúng';
+    btnTrue.onclick = () => handleTrueFalseAnswerClick(true, answerObj.correct);
+    answersBlock.appendChild(btnTrue);
+    
+    const btnFalse = document.createElement('button');
+    btnFalse.className = 'answer-btn';
+    btnFalse.textContent = 'Sai';
+    btnFalse.onclick = () => handleTrueFalseAnswerClick(false, answerObj.correct);
+    answersBlock.appendChild(btnFalse);
+  }
+
+  function handleTrueFalseAnswerClick(userAnswer, correctAnswer) {
+    Array.from(answersBlock.querySelectorAll('button')).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(userAnswer === correctAnswer) {
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    } else {
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('incorrect');
+        }
+        if(b.textContent.toLowerCase() === (correctAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    }
+
+    btnNext.style.display = 'inline-block';
+  }
+
+  // Essay submit handler
+  btnEssaySubmit.onclick = () => {
+    const userText = essayAnswerTextarea.value.trim();
+    if(userText.length === 0) {
+      alert('Hãy nhập câu trả lời trước khi nhấn "Xong"');
+      return;
+    }
+    btnEssaySubmit.disabled = true; // Vô hiệu hóa nút "Xong" sau khi submit
+    
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    const currentQ = questions[currentQIdx];
+    let answerRefHTML = `<br><br><em><strong>Đáp án tham khảo:</strong> ${currentQ.answerRef}</em>`;
+    
+    if(currentQ.answerRefImage) {
+      answerRefHTML += `<div style="margin: 15px 0; text-align: center;">
+        <img src="${currentQ.answerRefImage}" style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;">
+      </div>`;
+    }
+    
+    questionBlock.innerHTML += answerRefHTML;
+    btnNext.style.display = 'inline-block';
+  };
+
+  btnNext.onclick = () => {
+    // Ẩn nút "Tiếp tục"
+    btnNext.style.display = 'none';
+    // Đảm bảo nút "Xong" (essay) được kích hoạt lại
+    btnEssaySubmit.disabled = false; 
+
+    if(quizType === 'truefalse') {
+      currentTFAnswerIdx++;
+      const currentQ = questions[currentQIdx];
+      // Nếu còn câu hỏi phụ trong câu hỏi Đúng/Sai hiện tại
+      if(currentTFAnswerIdx < currentQ.answers.length) {
+        showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+        return; // Không chuyển sang câu hỏi tiếp theo mà hiển thị câu phụ
+      }
+    }
+
+    // Chuyển sang câu hỏi tiếp theo
+    currentQIdx++;
+    showQuestion();
+  };
+
+  function endQuiz() {
+    stopTimer();
+    quizSection.style.display = 'none';
+    resultSection.style.display = 'block';
+    toggleThemeBtn.style.display = 'block'; // Hiển thị lại nút chuyển theme
+
+    resultTime.textContent = formatTime(timeSeconds);
+    resultTotal.textContent = doneCount;
+    resultCorrect.textContent = correctCount;
+    resultWrong.textContent = wrongCount;
+
+    starRating.innerHTML = '';
+
+    // Logic tính sao đã được khôi phục và tinh chỉnh
+    if(quizType === 'multi' || quizType === 'truefalse') {
+      let starsGreen = 0;
+      let starsGray = 0;
+      
+      if(wrongCount <= 5) { // Nếu không có câu sai
+        starsGreen = 3; // 3 sao xanh
+      } else if (wrongCount >= 6 && wrongCount <= 10) {
+        starsGreen = 2; // 2 sao xanh
+        starsGray = 1; // 1 sao xám
+      } else if (wrongCount >= 11 && wrongCount <= 20) {
+        starsGreen = 1; // 1 sao xanh
+        starsGray = 2; // 2 sao xám
+      } else { // wrongCount >= 21
+        starsGreen = 0; // 0 sao xanh
+        starsGray = 3; // 3 sao xám
+      }
+
+      for(let i = 1; i <= 3; i++) {
+        const star = document.createElement('span');
+        star.classList.add('star');
+        if(i <= starsGreen) star.classList.add('Green');
+        else if(i <= starsGray) star.classList.add('gray');
+        star.innerHTML = '&#9733;';
+        starRating.appendChild(star);
+      }
+    } else if (quizType === 'essay') {
+        // Đối với bài tự luận, không có điểm đúng/sai tự động
+        // Bạn có thể thêm logic chấm điểm thủ công hoặc hiển thị thông báo khác
+        const infoDiv = document.createElement('div');
+        infoDiv.textContent = "Bài Tự Luận Cần Được Giáo Viên Chấm Điểm.";
+        infoDiv.style.fontWeight = "bold";
+        infoDiv.style.marginTop = "20px";
+        starRating.appendChild(infoDiv);
+    }
+  }
+
+  // --- EVENT LISTENERS ---
+  // Đã xóa btnRestart.onclick và logic liên quan
+  // Nếu bạn muốn chức năng "làm lại" bài quiz, bạn cần tạo một nút mới với ID khác
+  // và thêm lại logic reset Stats vào event listener của nút đó.
+
+  // Nút Home (ở màn hình kết quả) - vẫn reload trang hiện tại
+  btnHome.onclick = () => {
+    location.reload(); 
+  };
+
+  btnMulti.onclick = () => initQuiz('multi');
+  btnTrueFalse.onclick = () => initQuiz('truefalse');
+  btnEssay.onclick = () => initQuiz('essay');
+  // New: Download button functionality
+  btnDownload.onclick = () => {
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'toancreator-default'; // Set the desired filename
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  };
+  
+  
+  // Xử lý sự kiện cho nút Exit mới
+  btnExit.onclick = () => {
+    window.location.href = '../index.html'; // Chuyển hướng về index.html
+  };
+
+  // Xử lý sự kiện cho nút Back to Home trong quiz
+  btnBackHomeInQuiz.onclick = () => {
+    if (confirm('Bạn có chắc chắn muốn thoát bài làm hiện tại?')) {
+      stopTimer(); // Dừng đồng hồ
+      location.reload(); // Tải lại trang promt-onlineV2.html
+    }
+  };
+
+  toggleThemeBtn.onclick = () => {
+    document.body.classList.toggle('dark');
+  };
+
+  // Ẩn/hiện nút toggle theme ban đầu
+  // Bạn có thể đặt nút toggle theme ở vị trí cố định thay vì ẩn/hiện tùy thuộc vào màn hình
+  // Hiện tại, nó sẽ luôn hiển thị trừ khi bị ẩn bởi CSS hoặc logic khác
+  toggleThemeBtn.style.display = 'block'; 
+})();
+</script>
+</body>
+</html>

@@ -271,9 +271,9 @@
   </button>
   <div id="quiz-section" style="display:none; margin-top: 10px;">
     <div class="status-bar">
-      <div>Thời gian:<span id="timer">00:00</span></div>
-      <div>Câu đã làm:<span id="done-count">0</span></div>
-      <div>Đúng:<span id="correct-count">0</span> | <strong>Sai:</strong><span id="wrong-count">0</span></div>
+      <div><span id="timer">00:00</span></div>
+      <div>ㅤㅤ <span id="done-count">0</span></div>
+      <div>✅<span id="correct-count">0</span> | <strong>⛔</strong><span id="wrong-count">0</span></div>
     </div>
 
     <div id="question-block" class="question-container"></div>
@@ -357,21 +357,21 @@
     }
   ];
 
-  // Essay questions [TL]
-  const essayQuestions = [
-    {
-      q: "Giải bài toán sau",
-      qImage: null,
-      answerRef: "Giải phương trình bậc 2...",
-      answerRefImage: null
-    },
-    {
-      q: "Viết một đoạn văn miêu tả bức tranh sau",
-      qImage: null,
-      answerRef: "Bức tranh miêu tả...",
-      answerRefImage: null
-    }
-  ];
+    // Essay questions [TL]
+  const essayQuestions = [
+    {
+      q: "Trong tiếng Việt, chữ nào có ngàn 'h' ? ",
+      qImage: null,
+      answerRef: "là chữ 'ngành' có ngàn 'h' ",
+      answerRefImage: null
+    },
+    {
+      q: "Trong tiếng Anh, chữ 'GG' viết tắt của từ gì ? ",
+      qImage: null,
+      answerRef: "là 'Good Game' ",
+      answerRefImage: null
+    }
+  ];
 
   // --- UTILITY FUNCTIONS ---
   function shuffleArray(arr) {
