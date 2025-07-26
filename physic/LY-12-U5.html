@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toàn Creator - Online Lesson</title>
+<style>
+  :root {
+    --yellow: #f9d342;
+    --yellow-dark: #d4b833;
+    --Green: #2ecc71;
+    --starsGreen: #2ecc71;
+    --red: #d93025;
+    --green: #2ecc40;
+    --starsGray: #ccc;
+    --star-size: 30px;
+    --orange: #ff9800;
+  }
+  body {
+    margin:0; padding:0; font-family: Arial, sans-serif;
+    background: white; color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: black; color: white;
+  }
+  /* Existing #app rule */
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+/* Media query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+  #app {
+    max-width: 960px; /* Or any wider value you prefer, e.g., 900px, 1200px */
+    padding: 20px; /* Optional: Increase padding for more space on larger screens */
+  }
+
+  /* Optional: Adjust button widths for larger screens if they look too wide */
+  .btn {
+    max-width: 400px; /* Make main buttons a bit wider */
+  }
+
+  /* Optional: Adjust status bar layout for larger screens */
+  .status-bar {
+    font-size: 1.1em;
+  }
+}
+  h1, h3 {
+    text-align: center;
+    margin: 10px 0;
+  }
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+    color: #FF00FF;
+  }
+  hr {
+    border:none; border-bottom: 3px solid black;
+    margin: 5px 0 25px 0;
+  }
+  .btn {
+    background: #3399FF;
+    border-radius: 8px;
+    border:none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 15px;
+    width: 100%;
+    max-width: 350px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: 3px solid transparent;
+    user-select: none;
+  }
+  .btn:hover {
+    background: var(--yellow-dark);
+  }
+  .btn svg {
+    vertical-align: middle;
+  }
+  .question-container {
+    margin-bottom: 20px;
+    color: var(--orange) !important;
+    font-weight: bold;
+    font-size: 1.08em;
+    transition: color 0.3s;
+  }
+  body.dark .question-container {
+    color: var(--orange) !important;
+  }
+  .answers {
+    margin-top: 15px;
+  }
+  .answer-btn {
+    display: block;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 6px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
+    padding: 12px 10px;
+    margin: 7px 0;
+    cursor: pointer;
+    text-align: left;
+    user-select: none;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .answer-btn:hover:not(.disabled) {
+    background-color: #eee;
+  }
+  body.dark .answer-btn {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  body.dark .answer-btn:hover:not(.disabled) {
+    background-color: #444;
+  }
+  .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  body.dark .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  body.dark .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  .disabled {
+    pointer-events: none;
+  }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .star-container {
+    text-align: center;
+    margin: 20px 0 10px 0;
+  }
+  .star {
+    font-size: var(--star-size);
+    margin: 0 5px;
+    color: var(--starsGray);
+  }
+  .star.Green {
+    color: var(--Green);
+  }
+  .star.red {
+    color: var(--red);
+  }
+  .toggle-btn {
+    background: lime;
+    color: white;
+    font-size: 1.5em;
+    padding: 12px 0;
+    margin: 25px auto;
+    width: 150px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    display: block;
+  }
+  .input-textarea {
+    width: 100%;
+    min-height: 80px;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid black;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  body.dark .input-textarea {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  .btn-small {
+    background: #FF99CC;
+    width: auto;
+    padding: 8px 15px;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+  .answer-btn img {
+    max-width: 100%;
+    max-height: 150px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .question-container img {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  body.dark .answer-btn img,
+  body.dark .question-container img {
+    border-color: #555;
+  }
+  .question-container img, .answer-btn img {
+    display: block;
+    margin: 0 auto;
+    background: #f5f5f5;
+  }
+  body.dark .question-container img,
+  body.dark .answer-btn img {
+    background: #333;
+  }
+  /* Style for the header image placeholder */
+  .header-image-placeholder {
+    display: block;
+    width: 100%; /* Hoặc một chiều rộng cố định */
+    height: 100px; /* Điều chỉnh chiều cao này để phù hợp với kích thước bạn muốn */
+    background-color: #f0f0f0; /* Màu nền để dễ nhìn thấy placeholder */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 25px; /* Khoảng cách với tiêu đề bên dưới */
+    
+  }
+  body.dark .header-image-placeholder {
+    background-color: #333;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <img src="https://i.ibb.co/tMdHNdPH/Picsart-25-07-17-06-40-25-073.jpg" alt="Header Image" class="header-image-placeholder">
+  
+  <h2>LÝ - BÀI 5</h2>
+
+  <button class="btn" id="btn-exit" style="background: var(--red);">
+    <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+      <path d="M16 17v-4h-2V7h-4V4H6V2H4v2h2v4h4v6h2v4h4v2h2v-2h-2z"/>
+    </svg>
+    Thoát
+  </button>
+  <button class="btn" id="btn-multi">TRẮC NGHIỆM 4 PHƯƠNG ÁN</button>
+  <button class="btn" id="btn-truefalse">TRẮC NGHIỆM ĐÚNG/SAI</button>
+  <button class="btn" id="btn-essay">TỰ LUẬN</button>
+
+  <button class="toggle-btn" id="toggle-theme">💡</button>
+  <button class="toggle-btn" id="btn-download" style="background: orange; margin-top: -20px; margin-bottom: 25px;">
+    Tải xuống
+  </button>
+  <div id="quiz-section" style="display:none; margin-top: 10px;">
+    <div class="status-bar">
+      <div><span id="timer">00:00</span></div>
+      <div>ㅤㅤ <span id="done-count">0</span></div>
+      <div>✅<span id="correct-count">0</span> | <strong>⛔</strong><span id="wrong-count">0</span></div>
+    </div>
+
+    <div id="question-block" class="question-container"></div>
+    <div id="answers-block" class="answers"></div>
+
+    <div id="essay-input-block" style="display:none;">
+      <textarea id="essay-answer" class="input-textarea" placeholder="Nhập câu trả lời của bạn..."></textarea>
+      <button id="btn-essay-submit" class="btn-small">Xong</button>
+    </div>
+
+    <div style="display:flex; justify-content: space-between; margin-top: 20px;">
+      <button id="btn-back-home-in-quiz" class="btn btn-small" style="background: var(--Green); width: 48%;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+      <button id="btn-next" class="btn btn-small" style="width: 48%;">Tiếp tục</button>
+    </div>
+  </div>
+
+  <div id="result-section" style="display:none; text-align:center; margin-top: 30px;">
+    <h2>KẾT THÚC BÀI LÀM</h2>
+    <div><strong>Tổng thời gian làm bài:</strong> <span id="result-time"></span></div>
+    <div><strong>Tổng số câu đã làm:</strong> <span id="result-total"></span></div>
+    <div><strong>Đúng:</strong><span id="result-correct"></span><strong> | </strong><strong>Sai:</strong><span id="result-wrong"></span></div>
+    <div id="star-rating" class="star-container"></div>
+    <div style="margin-top: 25px;">
+      <button id="btn-home" class="btn" style="display:inline-block; width:120px;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg> 
+      </button>
+      </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // --- QUESTION DATA ---
+  // Multiple choice questions [ABCD]
+const multiChoiceQuestions = [
+  {
+    q: "Vật (chất) nào dưới đây không có nhiệt độ nóng chảy xác định?",
+    qImage: null,
+    answers: [
+      { text: "A. Miếng nhựa thông", correct: true, image: "media/anh106.png" },
+      { text: "B. Hạt đường", correct: false, image: "media/anh110.png" },
+      { text: "C. Viên kim cương", correct: false, image: "media/anh33.png" },
+      { text: "D. Đá thạch anh", correct: false, image: "media/anh109.png" }
+    ]
+  },
+  {
+    q: "Đơn vị của nhiệt nóng chảy riêng là",
+    qImage: null,
+    answers: [
+      { text: "A. J/s", correct: false, image: null },
+      { text: "B. J/kg.độ", correct: false, image: null },
+      { text: "C. J/kg", correct: true, image: null },
+      { text: "D. kg/J", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Gọi Q là nhiệt lượng cần truyền cho vật có khối lượng m để làm vật nóng chảy hoàn toàn vật ở nhiệt độ nóng chảy mà không thay đổi nhiệt độ của vật. Thì nhiệt nóng chảy riêng λ của chất đó được tính theo công thức",
+    qImage: null,
+    answers: [
+      { text: "A. λ = Q.m", correct: false, image: null },
+      { text: "B. λ = Q + m", correct: false, image: null },
+      { text: "C. λ = Q - m", correct: false, image: null },
+      { text: "D. λ = Q/m", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Không thể kết luận gì về nhiệt nóng chảy riêng của chất nào dưới đây?",
+    qImage: null,
+    answers: [
+      { text: "A. Miếng nhựa đường (hắc ín)", correct: true, image: "media/anh115.png" },
+      { text: "B. Muối ăn", correct: false, image: "media/anh114.png" },
+      { text: "C. Viên kim cương", correct: false, image: "media/anh33.png" },
+      { text: "D. Khối thạch anh", correct: false, image: "media/anh113.png" }
+    ]
+  },
+  {
+    q: "Nhiệt độ nóng chảy riêng của vật rắn phụ thuộc vào những yếu tố nào?",
+    qImage: null,
+    answers: [
+      { text: "A. Phụ thuộc vào nhiệt độ của vật rắn và áp suất ngoài.", correct: false, image: null },
+      { text: "B. Phụ thuộc bản chất của vật rắn", correct: true, image: null },
+      { text: "C. Phụ thuộc bản chất và nhiệt độ của vật rắn", correct: false, image: null },
+      { text: "D. Phụ thuộc bản chất và nhiệt độ của vật rắn, đồng thời phụ thuộc áp suất ngoài", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt nóng chảy riêng của một chất là",
+    qImage: null,
+    answers: [
+      { text: "A. nhiệt độ nóng chảy riêng của chất rắn", correct: false, image: null },
+      { text: "B. nhiệt lượng cần cung cấp cho vật để làm vật nóng chảy", correct: false, image: null },
+      { text: "C. là nhiệt lượng cần để làm cho một đơn vị khối lượng chất đó nóng chảy hoàn toàn.", correct: false, image: null },
+      { text: "D. là nhiệt lượng cần để làm cho một đơn vị khối lượng chất đó nóng chảy hoàn toàn ở nhiệt độ nóng chảy mà không làm thay đổi nhiệt độ.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Tính nhiệt lượng Q cần cung cấp để làm nóng chảy 500g nước đá ở 0°C. Biết nhiệt nóng chảy riêng của nước đá bằng 3,34.10⁵J/kg",
+    qImage: null,
+    answers: [
+      { text: "A. Q = 7.10⁷ J", correct: false, image: null },
+      { text: "B. Q = 167k J", correct: true, image: null },
+      { text: "C. Q = 167J", correct: false, image: null },
+      { text: "D. Q = 167.10J", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Để giải thích hiện tượng tách kim loại bằng nóng chảy người ta dùng khái niệm về đại lượng nào ?",
+    qImage: null,
+    answers: [
+      { text: "A. Nhiệt dung riêng", correct: false, image: null },
+      { text: "B. Nhiệt lượng", correct: false, image: null },
+      { text: "C. Nhiệt nóng chảy riêng", correct: true, image: null },
+      { text: "D. Nhiệt hoá hơi riêng", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Cho bảng số liệu sau : Phát biểu nào sau đây là đúng",
+    qImage: "media/anh139.jpg",
+    answers: [
+      { text: "A. Cần nhiệt lượng 3,34.10⁵ J để làm nóng chảy nước đá.", correct: false, image: null },
+      { text: "B. Sắt có nhiệt độ nóng chảy lớn nhất nên nhiệt nóng chảy riêng của nó lớn nhất.", correct: false, image: null },
+      { text: "C. Cần nhiệt lượng 1,8.10⁵ J để làm nóng chảy 1kg đồng", correct: false, image: null },
+      { text: "D. Cần nhiệt lượng 0,25.10⁵ J để làm nóng chảy hoàn toàn 1kg chì ở 327°C", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Trong thí nghiệm xác định nhiệt nóng chảy riêng của nước đá không cần thiết phải có dụng cụ nào sau đây ?",
+    qImage: null,
+    answers: [
+      { text: "A. Oát kế", correct: false, image: null },
+      { text: "B. Nhiệt lượng kế", correct: false, image: null },
+      { text: "C. Đồng hồ bấm giây", correct: false, image: null },
+      { text: "D. Thước mét", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Cho bảng kết quả thí nghiệm xác định nhiệt nóng chảy riêng của nước đá. Dựa vào bảng số liệu trên cho biết nhiệt lượng đã cung cấp cho nước đá là bao nhiêu?",
+    qImage: "media/anh140.jpg",
+    answers: [
+      { text: "A. 4320 J", correct: true, image: null },
+      { text: "B. 3,15 J", correct: false, image: null },
+      { text: "C. 5,51 J", correct: false, image: null },
+      { text: "D. 72J", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Gọi Q là nhiệt lượng cần truyền cho vật, m là khối lượng của vật (kg). Tỉ số Q/m gọi là",
+    qImage: null,
+    answers: [
+      { text: "A. nhiệt dung riêng của chất làm nên vật", correct: false, image: null },
+      { text: "B. nhiệt nóng chảy riêng của chất làm nên vật", correct: true, image: null },
+      { text: "C. trọng lượng riêng của vật", correct: false, image: null },
+      { text: "D. khối lượng riêng của vật", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong các hiên tượng sau, hiện tượng nào liên quan đến sự nóng chảy",
+    qImage: null,
+    answers: [
+      { text: "A. Thả cục nước đá vào cốc nước", correct: true, image: "media/anh121.png" },
+      { text: "B. Đốt ngọn đèn dầu", correct: false, image: "media/anh120.png" },
+      { text: "C. Đun nóng một nồi nước", correct: false, image: "media/anh119.png" },
+      { text: "D. Cho cốc nước vào tủ lạnh", correct: false, image: "media/anh118.png" }
+    ]
+  },
+  {
+    q: "Biết nhiệt nóng chảy riêng của nước đá là 3,34.10⁵ J/ kg. Người ta cung cấp nhiệt lượng 5,01.10⁵ J có thể làm nóng chảy hoàn toàn bao nhiêu kg nước đá",
+    qImage: "media/anh121.png",
+    answers: [
+      { text: "A. 16,7 kg", correct: false, image: null },
+      { text: "B. 1,5kg", correct: true, image: null },
+      { text: "C. 8,35kg", correct: false, image: null },
+      { text: "D. 0,668kg", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong công nghệ đúc kim loại người ta quan tâm đến đại lượng nào sau đây",
+    qImage: "media/anh117.png",
+    answers: [
+      { text: "A. Nhiệt lượng của vật liệu đúc", correct: false, image: null },
+      { text: "B. Nhiệt nóng chảy riêng của vật liệu đúc", correct: true, image: null },
+      { text: "C. Nhiệt dung của vật liệu đúc", correct: false, image: null },
+      { text: "D. Nhiệt dung riêng của vật liệu đúc", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt nóng chảy riêng của đồng là 1,8.10⁵ J/kg. Câu nào dưới đây là đúng?",
+    qImage: "media/anh116.png",
+    answers: [
+      { text: "A. Khối đồng sẽ tỏa ra nhiệt lượng 1,8.10⁵ J khi nóng chảy hoàn toàn.", correct: false, image: null },
+      { text: "B. Mỗi kilogam đồng cần thu nhiệt lượng 1,8.10⁵ J để hóa lỏng hoàn toàn ở nhiệt độ nóng chảy.", correct: true, image: null },
+      { text: "C. Khối đồng cần thu nhiệt lượng 1,8.10⁵ J để hóa lỏng.", correct: false, image: null },
+      { text: "D. Mỗi kilogam đồng tỏa ra nhiệt lượng 1,8.10⁵ J khi hóa lỏng hoàn toàn.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Điều nào sau đây là sai khi nói về nhiệt nóng chảy",
+    qImage: null,
+    answers: [
+      { text: "A. Nhiệt nóng chảy của vật rắn là nhiệt lượng cung cấp cho vật rắn trong quá trình nóng chảy", correct: false, image: null },
+      { text: "B. Nhiệt nóng chảy có đơn vị Jun (J)", correct: false, image: null },
+      { text: "C. Các vật có khối lượng bằng nhau thì có nhiệt nóng chảy như nhau.", correct: true, image: null },
+      { text: "D. Nhiệt nóng chảy tỉ lệ thuận với khối lượng của vật rắn.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Cho bảng nhiệt độ nóng chảy của các chất sau: Sắp xếp theo chiều tăng dần nhiệt nóng chảy riêng của các chất thép, đồng, nhôm, thiếc",
+    qImage: "media/anh141.jpg",
+    answers: [
+      { text: "A. Đồng, nhôm, thiếc, sắt.", correct: false, image: null },
+      { text: "B. Thiếc, nhôm, đồng, thép", correct: true, image: null },
+      { text: "C. Nhôm, đồng, thiếc, thép", correct: false, image: null },
+      { text: "D. Thiếc, đồng, nhôm, thép", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần cung cấp để làm tăng nhiệt độ của 100 g nước đá lên 0°C là 4200 J. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần cung cấp để làm tăng nhiệt độ của 100 g nước đá lên 0°C là 2100 J. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần cung cấp để làm nóng chảy của 100 g nước đá ở -20°C là 3,34.10⁵ J. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần cung cấp để làm nóng chảy hoàn toàn 100 g nước đá ở -20°C là 37600J. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt năng của chì bằng 0,25.10⁵ J/Kg. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Miếng chì khối lượng 1 kg đang ở nhiệt độ 25°C được cung cấp nhiệt lượng 1,26 kJ thì nhiệt độ của nó tăng lên 26°C. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Cần cung cấp nhiệt lượng 0,25.10⁵ J/kg để làm nóng chảy hoàn toàn 1kg chì ở nhiệt độ nóng chảy của nó. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Biết công suất của lò nung là 1000W, giả sử hiệu suất của lò là 100%. Thời gian để làm nóng chảy hoàn toàn 1 kg chì từ nhiệt độ nóng chảy của nó bằng 25 s. Phát biểu này là:",
+    qImage: "media/anh20.png",
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Thiếc có nhiệt độ nóng chảy là 232 °C. Nếu mảnh thiếc đang có nhiệt độ 25°C nhận nhiệt lượng đủ lớn và đang nóng chảy thì nhiệt độ của vật tăng lên. Phát biểu này là:",
+    qImage: "media/anh16.png",
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Thiếc có nhiệt độ nóng chảy là 232 °C. Nếu mảnh thiếc đang có nhiệt độ 25°C nhận nhiệt lượng đủ lớn và đang nóng chảy thì nhiệt độ của vật giảm xuống. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Thiếc có nhiệt độ nóng chảy là 232 °C. Nếu mảnh thiếc đang có nhiệt độ 25°C nhận nhiệt lượng đủ lớn và đang nóng chảy thì ban đầu nhiệt độ của vật tăng lên 232°C, trong quá trình nóng chảy nhiệt độ của vật không đổi. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Thiếc có nhiệt độ nóng chảy là 232 °C. Nếu mảnh thiếc đang có nhiệt độ 25°C nhận nhiệt lượng đủ lớn và đang nóng chảy thì một phần nhiệt lượng cung cấp để làm tăng nhiệt độ của vật đến nhiệt độ nóng chảy, phần còn lại cung cấp cho vật để làm nóng chảy vật. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Cần cung cấp nhiệt lượng 896 J để nhiệt độ của 1kg nhôm tăng thêm 1K. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Cần cung cấp nhiệt lượng 3,9.10⁵ J để hoá lỏng hoàn toàn miếng nhôm. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Cần cung cấp nhiệt lượng 57164,8 J để tăng nhiệt độ của miếng nhôm từ 20°C lên 658°C. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần cung cấp cho miếng nhôm hóa lỏng hoàn toàn ở nhiệt độ 658°C là 39.10⁵ J. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần cung cấp để làm nóng chảy hoàn toàn 100g nước đá là",
+    qImage: null,
+    answers: [
+      { text: "A. 3,34.10⁵ J", correct: false, image: null },
+      { text: "B. 33,4 kJ", correct: true, image: null },
+      { text: "C. 3,34 kJ", correct: false, image: null },
+      { text: "D. 0,334kJ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sắt có nhiệt độ nóng chảy lớn nhất nên nhiệt nóng chảy riêng của nó lớn nhất. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt dung của đồng lớn hơn của chì. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Cần nhiệt lượng 1,8.10⁵ J để làm nóng chảy đồng. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Cần nhiệt lượng 0,25.10⁵ J để làm nóng chảy hoàn toàn 1kg chì ở 327°C. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt nóng chảy riêng của một chất là nhiệt lượng cần cung cấp để 1 kg chất đó nóng chảy hoàn toàn ở nhiệt độ nóng chảy. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt nóng chảy riêng của một chất là nhiệt lượng cần cung cấp để 1 kg chất đó nóng chảy hoàn toàn ở nhiệt độ bất kỳ. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Đơn vị của nhiệt nóng chảy riêng là J/kg. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hệ thức tính nhiệt lượng trong quá trình truyền nhiệt để làm vật nóng chảy hoàn toàn ở nhiệt độ nóng chảy là Q = λ.m. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt nóng chảy riêng của nước đá là bao nhiêu?",
+    qImage: null,
+    answers: [
+      { text: "A. 3,34.10⁵ J/kg", correct: true, image: null },
+      { text: "B. 2,27.10⁵ J/kg", correct: false, image: null },
+      { text: "C. 1,80.10⁵ J/kg", correct: false, image: null },
+      { text: "D. 0,25.10⁵ J/kg", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần cung cấp để làm nóng chảy hoàn toàn 2kg đồng ở nhiệt độ nóng chảy của nó là 3,6.10⁵ J. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Dùng lò nung có công suất 2000 W hiệu suất 75% thì mất 240s để làm nóng chảy hoàn toàn 2kg đồng ở nhiệt độ nóng chảy của nó. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần cung cấp để làm tăng nhiệt độ của 200 g nước đá lên 0°C là 4200 J. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần cung cấp để làm tăng nhiệt độ của 200 g nước đá lên 0°C là 8,4 kJ. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần cung cấp để làm nóng chảy của 200 g nước đá ở -20°C là 6,68.10⁵ J. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: false, image: null },
+      { text: "B. Sai", correct: true, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần cung cấp để làm nóng chảy hoàn toàn 200 g nước đá ở -20°C là 75200 J. Phát biểu này là:",
+    qImage: null,
+    answers: [
+      { text: "A. Đúng", correct: true, image: null },
+      { text: "B. Sai", correct: false, image: null },
+      { text: "C. Không xác định", correct: false, image: null },
+      { text: "D. Cần thêm thông tin", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Thời gian mà nước đá nóng chảy là bao nhiêu :",
+    qImage: null,
+    answers: [
+      { text: "A. 120 s", correct: false, image: null },
+      { text: "B. 480s", correct: false, image: null },
+      { text: "C. 600s", correct: true, image: null },
+      { text: "D. 960s", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Kết quả nhiệt nóng chảy riêng của nước đá theo công thức: λH₂O = PTM / m bằng bao nhiêu?",
+    qImage: null,
+    answers: [
+      { text: "A. 34176 J/kg", correct: false, image: null },
+      { text: "B. 6835,2 J/kg", correct: false, image: null },
+      { text: "C. 27340,8 J/kg", correct: false, image: null },
+      { text: "D. 54681,6J/kg", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Biết nhiệt nóng chảy riêng của nước đá là 3,34.10⁵ J/ kg. Người ta cung cấp nhiệt lượng 10,02.10⁵ J có thể làm nóng chảy hoàn toàn bao nhiêu kg nước đá",
+    qImage: null,
+    answers: [
+      { text: "A. 33,47 kg", correct: false, image: null },
+      { text: "B. 3kg", correct: true, image: null },
+      { text: "C. 0,35kg", correct: false, image: null },
+      { text: "D. 0,668kg", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt nóng chảy riêng của một chất là nhiệt lượng cần cung cấp để 1 kg chất đó:",
+    qImage: null,
+    answers: [
+      { text: "A. nóng chảy hoàn toàn ở nhiệt độ nóng chảy.", correct: true, image: null },
+      { text: "B. nóng chảy hoàn toàn ở nhiệt độ bất kỳ.", correct: false, image: null },
+      { text: "C. tăng nhiệt độ lên 1 độ C.", correct: false, image: null },
+      { text: "D. hóa hơi hoàn toàn.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Đơn vị của nhiệt nóng chảy riêng là:",
+    qImage: null,
+    answers: [
+      { text: "A. J/kg", correct: true, image: null },
+      { text: "B. J/kg.K", correct: false, image: null },
+      { text: "C. J/K", correct: false, image: null },
+      { text: "D. J", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Công thức tính nhiệt lượng cần thiết để làm nóng chảy một lượng chất rắn là:",
+    qImage: null,
+    answers: [
+      { text: "A. Q = λ.m", correct: true, image: null },
+      { text: "B. Q = λ/m", correct: false, image: null },
+      { text: "C. Q = m/λ", correct: false, image: null },
+      { text: "D. Q = λ + m", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Để làm nóng chảy hoàn toàn 0,5 kg nước đá ở 0°C, cần cung cấp nhiệt lượng là bao nhiêu? (Biết nhiệt nóng chảy riêng của nước đá là 3,34.10⁵ J/kg)",
+    qImage: null,
+    answers: [
+      { text: "A. 1,67.10⁵ J", correct: true, image: null },
+      { text: "B. 3,34.10⁵ J", correct: false, image: null },
+      { text: "C. 0,5.10⁵ J", correct: false, image: null },
+      { text: "D. 6,68.10⁵ J", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một chất có nhiệt nóng chảy riêng càng cao thì có ý nghĩa gì?",
+    qImage: null,
+    answers: [
+      { text: "A. Cần nhiều nhiệt lượng để làm nóng chảy chất đó.", correct: true, image: null },
+      { text: "B. Cần ít nhiệt lượng để làm nóng chảy chất đó.", correct: false, image: null },
+      { text: "C. Chất đó nóng chảy ở nhiệt độ cao hơn.", correct: false, image: null },
+      { text: "D. Chất đó nóng chảy nhanh hơn.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi một vật rắn đang nóng chảy, nhiệt độ của vật:",
+    qImage: null,
+    answers: [
+      { text: "A. Tăng dần.", correct: false, image: null },
+      { text: "B. Giảm dần.", correct: false, image: null },
+      { text: "C. Không đổi.", correct: true, image: null },
+      { text: "D. Có thể tăng hoặc giảm tùy thuộc vào chất.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Quá trình chuyển từ thể rắn sang thể lỏng của các chất gọi là:",
+    qImage: null,
+    answers: [
+      { text: "A. Sự đông đặc.", correct: false, image: null },
+      { text: "B. Sự nóng chảy.", correct: true, image: null },
+      { text: "C. Sự bay hơi.", correct: false, image: null },
+      { text: "D. Sự ngưng tụ.", correct: false, image: null }
+    ]
+  }
+];
+
+// True/False questions [D/S]
+const trueFalseQuestions = [
+  {
+    q: "Khi nói về nhiệt nóng chảy của một vật (chất) thì:",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt nóng chảy của vật rắn là nhiệt lượng cung cấp cho vật rắn để nâng nhiệt độ của vật đến nhiệt độ nóng chảy.", correct: false, image: null },
+      { text: "Nhiệt nóng chảy riêng có đơn vị Jun/kg (J/kg).", correct: true, image: null },
+      { text: "Các vật có khối lượng bằng nhau thì có nhiệt nóng chảy như nhau.", correct: false, image: null },
+      { text: "Nhiệt nóng chảy tỉ lệ thuận với khối lượng của vật rắn.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Trong các hiện tượng sau, những hiện tượng liên quan đến sự nóng chảy là:",
+    qImage: null,
+    answers: [
+      { text: "Thả cục nước đá vào cốc nước.", correct: true, image: null },
+      { text: "Đun sôi dầu ăn.", correct: false, image: null },
+      { text: "Đun nóng chảy chì để làm cầu đá.", correct: true, image: null },
+      { text: "Cho cốc nước vào tủ lạnh.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt nóng chảy riêng của đồng là 1,8.10⁵ J/kg. Khi nói về đồng thì:",
+    qImage: null,
+    answers: [
+      { text: "Khối đồng sẽ tỏa ra nhiệt lượng 1,8.10⁵ J khi nóng chảy hoàn toàn.", correct: false, image: null },
+      { text: "Mỗi kilogam đồng cần thu nhiệt lượng 1,8.10⁵ J để hóa lỏng hoàn toàn ở nhiệt độ nóng chảy.", correct: true, image: null },
+      { text: "Nhiệt lượng cần cung cấp để làm nóng chảy hoàn toàn 2kg đồng ở nhiệt độ nóng chảy của nó là 3,6.10⁵ J.", correct: true, image: null },
+      { text: "Dùng lò nung có công suất 2000 W hiệu suất 75% thì mất 240s để làm nóng chảy hoàn toàn 2kg đồng ở nhiệt độ nóng chảy của nó.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Người ta cung cấp nhiệt lượng Q để làm nóng chảy 200g nước đá ở -20°C. Biết nhiệt nóng chảy riêng của nước đá là 3,34.10⁵J/kg và nhiệt dung riêng của nước đá là 2,1.10³ J/kg. Khi đó:",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt lượng cần cung cấp để làm tăng nhiệt độ của 200 g nước đá lên 0°C là 4200 J.", correct: false, image: null },
+      { text: "Nhiệt lượng cần cung cấp để làm tăng nhiệt độ của 200 g nước đá lên 0°C là 8,4 kJ.", correct: true, image: null },
+      { text: "Nhiệt lượng cần cung cấp để làm nóng chảy của 200 g nước đá ở -20°C là 6,68.10⁵ J.", correct: false, image: null },
+      { text: "Nhiệt lượng cần cung cấp để làm nóng chảy hoàn toàn 200 g nước đá ở -20°C là 75200 J.", correct: true, image: null }
+    ]
+  }
+];
+
+// Essay questions [TL]
+const essayQuestions = [
+  {
+    q: "Một thỏi nhôm có khối lượng 1,0kg ở 8°C. Cần cung cấp nhiệt lượng Q bằng bao nhiêu kJ để làm nóng chảy hoàn toàn thỏi nhôm này. Nhôm nóng chảy ở 658°C, nhiệt nóng chảy riêng của nhôm là 3,9.10⁵J/Kg và nhiệt dung riêng của nhôm là 880J/kg.K",
+    qImage: null,
+    answerRef: "Q = mcΔT + λm = 1.0kg * 880J/kg.K * (658°C - 8°C) + 1.0kg * 3.9e5 J/kg = 572000 J + 390000 J = 962000 J = 962 kJ.",
+    answerRefImage: null
+  },
+  {
+    q: "Người ta thả một cục nước đá khối lượng 80g ở 0°C vào một cốc nhôm đựng 0,4kg nước ở 20°C đặt trong nhiệt lượng kế. Khối lượng của cốc nhôm là 0,20kg. Tính nhiệt độ của nước trong cốc nhôm (theo °C, làm tròn đến 1 chữ số thập phân) khi cục nước vừa tan hết. Nhiệt nóng chảy riêng của nước đá là 3,4.10⁵J/kg. Nhiệt dung riêng của nhôm là 880J/kg.K và của nước là 4180 J/kg.K. Bỏ qua sự mất mát nhiệt độ do nhiệt truyền ra bên ngoài nhiệt lượng kế.",
+    qImage: null,
+    answerRef: "Kết quả: 4.9°C",
+    answerRefImage: null
+  },
+  {
+    q: "Tính nhiệt lượng cần cung cấp (tính ra đơn vị MegaJun MJ lấy đến số thập phân thứ 2) cho 5kg nước đá ở -10°C chuyển thành nước ở 0°C. Cho biết nhiệt dung riêng của nước đá là 2090J/kg.K và nhiệt nóng chảy riêng của nước đá 3,4.10⁵J/kg.",
+    qImage: null,
+    answerRef: "Q = m_ice * c_ice * ΔT + m_ice * λ_ice = 5kg * 2090J/kg.K * (0 - (-10))K + 5kg * 3.4e5 J/kg = 104500 J + 1700000 J = 1804500 J ≈ 1.80 MJ.",
+    answerRefImage: null
+  },
+  {
+    q: "Sử dụng bảng số liệu dưới đây. Cần bao nhiêu thời gian(s) để làm nóng chảy hoàn toàn 2kg đồng có nhiệt độ ban đầu 30°C, trong một lò nung điện công suất 20000W. Biết chỉ có 50% năng lượng tiêu thụ của lò được dùng vào việc làm đồng nóng lên và nóng chảy hoàn toàn ở nhiệt độ không đổi. Nhiệt dung riêng của đồng là 380J/kg.K",
+    qImage: "media/anh139.png",
+    answerRef: "Thời gian cần thiết là: 116 s.",
+    answerRefImage: null
+  },
+  {
+    q: "Thả cục nước đá khối lượng 30g ở 0° C vào cốc nước chứa 0,2 l nước ở 20°C. Bỏ qua nhiệt dụng của cốc. Hỏi nhiệt độ cuối của cốc nước là bao nhiêu (°C)",
+    qImage: null,
+    answerRef: "Kết quả: 7°C",
+    answerRefImage: null
+  }
+];
+
+  // --- UTILITY FUNCTIONS ---
+  function shuffleArray(arr) {
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/</g, "‹")
+      .replace(/>/g, "›")
+      .replace(/"/g, "'");
+  }
+
+  // --- DOM ELEMENTS ---
+  const btnMulti = document.getElementById('btn-multi');
+  const btnTrueFalse = document.getElementById('btn-truefalse');
+  const btnEssay = document.getElementById('btn-essay');
+  const toggleThemeBtn = document.getElementById('toggle-theme');
+  const btnExit = document.getElementById('btn-exit'); 
+  const btnBackHomeInQuiz = document.getElementById('btn-back-home-in-quiz'); // Nút Back Home trong quiz
+  const btnDownload = document.getElementById('btn-download');
+
+  const quizSection = document.getElementById('quiz-section');
+  const questionBlock = document.getElementById('question-block');
+  const answersBlock = document.getElementById('answers-block');
+  const essayInputBlock = document.getElementById('essay-input-block');
+  const essayAnswerTextarea = document.getElementById('essay-answer');
+  const btnEssaySubmit = document.getElementById('btn-essay-submit');
+  const btnNext = document.getElementById('btn-next');
+
+  const timerSpan = document.getElementById('timer');
+  const doneCountSpan = document.getElementById('done-count');
+  const correctCountSpan = document.getElementById('correct-count');
+  const wrongCountSpan = document.getElementById('wrong-count');
+
+  const resultSection = document.getElementById('result-section');
+  const resultTime = document.getElementById('result-time');
+  const resultTotal = document.getElementById('result-total');
+  const resultCorrect = document.getElementById('result-correct');
+  const resultWrong = document.getElementById('result-wrong');
+  const starRating = document.getElementById('star-rating');
+
+  // const btnRestart = document.getElementById('btn-restart'); // Đã xóa khỏi HTML, nên bỏ dòng này hoặc comment lại
+  const btnHome = document.getElementById('btn-home');
+
+  // --- STATE VARIABLES ---
+  let quizType = null; // 'multi', 'truefalse', 'essay'
+  let questions = [];
+  let currentQIdx = 0;
+  let timerInterval = null;
+  let timeSeconds = 0;
+  let doneCount = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let currentTFAnswerIdx = 0;
+
+  // --- TIMER FUNCTIONS ---
+  function startTimer() {
+    timeSeconds = 0;
+    timerSpan.textContent = formatTime(timeSeconds);
+    if(timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeSeconds++;
+      timerSpan.textContent = formatTime(timeSeconds);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if(timerInterval) clearInterval(timerInterval);
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s/60);
+    const sec = s % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (sec < 10 ? '0' + sec : sec);
+  }
+
+  // --- QUIZ FUNCTIONS ---
+  function resetStats() {
+    doneCount = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    doneCountSpan.textContent = "0";
+    correctCountSpan.textContent = "0";
+    wrongCountSpan.textContent = "0";
+  }
+
+  function initQuiz(type) {
+    quizType = type;
+    currentQIdx = 0;
+    resetStats();
+
+    if(type === 'multi') {
+      questions = multiChoiceQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+    } else if(type === 'truefalse') {
+      questions = trueFalseQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+      currentTFAnswerIdx = 0;
+    } else if(type === 'essay') {
+      questions = essayQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answerRef: q.answerRef,
+        answerRefImage: q.answerRefImage
+      }));
+      shuffleArray(questions);
+    }
+    
+    quizSection.style.display = 'block';
+    resultSection.style.display = 'none';
+    btnMulti.style.display = 'none';
+    btnTrueFalse.style.display = 'none';
+    btnEssay.style.display = 'none';
+    btnExit.style.display = 'none'; // Ẩn nút Exit khi bắt đầu quiz
+    toggleThemeBtn.style.display = 'none'; // Ẩn nút chuyển theme khi vào quiz
+    btnDownload.style.display = 'none';
+
+    showQuestion();
+    startTimer();
+  }
+
+  function showQuestion() {
+    // Ẩn nút "Tiếp tục" nếu nó đang hiển thị
+    btnNext.style.display = 'none'; 
+    // Nếu là dạng tự luận, nút "Xong" (submit) sẽ được hiển thị, ngược lại ẩn
+    btnEssaySubmit.style.display = (quizType === 'essay') ? 'block' : 'none';
+    // Đảm bảo nút "Xong" được kích hoạt lại cho câu hỏi tự luận mới
+    btnEssaySubmit.disabled = false; 
+
+    answersBlock.innerHTML = ''; // Xóa các câu trả lời cũ
+    essayInputBlock.style.display = 'none'; // Ẩn khung nhập tự luận
+    essayAnswerTextarea.value = ''; // Xóa nội dung cũ trong khung tự luận
+    
+    if (currentQIdx >= questions.length) {
+      endQuiz();
+      return;
+    }
+
+    const currentQ = questions[currentQIdx];
+    
+    // Display question text and image (if any)
+    let questionHTML = `
+      <div style="color: var(--orange); font-weight: bold; margin-bottom: 15px;">
+        Câu ${currentQIdx + 1}: ${escapeHtml(currentQ.q)}
+      </div>
+    `;
+    
+    if (currentQ.qImage) {
+      questionHTML += `
+        <div style="text-align: center; margin: 15px 0;">
+          <img src="${currentQ.qImage}" 
+               style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;"
+               onerror="this.style.display='none'">
+        </div>
+      `;
+    }
+    
+    questionBlock.innerHTML = questionHTML;
+
+    if (quizType === 'multi') {
+      // Multiple choice questions
+      answersBlock.style.display = 'block';
+      currentQ.answers.forEach((ans, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        
+        let answerContent = `${String.fromCharCode(65 + i)}. ${escapeHtml(ans.text)}`;
+        
+        if (ans.image) {
+          answerContent += `
+            <div style="margin-top: 8px; text-align: center;">
+              <img src="${ans.image}" 
+                   style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 3px;"
+                   onerror="this.style.display='none'">
+            </div>
+          `;
+        }
+        
+        btn.innerHTML = answerContent;
+        btn.onclick = () => handleMultiAnswerClick(btn, ans.correct, currentQ.answers);
+        answersBlock.appendChild(btn);
+      });
+
+    } else if (quizType === 'truefalse') {
+      // True/False questions
+      answersBlock.style.display = 'block';
+      currentTFAnswerIdx = 0;
+      showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+      
+    } else if (quizType === 'essay') {
+      // Essay questions
+      essayInputBlock.style.display = 'block';
+    }
+  }
+
+  function handleMultiAnswerClick(btn, isCorrect, allAnswers) {
+    Array.from(answersBlock.children).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(isCorrect) {
+      btn.classList.add('correct');
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+    } else {
+      btn.classList.add('incorrect');
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      // Highlight correct answer
+      const correctAns = allAnswers.find(a => a.correct);
+      for(let b of answersBlock.children) {
+        // Cẩn thận với việc so sánh textContent trực tiếp nếu có hình ảnh
+        // Cần lấy chỉ phần text của câu trả lời
+        const btnText = b.childNodes[0].nodeType === 3 ? b.childNodes[0].nodeValue.substring(3).trim() : ''; // Lấy text trước hình ảnh
+        const correctText = escapeHtml(correctAns.text);
+
+        if(btnText === correctText && correctAns.correct) {
+          b.classList.add('correct');
+          break;
+        }
+      }
+    }
+    btnNext.style.display = 'inline-block';
+  }
+
+  function showTrueFalseAnswer(answerObj) {
+    answersBlock.innerHTML = '';
+
+    const label = document.createElement('div');
+    label.style.marginBottom = '10px';
+    label.style.fontWeight = 'bold';
+    label.textContent = `Câu hỏi phụ ${currentTFAnswerIdx + 1}: ${answerObj.text}`;
+    answersBlock.appendChild(label);
+
+    if (answerObj.image) {
+      const imgDiv = document.createElement('div');
+      imgDiv.style.textAlign = 'center';
+      imgDiv.style.margin = '10px 0';
+      imgDiv.innerHTML = `<img src="${answerObj.image}" style="max-width: 100%; max-height: 200px; border: 1px solid #ccc; border-radius: 3px;" onerror="this.style.display='none'">`;
+      answersBlock.appendChild(imgDiv);
+    }
+
+    const btnTrue = document.createElement('button');
+    btnTrue.className = 'answer-btn';
+    btnTrue.textContent = 'Đúng';
+    btnTrue.onclick = () => handleTrueFalseAnswerClick(true, answerObj.correct);
+    answersBlock.appendChild(btnTrue);
+    
+    const btnFalse = document.createElement('button');
+    btnFalse.className = 'answer-btn';
+    btnFalse.textContent = 'Sai';
+    btnFalse.onclick = () => handleTrueFalseAnswerClick(false, answerObj.correct);
+    answersBlock.appendChild(btnFalse);
+  }
+
+  function handleTrueFalseAnswerClick(userAnswer, correctAnswer) {
+    Array.from(answersBlock.querySelectorAll('button')).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(userAnswer === correctAnswer) {
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    } else {
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('incorrect');
+        }
+        if(b.textContent.toLowerCase() === (correctAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    }
+
+    btnNext.style.display = 'inline-block';
+  }
+
+  // Essay submit handler
+  btnEssaySubmit.onclick = () => {
+    const userText = essayAnswerTextarea.value.trim();
+    if(userText.length === 0) {
+      alert('Hãy nhập câu trả lời trước khi nhấn "Xong"');
+      return;
+    }
+    btnEssaySubmit.disabled = true; // Vô hiệu hóa nút "Xong" sau khi submit
+    
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    const currentQ = questions[currentQIdx];
+    let answerRefHTML = `<br><br><em><strong>Đáp án tham khảo:</strong> ${currentQ.answerRef}</em>`;
+    
+    if(currentQ.answerRefImage) {
+      answerRefHTML += `<div style="margin: 15px 0; text-align: center;">
+        <img src="${currentQ.answerRefImage}" style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;">
+      </div>`;
+    }
+    
+    questionBlock.innerHTML += answerRefHTML;
+    btnNext.style.display = 'inline-block';
+  };
+
+  btnNext.onclick = () => {
+    // Ẩn nút "Tiếp tục"
+    btnNext.style.display = 'none';
+    // Đảm bảo nút "Xong" (essay) được kích hoạt lại
+    btnEssaySubmit.disabled = false; 
+
+    if(quizType === 'truefalse') {
+      currentTFAnswerIdx++;
+      const currentQ = questions[currentQIdx];
+      // Nếu còn câu hỏi phụ trong câu hỏi Đúng/Sai hiện tại
+      if(currentTFAnswerIdx < currentQ.answers.length) {
+        showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+        return; // Không chuyển sang câu hỏi tiếp theo mà hiển thị câu phụ
+      }
+    }
+
+    // Chuyển sang câu hỏi tiếp theo
+    currentQIdx++;
+    showQuestion();
+  };
+
+  function endQuiz() {
+    stopTimer();
+    quizSection.style.display = 'none';
+    resultSection.style.display = 'block';
+    toggleThemeBtn.style.display = 'block'; // Hiển thị lại nút chuyển theme
+
+    resultTime.textContent = formatTime(timeSeconds);
+    resultTotal.textContent = doneCount;
+    resultCorrect.textContent = correctCount;
+    resultWrong.textContent = wrongCount;
+
+    starRating.innerHTML = '';
+
+    // Logic tính sao đã được khôi phục và tinh chỉnh
+    if(quizType === 'multi' || quizType === 'truefalse') {
+      let starsGreen = 0;
+      let starsGray = 0;
+      
+      if(wrongCount === 0) { // Nếu không có câu sai
+        starsGreen = 3; // 3 sao xanh
+      } else if (wrongCount >= 1 && wrongCount <= 3) {
+        starsGreen = 2; // 2 sao xanh
+        starsGray = 1; // 1 sao xám
+      } else if (wrongCount >= 4 && wrongCount <= 9) {
+        starsGreen = 1; // 1 sao xanh
+        starsGray = 2; // 2 sao xám
+      } else { // wrongCount >= 10
+        starsGreen = 0; // 0 sao xanh
+        starsGray = 3; // 3 sao xám
+      }
+
+      for(let i = 1; i <= 3; i++) {
+        const star = document.createElement('span');
+        star.classList.add('star');
+        if(i <= starsGreen) star.classList.add('Green');
+        else if(i <= starsGray) star.classList.add('gray');
+        star.innerHTML = '&#9733;';
+        starRating.appendChild(star);
+      }
+    } else if (quizType === 'essay') {
+        // Đối với bài tự luận, không có điểm đúng/sai tự động
+        // Bạn có thể thêm logic chấm điểm thủ công hoặc hiển thị thông báo khác
+        const infoDiv = document.createElement('div');
+        infoDiv.textContent = "Bài Tự Luận Cần Được Giáo Viên Chấm Điểm.";
+        infoDiv.style.fontWeight = "bold";
+        infoDiv.style.marginTop = "20px";
+        starRating.appendChild(infoDiv);
+    }
+  }
+
+  // --- EVENT LISTENERS ---
+  // Đã xóa btnRestart.onclick và logic liên quan
+  // Nếu bạn muốn chức năng "làm lại" bài quiz, bạn cần tạo một nút mới với ID khác
+  // và thêm lại logic reset Stats vào event listener của nút đó.
+
+  // Nút Home (ở màn hình kết quả) - vẫn reload trang hiện tại
+  btnHome.onclick = () => {
+    location.reload(); 
+  };
+
+  btnMulti.onclick = () => initQuiz('multi');
+  btnTrueFalse.onclick = () => initQuiz('truefalse');
+  btnEssay.onclick = () => initQuiz('essay');
+  // New: Download button functionality
+  btnDownload.onclick = () => {
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'toancreator-default'; // Set the desired filename
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  };
+  
+  
+  // Xử lý sự kiện cho nút Exit mới
+  btnExit.onclick = () => {
+    window.location.href = '../index.html'; // Chuyển hướng về index.html
+  };
+
+  // Xử lý sự kiện cho nút Back to Home trong quiz
+  btnBackHomeInQuiz.onclick = () => {
+    if (confirm('Bạn có chắc chắn muốn thoát bài làm hiện tại?')) {
+      stopTimer(); // Dừng đồng hồ
+      location.reload(); // Tải lại trang promt-onlineV2.html
+    }
+  };
+
+  toggleThemeBtn.onclick = () => {
+    document.body.classList.toggle('dark');
+  };
+
+  // Ẩn/hiện nút toggle theme ban đầu
+  // Bạn có thể đặt nút toggle theme ở vị trí cố định thay vì ẩn/hiện tùy thuộc vào màn hình
+  // Hiện tại, nó sẽ luôn hiển thị trừ khi bị ẩn bởi CSS hoặc logic khác
+  toggleThemeBtn.style.display = 'block'; 
+})();
+</script>
+</body>
+</html>
