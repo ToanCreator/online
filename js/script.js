@@ -36,7 +36,7 @@ function closeNotification(e) {
     const notificationBox = document.getElementById('notificationBox');
     if (notificationBox) {
         notificationBox.style.display = 'none';
-        localStorage.setItem('notificationClosed', 'true');
+        
     }
 }
 
