@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T6703221V4"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    
+    <!-- reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    
+    <!-- Font Awesome (cho icon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T6703221V4');
+    </script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toàn Creator - Học tập với Python/HTML</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Hamburger Menu -->
+<div class="hamburger-menu">
+    <div class="hamburger-icon">☰</div>
+    <div class="menu-items">
+        <div class="menu-item" id="notificationBtn">1. Thông báo</div>
+        <div class="menu-item" id="backgroundSettingsBtn">2. Thiết lập nền</div>
+        <div class="menu-item" id="resetBtn">3. Đặt lại</div>
+    </div>
+</div>
+
+<!-- Background Settings Modal -->
+<div id="backgroundSettingsModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Thiết lập nền</h2>
+        
+        <div class="setting-option">
+            <div class="toggle-container">
+                <label>Khoá nền hiện tại</label>
+                <label class="switch">
+                    <input type="checkbox" id="lockBackgroundToggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            
+        </div>
+        
+        <div class="setting-option">
+            <h3>Tải ảnh lên</h3>
+            <input type="file" id="backgroundUpload" accept="image/png, image/jpeg, image/jpg, image/gif">
+            <p class="file-requirements">(png, jpg, jpeg, gif - dưới 50MB)</p>
+            <button id="uploadSetBtn" class="setting-btn">Thiết lập</button>
+        </div>
+        
+        <div class="setting-option">
+            <h3>Ảnh có sẵn</h3>
+            <div class="preset-images">
+
+            </div>
+            <button id="presetSetBtn" class="setting-btn">Thiết lập</button>
+        </div>
+        
+        <div class="setting-option">
+            <h3>Nhập mã màu</h3>
+            <input type="text" id="colorInput" placeholder="#ffffff, #000000, #ff0000">
+            <button id="colorSetBtn" class="setting-btn">Thiết lập</button>
+        </div>
+    </div>
+</div>
+
+<!-- Reset Confirmation Modal -->
+<div id="resetModal" class="modal">
+    <div class="modal-content">
+        <h2>Xác nhận đặt lại</h2>
+        <p>Bạn có chắc chắn muốn đặt lại không? Điều này sẽ xoá sạch dữ liệu của bạn khỏi trang web này.</p>
+        <div class="modal-buttons">
+            <button id="confirmResetBtn" class="modal-btn btn-yes">Xác nhận</button>
+            <button id="cancelResetBtn" class="modal-btn btn-no">Huỷ</button>
+        </div>
+    </div>
+</div>
+ <!-- Thông báo truy cập -->
+    <div class="notification-overlay" id="notificationBox">
+        <div class="notification-box">
+            <span class="close-btn" id="closeBtn">×</span>
+            
+            <div class="avatar-container">
+                <div class="rainbow-border"></div>
+                <img src="https://i.ibb.co/BK658SV5/Picsart-25-06-23-20-06-13-912.png" alt="Avatar" class="avatar">
+            </div>
+            
+            <div class="owner-name"><h2 style= "color: #2ecc71;">Toàn Creator</h2></div>
+            <div class="website-desc">trang web học tập với html, python,...</div>
+            
+            <div class="update-time">
+                <span id="simple-time">09:10</span>
+            </div>
+            
+            <div class="update-date" id="updateDate">28/07/2025</div>
+        </div>
+    </div>
+    
+    <div class="background"></div>
+    
+    <header>
+        <h1>Toàn Creator</h1>
+        <p>Trang web học tập với html, python,...</p>
+    </header>
+    
+    <div class="container">
+        <h1 style="color: white; text-align: center; font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px  1px 0 #000, 1px  1px 0 #000;">CÁC BÀI HỌC HIỆN CÓ</h1>
+        
+        <div class="subjects-container" id="subjectsContainer">
+            </div>
+        
+        <div class="code-runner">
+            <h3 class="code-runner-title">Chạy Code Online</h3>
+            <div class="code-runner-options">
+                <button class="code-runner-option active" data-language="python">Python</button>
+                <button class="code-runner-option" data-language="html">HTML</button>
+            </div>
+            
+            <textarea class="code-editor" id="codeEditor" placeholder="Nhập code Python của bạn vào đây..."></textarea>
+            
+            <div class="file-upload">
+                <input type="file" id="fileUpload" accept=".py,.html" style="display: none;">
+                <button id="uploadBtn" class="upload-btn">Tải lên file</button>
+                <span id="fileName" style="margin-left: 10px;"></span>
+            </div>
+            
+            <button class="run-btn" id="runBtn">Chạy Code</button>
+            
+            <div class="output-container" id="outputContainer">
+                <p>Kết quả sẽ hiển thị ở đây...</p>
+            </div>
+        </div>
+        
+        <div class="youtube-player">
+            <h3 class="youtube-title">Tìm kiếm và xem Video YouTube</h3>
+            
+            <div class="Youtube-area">
+                <div class="youtube-tabs">
+                    <button class="youtube-tab active" data-type="video">Video</button>
+                    <button class="youtube-tab" data-type="channel">Kênh</button>
+                    <button class="youtube-tab" data-type="playlist">Playlist</button>
+                    <button class="youtube-tab" data-type="url">Dán URL</button>
+                </div>
+                <div class="search-input-container">
+                    <input type="text" id="Youtube-input" placeholder="Nhập từ khóa tìm kiếm video...">
+                    <button id="Youtube-button" class="submit-btn">Tìm kiếm</button>
+                </div>
+            </div>
+
+            <h3 style="color: white; font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px  1px 0 #000, 1px  1px 0 #000;">Video đang phát</h3>
+            <iframe id="youtube-video-player" class="youtube-video-player"
+                src="https://www.youtube.com/embed/" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+
+            <h3 style="color: white; font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px  1px 0 #000, 1px  1px 0 #000;">Kết quả tìm kiếm</h3>
+            <div id="youtube-results-container" class="youtube-results-grid"></div>
+            <div class="view-more-less" id="youtubeViewMoreLess" style="display: none;">
+                <button class="view-more-btn" id="youtubeViewMore">Xem thêm</button>
+                <button class="view-less-btn" id="youtubeViewLess">Thu gọn</button>
+            </div>
+            <div class="youtube-pagination" id="youtubePagination" style="display: none;">
+                <button class="pagination-btn" id="youtubePrevPage">Trang trước</button>
+                <button class="pagination-btn" id="youtubeNextPage">Trang sau</button>
+            </div>
+        </div>
+        
+        <div class="comments-section">
+            <h3 class="comments-title">Bình luận</h3> <!-- Phần điều khiển đăng nhập (ẩn/hiện tùy trạng thái) -->
+            <div class="auth-controls" style="margin-bottom: 15px;">
+                <button id="googleLoginBtn" class="login-btn hidden">
+                    <i class="fab fa-google"></i> Google log (ADMIN ONLY)
+                </button>
+                <button id="logoutBtn" class="logout-btn hidden">
+                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                </button>
+            </div>
+            <form class="comment-form" id="commentForm"> <!-- Phần nhập tên (sẽ thay đổi tùy trạng thái đăng nhập) -->
+                <div class="form-group" id="userInfoGroup">
+                    <label for="username">
+                        <h3 style="color: white; font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;"> Tên của bạn:
+                        </h3> 
+                    </label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="comment">
+                        <h3 style="color: white; font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;"> Nội dung:
+                        </h3>
+                    </label>
+                    <textarea id="comment" required></textarea>
+                    <p class="word-count">Số từ: <span id="wordCount">0</span>/200</p>
+                </div>
+                <div class="g-recaptcha" data-sitekey="6LcFRFYrAAAAAN8D0eXjMWkOUdlro3LPhuadhE7J"></div>
+                <button type="submit" class="submit-btn">Gửi bình luận</button>
+            </form>
+            <div class="comments-list" id="commentsList"></div>
+            <div class="view-more-less" id="commentsViewMoreLess" style="display: none;">
+                <button class="view-more-btn" id="commentsViewMore">Xem thêm bình luận</button>
+                <button class="view-less-btn" id="commentsViewLess">Thu gọn bình luận</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toggle-heart" id="toggleHeart">❤️‍🔥</div>
+    
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Xác nhận</h3>
+            <p class="modal-message">Bạn có muốn tải bài học này không?</p>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn btn-yes" id="btnYes">Có</button>
+                <button class="modal-btn btn-guide" id="btnGuide">Xem hướng dẫn</button>
+                <button class="modal-btn btn-no" id="btnNo">Không</button>
+            </div>
+            
+            <div class="guide-content" id="guideContent" style="display: none;">
+                <p>+ Python/HTML: Vui lòng truy cập ứng dụng hoặc trang Web có hỗ trợ Code Python/HTML</p>
+                <p>+ Mở file bài học bạn vừa tải</p>
+                <p>+ Chạy chương trình</p>
+                <p>+ Chúc bạn học tốt!</p>
+                <button class="modal-btn btn-yes" id="btnConfirm" style="margin-top: 10px;">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Xóa Bình Luận</h3>
+            <div class="form-group">
+                <label for="adminPassword">Nhập mật khẩu admin:</label>
+                <input type="password" id="adminPassword" required>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn btn-yes" id="btnDeleteConfirm">Xác nhận</button>
+                <button class="modal-btn btn-no" id="btnDeleteCancel">Hủy</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© Toàn Creator / 2025 - 2025</p>
+    </footer>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
