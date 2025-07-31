@@ -134,7 +134,7 @@ const subjects = [
         id: 2,
         title: "Vật Lý",
         image: "https://i.ibb.co/sddMYYvR/retouch-2025060606155524.jpg",
-        lessons: ["LY-12-U1","LY-12-U2","LY-12-U3","LY-12-U4"]
+        lessons: ["LY-12-U1","LY-12-U2","LY-12-U3","LY-12-U4","LY-12-U5"]
     },
     {
         id: 3,
@@ -164,7 +164,7 @@ const subjects = [
             id: 7,
             title: "Websites",
             image: "https://i.ibb.co/Qvy9Vctj/wmremove-transformed-1.jpg",
-            lessons: ["THPT NGÔ GIA TỰ"]
+            lessons: ["THPT NGÔ GIA TỰ","Dô La Chat - No sign in"]
     },
     {
             id: 8,
@@ -781,6 +781,7 @@ function downloadLesson() {
         const lessonLinks = {
             // Môn Websites (id:7)
             "THPT NGÔ GIA TỰ": "https://thptngogiatu.giaoductayninh.vn/",
+            "Dô La Chat - No sign in": "https://toancreator.github.io/online-chat/",
             
             // Môn Khác (id:8)
             "BỘ 30 ĐỀ THI TN TIN 2025": "https://is.gd/0Byez9",
