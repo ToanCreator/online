@@ -164,7 +164,7 @@ const subjects = [
             id: 7,
             title: "Websites",
             image: "https://i.ibb.co/Qvy9Vctj/wmremove-transformed-1.jpg",
-            lessons: ["THPT NGÔ GIA TỰ","Dô La Chat - No sign in"]
+            lessons: ["THPT NGÔ GIA TỰ","Dô La Chat - No sign in","GUESS THE DRAW - No sign in"]
     },
     {
             id: 8,
