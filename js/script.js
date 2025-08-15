@@ -782,10 +782,11 @@ function downloadLesson() {
             // Môn Websites (id:7)
             "THPT NGÔ GIA TỰ": "https://thptngogiatu.giaoductayninh.vn/",
             "Dô La Chat - No sign in": "https://toancreator.github.io/online-chat/",
+            "GUESS THE DRAW - No sign in": "https://skribbl.io/",
             
             // Môn Khác (id:8)
             "BỘ 30 ĐỀ THI TN TIN 2025": "https://is.gd/0Byez9",
-            "SQL PYTHON": "https://is.gd/VF8MV9",
+            "SQL PYTHON": "https://is.gd/zCXEuI",
             
         };
         
