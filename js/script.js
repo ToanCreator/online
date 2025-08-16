@@ -808,8 +808,8 @@ function downloadLesson() {
         const lessonLinks = {
             // Môn Websites (id:7)
             "THPT NGÔ GIA TỰ": "https://thptngogiatu.giaoductayninh.vn/",
-            "DÔ LA CHAT - No sign in": "https://toancreator.github.io/online-chat/"
-            "GUESS THE DRAW - No sign in": "https://skribbl.io/"
+            "DÔ LA CHAT - No sign in": "https://toancreator.github.io/online-chat/",
+            "GUESS THE DRAW - No sign in": "https://skribbl.io/",
             
             // Môn Khác (id:8)
             "BỘ 30 ĐỀ THI TN TIN 2025": "https://is.gd/0Byez9",
