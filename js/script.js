@@ -26,9 +26,36 @@ document.addEventListener('DOMContentLoaded', function() {
         "https://i.ibb.co/Dgzp73pp/1730539664-5.gif",
         "https://i.ibb.co/SXY22f0j/In-Shot-20250727-134343142.gif",
         "https://i.ibb.co/LhtqZXkZ/In-Shot-20250727-134641138.gif",
-        "https://i.ibb.co/JjwBrMkR/1730539366-15.gif",
-        "https://i.ibb.co/gZ9dyg6J/In-Shot-20250728-065201888.gif",
-        "https://i.ibb.co/LhhJ7SKt/In-Shot-20250728-064937489.gif"
+        
+"https://i.ibb.co/CKysTXrK/1103597.png",
+
+"https://i.ibb.co/CsDCHjW7/22988.jpg",
+
+"https://i.ibb.co/FbxwXkzM/21363.jpg",
+
+"https://i.ibb.co/v6SZBXZz/20404.jpg",
+
+"https://i.ibb.co/RTC3gCLR/20184.jpg",
+
+"https://i.ibb.co/ZR7WJdGv/19857.jpg",
+
+"https://i.ibb.co/QvrY5Q2d/19754.jpg",
+
+"https://i.ibb.co/KcvYT71b/18712.jpg",
+
+"https://i.ibb.co/s9VVZ0JL/18710.jpg",
+
+"https://i.ibb.co/0pQHrCcq/17612.jpg",
+
+"https://i.ibb.co/My5nnqDH/18706.jpg",
+
+"https://i.ibb.co/ZRt7v4RX/10024.jpg",
+
+"https://i.ibb.co/jXSfpWF/9792.jpg",
+
+"https://i.ibb.co/v8GzyTk/16188.jpg",
+
+"https://i.ibb.co/5gp6BcMh/9278.jpg"
     ];
 
     let visiblePresetImages = 9;
@@ -134,7 +161,7 @@ const subjects = [
         id: 2,
         title: "Vật Lý",
         image: "https://i.ibb.co/sddMYYvR/retouch-2025060606155524.jpg",
-        lessons: ["LY-12-U1","LY-12-U2","LY-12-U3","LY-12-U4","LY-12-U5"]
+        lessons: ["LY-12-U1","LY-12-U2","LY-12-U3","LY-12-U4"]
     },
     {
         id: 3,
@@ -164,7 +191,7 @@ const subjects = [
             id: 7,
             title: "Websites",
             image: "https://i.ibb.co/Qvy9Vctj/wmremove-transformed-1.jpg",
-            lessons: ["THPT NGÔ GIA TỰ","Dô La Chat - No sign in","GUESS THE DRAW - No sign in"]
+            lessons: ["THPT NGÔ GIA TỰ"]
     },
     {
             id: 8,
@@ -781,12 +808,10 @@ function downloadLesson() {
         const lessonLinks = {
             // Môn Websites (id:7)
             "THPT NGÔ GIA TỰ": "https://thptngogiatu.giaoductayninh.vn/",
-            "Dô La Chat - No sign in": "https://toancreator.github.io/online-chat/",
-            "GUESS THE DRAW - No sign in": "https://skribbl.io/",
             
             // Môn Khác (id:8)
             "BỘ 30 ĐỀ THI TN TIN 2025": "https://is.gd/0Byez9",
-            "SQL PYTHON": "https://is.gd/zCXEuI",
+            "SQL PYTHON": "https://is.gd/VF8MV9",
             
         };
         
