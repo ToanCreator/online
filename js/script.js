@@ -161,7 +161,7 @@ const subjects = [
         id: 2,
         title: "Vật Lý",
         image: "https://i.ibb.co/sddMYYvR/retouch-2025060606155524.jpg",
-        lessons: ["LY-12-U1","LY-12-U2","LY-12-U3","LY-12-U4","LY-12-U5"]
+        lessons: ["LY-12-U1","LY-12-U2","LY-12-U3","LY-12-U4","LY-12-U5","LY-12-U6"]
     },
     {
         id: 3,
