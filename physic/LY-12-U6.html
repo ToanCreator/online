@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toàn Creator - Online Lesson</title>
+<style>
+  :root {
+    --yellow: #f9d342;
+    --yellow-dark: #d4b833;
+    --Green: #2ecc71;
+    --starsGreen: #2ecc71;
+    --red: #d93025;
+    --green: #2ecc40;
+    --starsGray: #ccc;
+    --star-size: 30px;
+    --orange: #ff9800;
+  }
+  body {
+    margin:0; padding:0; font-family: Arial, sans-serif;
+    background: white; color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: black; color: white;
+  }
+  /* Existing #app rule */
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+/* Media query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+  #app {
+    max-width: 960px; /* Or any wider value you prefer, e.g., 900px, 1200px */
+    padding: 20px; /* Optional: Increase padding for more space on larger screens */
+  }
+
+  /* Optional: Adjust button widths for larger screens if they look too wide */
+  .btn {
+    max-width: 400px; /* Make main buttons a bit wider */
+  }
+
+  /* Optional: Adjust status bar layout for larger screens */
+  .status-bar {
+    font-size: 1.1em;
+  }
+}
+  h1, h3 {
+    text-align: center;
+    margin: 10px 0;
+  }
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+    color: #FF00FF;
+  }
+  hr {
+    border:none; border-bottom: 3px solid black;
+    margin: 5px 0 25px 0;
+  }
+  .btn {
+    background: #3399FF;
+    border-radius: 8px;
+    border:none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 15px;
+    width: 100%;
+    max-width: 350px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: 3px solid transparent;
+    user-select: none;
+  }
+  .btn:hover {
+    background: var(--yellow-dark);
+  }
+  .btn svg {
+    vertical-align: middle;
+  }
+  .question-container {
+    margin-bottom: 20px;
+    color: var(--orange) !important;
+    font-weight: bold;
+    font-size: 1.08em;
+    transition: color 0.3s;
+  }
+  body.dark .question-container {
+    color: var(--orange) !important;
+  }
+  .answers {
+    margin-top: 15px;
+  }
+  .answer-btn {
+    display: block;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 6px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
+    padding: 12px 10px;
+    margin: 7px 0;
+    cursor: pointer;
+    text-align: left;
+    user-select: none;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .answer-btn:hover:not(.disabled) {
+    background-color: #eee;
+  }
+  body.dark .answer-btn {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  body.dark .answer-btn:hover:not(.disabled) {
+    background-color: #444;
+  }
+  .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  body.dark .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  body.dark .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  .disabled {
+    pointer-events: none;
+  }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .star-container {
+    text-align: center;
+    margin: 20px 0 10px 0;
+  }
+  .star {
+    font-size: var(--star-size);
+    margin: 0 5px;
+    color: var(--starsGray);
+  }
+  .star.Green {
+    color: var(--Green);
+  }
+  .star.red {
+    color: var(--red);
+  }
+  .toggle-btn {
+    background: lime;
+    color: white;
+    font-size: 1.5em;
+    padding: 12px 0;
+    margin: 25px auto;
+    width: 150px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    display: block;
+  }
+  .input-textarea {
+    width: 100%;
+    min-height: 80px;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid black;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  body.dark .input-textarea {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  .btn-small {
+    background: #FF99CC;
+    width: auto;
+    padding: 8px 15px;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+  .answer-btn img {
+    max-width: 100%;
+    max-height: 150px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .question-container img {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  body.dark .answer-btn img,
+  body.dark .question-container img {
+    border-color: #555;
+  }
+  .question-container img, .answer-btn img {
+    display: block;
+    margin: 0 auto;
+    background: #f5f5f5;
+  }
+  body.dark .question-container img,
+  body.dark .answer-btn img {
+    background: #333;
+  }
+  /* Style for the header image placeholder */
+  .header-image-placeholder {
+    display: block;
+    width: 100%; /* Hoặc một chiều rộng cố định */
+    height: 100px; /* Điều chỉnh chiều cao này để phù hợp với kích thước bạn muốn */
+    background-color: #f0f0f0; /* Màu nền để dễ nhìn thấy placeholder */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 25px; /* Khoảng cách với tiêu đề bên dưới */
+    
+  }
+  body.dark .header-image-placeholder {
+    background-color: #333;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <img src="https://i.ibb.co/tMdHNdPH/Picsart-25-07-17-06-40-25-073.jpg" alt="Header Image" class="header-image-placeholder">
+  
+  <h2>LÝ - BÀI 6</h2>
+
+  <button class="btn" id="btn-exit" style="background: var(--red);">
+    <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+      <path d="M16 17v-4h-2V7h-4V4H6V2H4v2h2v4h4v6h2v4h4v2h2v-2h-2z"/>
+    </svg>
+    Thoát
+  </button>
+  <button class="btn" id="btn-multi">TRẮC NGHIỆM 4 PHƯƠNG ÁN</button>
+  <button class="btn" id="btn-truefalse">TRẮC NGHIỆM ĐÚNG/SAI</button>
+  <button class="btn" id="btn-essay">TỰ LUẬN</button>
+
+  <button class="toggle-btn" id="toggle-theme">💡</button>
+  <button class="toggle-btn" id="btn-download" style="background: orange; margin-top: -20px; margin-bottom: 25px;">
+    Tải xuống
+  </button>
+  <div id="quiz-section" style="display:none; margin-top: 10px;">
+    <div class="status-bar">
+      <div><span id="timer">00:00</span></div>
+      <div>ㅤㅤ <span id="done-count">0</span></div>
+      <div>✅<span id="correct-count">0</span> | <strong>⛔</strong><span id="wrong-count">0</span></div>
+    </div>
+
+    <div id="question-block" class="question-container"></div>
+    <div id="answers-block" class="answers"></div>
+
+    <div id="essay-input-block" style="display:none;">
+      <textarea id="essay-answer" class="input-textarea" placeholder="Nhập câu trả lời của bạn..."></textarea>
+      <button id="btn-essay-submit" class="btn-small">Xong</button>
+    </div>
+
+    <div style="display:flex; justify-content: space-between; margin-top: 20px;">
+      <button id="btn-back-home-in-quiz" class="btn btn-small" style="background: var(--Green); width: 48%;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+      <button id="btn-next" class="btn btn-small" style="width: 48%;">Tiếp tục</button>
+    </div>
+  </div>
+
+  <div id="result-section" style="display:none; text-align:center; margin-top: 30px;">
+    <h2>KẾT THÚC BÀI LÀM</h2>
+    <div><strong>Tổng thời gian làm bài:</strong> <span id="result-time"></span></div>
+    <div><strong>Tổng số câu đã làm:</strong> <span id="result-total"></span></div>
+    <div><strong>Đúng:</strong><span id="result-correct"></span><strong> | </strong><strong>Sai:</strong><span id="result-wrong"></span></div>
+    <div id="star-rating" class="star-container"></div>
+    <div style="margin-top: 25px;">
+      <button id="btn-home" class="btn" style="display:inline-block; width:120px;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg> 
+      </button>
+      </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // --- QUESTION DATA ---
+  // Multiple choice questions [ABCD]
+const multiChoiceQuestions = [
+  {
+    q: "Nhiệt hoá hơi riêng là",
+    qImage: null,
+    answers: [
+      { text: "nhiệt lượng cần để làm cho một kilogam chất lỏng đó hoá hơi hoàn toàn ở nhiệt độ xác định.", correct: true, image: null },
+      { text: "nhiệt lượng cần cung cấp cho một lượng chất lỏng hóa hơi hoàn toàn ở nhiệt độ không đổi", correct: false, image: null },
+      { text: "nhiệt lượng cần cung cấp cho một lượng chất khí hóa hơi hoàn toàn ở nhiệt độ không đổi", correct: false, image: null },
+      { text: "nhiệt lượng cần để làm cho một kilogam chất đó hoá hơi hoàn toàn ở nhiệt độ xác định.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Đơn vị của nhiệt hoá hơi riêng",
+    qImage: null,
+    answers: [
+      { text: "kg/J", correct: false, image: null },
+      { text: "J.kg", correct: false, image: null },
+      { text: "J/kg", correct: true, image: null },
+      { text: "J", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong các trường hợp phơi quần áo sau đây, trường hợp nào quần áo lâu khô nhất?",
+    qImage: null,
+    answers: [
+      { text: "Có gió, quần áo căng ra.", correct: false, image: null },
+      { text: "Không có gió, quần áo căng ra.", correct: false, image: null },
+      { text: "Quần áo không căng ra, không có gió.", correct: true, image: null },
+      { text: "Quần áo không căng ra, có gió.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tốc độ bay hơi của nước trong một cốc hình trụ càng lớn khi:",
+    qImage: null,
+    answers: [
+      { text: "Nước trong cốc càng nhiều", correct: false, image: null },
+      { text: "Nước trong cốc càng ít", correct: false, image: null },
+      { text: "Cốc được đặt trong nhà", correct: false, image: null },
+      { text: "Cốc được đặt ngoài sân nắng", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Tính nhiệt lượng cần cung cấp cho 10kg nước ở 25°C chuyển thành hơi ở 100°C. Cho biết nhiệt dung riêng của nước 4180 J/kg.K và nhiệt hóa hơi riêng của nước là 2,3.10^6 J/kg.",
+    qImage: "media/anh68.png",
+    answers: [
+      { text: "18450 kJ", correct: false, image: null },
+      { text: "26135 kJ", correct: true, image: null },
+      { text: "84500 kJ", correct: false, image: null },
+      { text: "804500 kJ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong các hiện tượng sau đây, hiện tượng nào không phải là sự bay hơi?",
+    qImage: null,
+    answers: [
+      { text: "Quần áo sau khi giặt được phơi khô.", correct: false, image: null },
+      { text: "Lau ướt bảng, một lúc sau bảng sẽ khô.", correct: false, image: null },
+      { text: "Mực khô sau khi viết.", correct: false, image: null },
+      { text: "Sự tạo thành giọt nước đọng trên lá cây.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Lượng nước sôi có trong một chiếc ấm có khối lượng m=300g. Đun nước tới nhiệt độ sôi, dưới áp suất khí quyển bằng 1 atm. Cho nhiệt hóa hơi riêng của nước là 2,3.10^6 J/kg. Nhiệt lượng cần thiết để có m' = 100g nước hóa thành hơi là",
+    qImage: "media/anh89.png",
+    answers: [
+      { text: "690 KJ.", correct: false, image: null },
+      { text: "230 KJ.", correct: true, image: null },
+      { text: "460 KJ.", correct: false, image: null },
+      { text: "320 KJ.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Để đảm bảo an toàn trong khi làm thí nghiệm cần phải chú ý. Chọn câu sai.",
+    qImage: null,
+    answers: [
+      { text: "Sử dụng thiết bị bảo hộ như kính bảo hộ để bảo vệ mắt khỏi các tác động của nhiệt độ cao hoặc nước sôi.", correct: false, image: null },
+      { text: "Luôn luôn tuân thủ các quy tắc an toàn khi làm việc với nguồn nhiệt và các thiết bị đốt cháy.", correct: false, image: null },
+      { text: "Tránh tiếp xúc trực tiếp với nguồn nhiệt cao và giữ khoảng cách an toàn.", correct: false, image: null },
+      { text: "Sử dụng bình nhiệt lượng kế được thiết kế cho mục đích đo nhiệt lượng và nứt cũng sử dụng được.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Để xác định nhiệt hóa hơi của nước, người ta làm thí nghiệm sau. Đưa 10g hơi nước ở nhiệt độ 100°C vào một nhiệt lượng kế chứa 290g nước ở 20°C. Nhiệt độ cuối của hệ là 40°C. Hãy tính nhiệt hóa hơi của nước, cho biết nhiệt dung của nhiệt lượng kế là 46J/độ, nhiệt dung riêng của nước là 4,18J/g.độ.",
+    qImage: "media/anh41.png",
+    answers: [
+      { text: "6900 J/g.", correct: false, image: null },
+      { text: "2265,6 J/g", correct: true, image: null },
+      { text: "4600 J/g.", correct: false, image: null },
+      { text: "3200 J/g.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Lấy 0,01 kg hơi nước ở 100°C cho ngưng tụ trong bình nhiệt lượng kế chứa 0,2kg nước ở 9,5°C. Nhiệt độ cuối cùng đo được là 40°C. Cho nhiệt dung riêng của nước là C= 4180J/kg.K. Hãy tính nhiệt hóa hơi của nước?",
+    qImage: "media/anh41.png",
+    answers: [
+      { text: "6,9.10^6 J/kg", correct: false, image: null },
+      { text: "2,3.10^6 J/kg", correct: true, image: null },
+      { text: "4,6.10^6 J/kg", correct: false, image: null },
+      { text: "3,2.10^6 J/kg.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Chọn phát biểu đúng về định nghĩa của sự bay hơi?",
+    qImage: "media/anh93.png",
+    answers: [
+      { text: "Sự chuyển từ thể rắn sang thể hơi gọi là sự bay hơi.", correct: false, image: null },
+      { text: "Sự chuyển từ thể hơi sang thể rắn gọi là sự bay hơi.", correct: false, image: null },
+      { text: "Sự chuyển từ thể lỏng sang thể hơi gọi là sự bay hơi.", correct: true, image: null },
+      { text: "Sự chuyển từ thể hơi sang thể lỏng gọi là sự bay hơi.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Dụng cụ được sử dụng trong thí nghiệm xác định nhiệt hoá hơi riêng của nước. Chọn câu đúng.",
+    qImage: "media/anh123.png",
+    answers: [
+      { text: "Biến thế nguồn, bộ đo công suất nguồn điện (oát kế) có tích hợp chức năng đo thời gian, nhiệt kế điện tử, nhiệt lượng kế bằng nhựa có vỏ xốp, dây điện trở, cân điện tử, các dây nối, nước đá.", correct: false, image: null },
+      { text: "Biến thế nguồn, bộ đo công suất nguồn điện (oát kế) có tích hợp chức năng đo thời gian, nhiệt kế điện tử, nhiệt lượng kế bằng nhựa có vỏ xốp, bật lửa, cân điện tử, các dây nối, nước đá.", correct: false, image: null },
+      { text: "Biến thế nguồn, bộ đo công suất nguồn điện (oát kế) có tích hợp chức năng đo thời gian, nhiệt kế điện tử, nhiệt lượng kế bằng nhựa có vỏ xốp, dây điện trở, cân điện tử, các dây nối, nước nóng.", correct: true, image: null },
+      { text: "Bộ đo công suất nguồn điện (oát kế) có tích hợp chức năng đo thời gian, nhiệt kế điện tử, nhiệt lượng kế bằng nhựa có vỏ xốp, dây điện trở, cân điện tử, các dây nối, nước nóng.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tính nhiệt lượng tỏa ra khi 4 kg hơi nước ở 100°C ngưng tụ thành nước ở 22°C. Nước có nhiệt dung riêng c=4180 J/kg.K và nhiệt hóa hơi L=2,3.10^6 J/kg. Chọn đáp án đúng.",
+    qImage: "media/anh38.png",
+    answers: [
+      { text: "11504160 J", correct: false, image: null },
+      { text: "12504160 J", correct: false, image: null },
+      { text: "10504160 J", correct: true, image: null },
+      { text: "13504160 J", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Có bao nhiêu câu đúng trong các câu sau: 1. Đơn vị của nhiệt hoá hơi là Jun trên kilôgam (J/kg). 2. Để xác định nhiệt hoá hơi riêng của nước cần xác định nhiệt lượng cần cung cấp cho nước hoá hơi và khối lượng của nước. 3. Trong tiến hành thí nghiệm xác định nhiệt hoá hơi riêng của nước bằng cách xác định công suất trung bình của nguồn điện bằng oát kế và thời gian. 4. Dụng cụ sử dụng để tiến hành thí nghiệm xác định nhiệt hoá hơi riêng của nước là biến thế nguồn, bộ đo công suất nguồn điện (oát kế) có tích hợp chức năng đo thời gian, nhiệt kế điện tử, nhiệt lượng kế bằng nhựa có vỏ xốp, dây điện trở, cân điện tử, các dây nối, nước nóng. 5. Nhiệt hoá hơi riêng là nhiệt lượng cần cung cấp cho một lượng chất lỏng hóa hơi hoàn toàn ở nhiệt độ không đổi",
+    qImage: null,
+    answers: [
+      { text: "2 - (1,5).", correct: false, image: null },
+      { text: "4 - (1,2,3,5).", correct: false, image: null },
+      { text: "5 - (1,2,3,4,5).", correct: false, image: null },
+      { text: "3 - (1,2,3).", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Điều nào sau đây là sai khi nói về nhiệt hoá hơi.",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt lượng cần cung cấp cho khối chất lỏng trong quá trình sôi gọi là nhiệt hoá hơi của khối chất lỏng ở nhiệt độ sôi.", correct: false, image: null },
+      { text: "Nhiệt hoá hơi tỉ lệ với khối lượng của phần chất lỏng đã biến thành hơi.", correct: false, image: null },
+      { text: "Đơn vị của nhiệt hoá hơi là Jun trên kilôgam (J/kg).", correct: false, image: null },
+      { text: "Nhiệt hoá hơi được tính bằng công thức Q = L.m trong đó L là nhiệt hoá hơi riêng của chất lỏng, m là khối lượng của chất lỏng.", correct: false, image: null },
+      { text: "Ko có câu sai", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Để đảm bảo an toàn trong tiến hành thí nghiệm xác định nhiệt hoá hơi riêng của nước cần chú ý. Chọn câu sai",
+    qImage: null,
+    answers: [
+      { text: "cẩn thận khi sử dụng nước nóng và nguồn điện", correct: false, image: null },
+      { text: "cẩn thận khi bật tắt nguồn điện và dây điện trở", correct: false, image: null },
+      { text: "Chú ý quan sát mọi người xung quanh khi thao tác thí nghiệm", correct: false, image: null },
+      { text: "nước không quá nóng và dòng điện nhỏ nên không cần chú ý.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Xác định nhiệt lượng nước trong bình nhiệt lượng kế thu được trong tiến hành thí nghiệm xác định nhiệt hoá hơi riêng của nước bằng cách.",
+    qImage: null,
+    answers: [
+      { text: "Xác định công suất trung bình của nguồn điện bằng oát kế và thời gian", correct: true, image: null },
+      { text: "Xác định công suất trung bình của nguồn điện bằng oát kế", correct: false, image: null },
+      { text: "Xác định nhiệt độ và khối lượng của nước", correct: false, image: null },
+      { text: "Xác định nhiệt độ của nước và thời gian", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt lượng cần cung cấp cho một lượng chất lỏng hoá hơi ở nhiệt độ không đổi",
+    qImage: null,
+    answers: [
+      { text: "phụ thuộc vào khối lượng và bản chất của chất lỏng", correct: true, image: null },
+      { text: "chỉ phụ thuộc vào khối lượng của chất lỏng", correct: false, image: null },
+      { text: "chỉ phụ thuộc vào bản chất của chất lỏng", correct: false, image: null },
+      { text: "phụ thuộc vào khối lượng và thể tích của chất lỏng", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt dung riêng của nước 4200J/kg.K. Để 200g nước tăng lên 20⁰C thì cần cung cấp nhiệt lượng.",
+    qImage: null,
+    answers: [
+      { text: "16800J", correct: true, image: null },
+      { text: "168J", correct: false, image: null },
+      { text: "1680J", correct: false, image: null },
+      { text: "168000J", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi tiến hành thí nghiệm xác định nhiệt hoá hơi riêng của nước phải thực hiện bước nào cuối cùng trong các bước sau.",
+    qImage: null,
+    answers: [
+      { text: "Tháo nắp bình ra khỏi nhiệt lượng kế", correct: false, image: null },
+      { text: "Bật nguồn điện", correct: false, image: null },
+      { text: "Nối oát kế với điện trở và nguồn điện", correct: false, image: null },
+      { text: "Đặt nhiệt lượng kế lên cân. Đổ nước nóng vào nhiệt lượng kế. Xác định khối lượng nước trong bình.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Lấy 0,01 kg hơi nước ở 100°C cho ngưng tụ trong bình nhiệt lượng kế chứa 0,2kg nước ở 9,5°C. Nhiệt độ cuối cùng đo được là 40°C. Cho nhiệt dung riêng của nước là C = 4180J/kg.K. Hãy tính nhiệt hóa hơi của nước?",
+    qImage: null,
+    answers: [
+      { text: "6,9.10^6 J/kg.", correct: false, image: null },
+      { text: "2,3.10^6 J/kg", correct: true, image: null },
+      { text: "4,6.10^6 J/kg.", correct: false, image: null },
+      { text: "3,2.10^6 J/kg.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong các đặc điểm sau đây, đặc điểm nào không phải là sự bay hơi?",
+    qImage: null,
+    answers: [
+      { text: "Xảy ra ở bất kì nhiệt độ nào của chất lỏng", correct: false, image: null },
+      { text: "Xảy ra trên mặt thoáng của chất lỏng.", correct: false, image: null },
+      { text: "Không nhìn thấy được.", correct: false, image: null },
+      { text: "Xảy ra ở một nhiệt độ xác định của chất lỏng.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Người ta đun sôi 0,5 lít nước có nhiệt độ ban đầu 27°C chứa trong chiếc ấm bằng đồng khối lượng m = 0,4kg. Sau khi sôi được một lúc đã có 0,1 lít nước biến thành hơi. Hãy xác định nhiệt lượng đã cung cấp cho ấm. Biết nhiệt hóa hơi của nước là 2,3.10^6 J/kg, nhiệt dung riêng của nước và của đồng tương ứng là C1 = 4180J/kg.K; C2 = 380J/Kg.K",
+    qImage: null,
+    answers: [
+      { text: "16366,7 J", correct: false, image: null },
+      { text: "230000 J", correct: false, image: null },
+      { text: "393666 J", correct: true, image: null },
+      { text: "400000", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tính nhiệt lượng cần cung cấp cho cục nước đá 0,2 kg ở -20°C biến hoàn toàn thành hơi nước ở 100°C. Biết nước đá có nhiệt nóng chảy riêng 3,4.10^5 J/kg, nhiệt dung riêng của nước đá là 2,09.10^3 J/kg.K, nhiệt dung riêng của nước là 4180 J/kg.K và nhiệt hóa hơi là 2,3.10^6 J/kg.",
+    qImage: null,
+    answers: [
+      { text: "219960 J", correct: false, image: null },
+      { text: "819960 J", correct: false, image: null },
+      { text: "705960 J", correct: false, image: null },
+      { text: "619960 J", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Khi một lượng chất lỏng hóa hơi hoàn toàn ở nhiệt độ không đổi, nhiệt lượng cần cung cấp được tính bằng công thức:",
+    qImage: null,
+    answers: [
+      { text: "Q = L.m", correct: true, image: null },
+      { text: "Q = m.c.Δt", correct: false, image: null },
+      { text: "Q = λ.m", correct: false, image: null },
+      { text: "Q = A + U", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Định nghĩa nhiệt hoá hơi riêng của một chất lỏng là gì?",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt lượng cần để làm cho một kilogam chất lỏng đó hoá hơi hoàn toàn ở nhiệt độ xác định.", correct: true, image: null },
+      { text: "Nhiệt lượng cần cung cấp để làm bay hơi một chất lỏng bất kỳ ở nhiệt độ bất kỳ.", correct: false, image: null },
+      { text: "Nhiệt lượng cần để làm tan chảy một chất rắn ở nhiệt độ xác định.", correct: false, image: null },
+      { text: "Nhiệt lượng tỏa ra khi một kilogam chất khí ngưng tụ hoàn toàn.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một ấm điện công suất 1000W. Tính thời gian cần thiết để đun 300g nước có nhiệt độ ban đầu 20°C đến khi sôi ở áp suất tiêu chuẩn (cH2O = 4200 J/Kg.K).",
+    qImage: "anh100.png",
+    answers: [
+      { text: "101s", correct: true, image: null },
+      { text: "120s", correct: false, image: null },
+      { text: "95s", correct: false, image: null },
+      { text: "110s", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt dung riêng của nước 4180J/kg.K. Để 500g nước tăng lên 50°C thì cần cung cấp bao nhiêu kJ nhiệt lượng?",
+    qImage: null,
+    answers: [
+      { text: "104.5 kJ", correct: true, image: null },
+      { text: "100 kJ", correct: false, image: null },
+      { text: "110 kJ", correct: false, image: null },
+      { text: "105 kJ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Một bình nước nóng có khối lượng 1kg ở 80°C. Người ta cho thêm vào bình 2kg nước lạnh ở 20°C. Hỏi nhiệt độ cuối cùng của bình nước là bao nhiêu? (bỏ qua sự trao đổi nhiệt với môi trường)",
+    qImage: null,
+    answers: [
+      { text: "40°C", correct: true, image: null },
+      { text: "50°C", correct: false, image: null },
+      { text: "60°C", correct: false, image: null },
+      { text: "70°C", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi một lượng chất lỏng hóa hơi hoàn toàn ở nhiệt độ không đổi, nhiệt lượng cần cung cấp được tính bằng công thức:",
+    qImage: null,
+    answers: [
+      { text: "Q = L.m", correct: true, image: null },
+      { text: "Q = m.c.Δt", correct: false, image: null },
+      { text: "Q = λ.m", correct: false, image: null },
+      { text: "Q = A + U", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiệt hóa hơi riêng của một chất lỏng phụ thuộc vào:",
+    qImage: null,
+    answers: [
+      { text: "Bản chất của chất lỏng và nhiệt độ", correct: true, image: null },
+      { text: "Chỉ phụ thuộc vào bản chất của chất lỏng", correct: false, image: null },
+      { text: "Chỉ phụ thuộc vào khối lượng của chất lỏng", correct: false, image: null },
+      { text: "Phụ thuộc vào khối lượng và thể tích", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Công thức tính nhiệt lượng cần cung cấp cho một chất lỏng hóa hơi hoàn toàn ở nhiệt độ không đổi là:",
+    qImage: null,
+    answers: [
+      { text: "Q = L.m", correct: true, image: null },
+      { text: "Q = m.c.Δt", correct: false, image: null },
+      { text: "Q = λ.m", correct: false, image: null },
+      { text: "Q = A + U", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Đơn vị của nhiệt hóa hơi riêng là:",
+    qImage: null,
+    answers: [
+      { text: "J/kg", correct: true, image: null },
+      { text: "J", correct: false, image: null },
+      { text: "kg", correct: false, image: null },
+      { text: "J.kg", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự bay hơi xảy ra ở đâu?",
+    qImage: null,
+    answers: [
+      { text: "Chỉ trên bề mặt chất lỏng", correct: true, image: null },
+      { text: "Chỉ bên trong lòng chất lỏng", correct: false, image: null },
+      { text: "Trên toàn bộ thể tích chất lỏng", correct: false, image: null },
+      { text: "Chỉ ở nhiệt độ sôi", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Yếu tố nào sau đây không ảnh hưởng đến tốc độ bay hơi?",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt độ", correct: false, image: null },
+      { text: "Bề mặt thoáng", correct: false, image: null },
+      { text: "Gió", correct: false, image: null },
+      { text: "Khối lượng ban đầu của chất lỏng", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Tính nhiệt lượng cần để làm bay hơi 100g nước ở 100°C.",
+    qImage: null,
+    answers: [
+      { text: "272 kJ", correct: true, image: null },
+      { text: "2720 J", correct: false, image: null },
+      { text: "6220 J", correct: false, image: null },
+      { text: "622 KJ", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi một chất lỏng bay hơi, nó thu nhiệt từ môi trường. Điều này dẫn đến:",
+    qImage: null,
+    answers: [
+      { text: "Nhiệt độ của chất lỏng giảm", correct: true, image: null },
+      { text: "Nhiệt độ của chất lỏng tăng", correct: false, image: null },
+      { text: "Nhiệt độ của môi trường tăng", correct: false, image: null },
+      { text: "Nhiệt độ của môi trường không đổi", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Khi một hơi nước ngưng tụ thành chất lỏng, nó sẽ:",
+    qImage: null,
+    answers: [
+      { text: "Thu nhiệt từ môi trường", correct: false, image: null },
+      { text: "Tỏa nhiệt ra môi trường", correct: true, image: null },
+      { text: "Không thay đổi nhiệt độ", correct: false, image: null },
+      { text: "Absolute Cinema", correct: false, image: "media/anh8.png" }
+    ]
+  },
+  {
+    q: "Hiện tượng nào sau đây là sự ngưng tụ?",
+    qImage: null,
+    answers: [
+      { text: "Sương đọng trên lá cây vào buổi sáng", correct: true, image: null },
+      { text: "Nước bay hơi từ mặt hồ", correct: false, image: null },
+      { text: "Quần áo khô khi phơi nắng", correct: false, image: null },
+      { text: "Nước đá tan chảy", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Yếu tố nào sau đây làm tăng tốc độ bay hơi của chất lỏng?",
+    qImage: null,
+    answers: [
+      { text: "Tăng nhiệt độ", correct: true, image: null },
+      { text: "Giảm nhiệt độ", correct: false, image: null },
+      { text: "Giảm bề mặt thoáng", correct: false, image: null },
+      { text: "Tăng áp suất", correct: false, image: null }
+    ]
+  }
+];
+
+// True/False questions [D/S]
+const trueFalseQuestions = [
+  {
+    q: "True or False?",
+    qImage: null,
+    answers: [
+      { text: " ", correct: true, image: null }
+    ]
+  }
+];
+
+// Essay questions [TL]
+const essayQuestions = [
+  {
+    q: "Nhiệt lượng cần cung cấp để làm bay hơi 100g nước ở 100°C là bao nhiêu kJ? Cho biết nhiệt hoá hơi riêng của nước là 2,3.10^6 J/kg",
+    qImage: "media/anh13.png",
+    answerRef: "Q = L.m = 2,3.10^6 * 100.10^-3 = 2,3.10^5 J = 230 kJ"
+  },
+  {
+    q: "Tính nhiệt lượng cần thiết để làm cho 10 kg nước ở 25°C chuyển hoàn toàn thành hơi ở 100°C. Cho nhiệt dung riêng là 4200J/kg.K; nhiệt hoá hơi riêng của nước là 2,26.10^6 J/kg. (tính theo đơn vị MJ và làm tròn đến 1 chữ số thập phân)",
+    qImage: "media/anh19.png",
+    answerRef: "Q = mcΔt + Lm = 10 * 4200 * (100-25) + 2,26.10^6 * 10 = 25750000 J = 25,8 MJ"
+  },
+  {
+    q: "Tính nhiệt lượng cần thiết để đun 100g nước có nhiệt độ ban đầu 30°C đến khi sôi ở áp suất tiêu chuẩn. Cho nhiệt dung riêng là 4180J/kg.K (tính theo đơn vị kJ và làm tròn đến 1 chữ số thập phân)",
+    qImage: "media/anh13.png",
+    answerRef: "Q = mcΔt = 0,1 * 4180 * (100-30) = 29260 J = 29,3 kJ"
+  },
+  {
+    q: "Một ấm điện công suất 1000W. Tính thời gian cần thiết để đun 300g nước có nhiệt độ ban đầu 20°C đến khi sôi ở áp suất tiêu chuẩn (làm tròn đến hàng đơn vị). Cho nhiệt dung riêng là 4200J/kg.K",
+    qImage: "media/anh100.png",
+    answerRef: "t = Q/P = (m.c.Δt) / 1000 = (0.3 * 4200 * (100-20)) / 1000 = 100,8s ≈ 101s"
+  },
+  {
+    q: "Nước trong một ấm điện công suất 1000W có khối lượng 300g có nhiệt độ ban đầu 20°C. Nếu để nước trong ấm sôi thêm 2 phút thì lượng nước còn lại trong ấm là bao nhiêu kg? Cho nhiệt dung riêng là 4200J/kg.K nhiệt hoá hơi riêng của nước là 2,26.10^6 J/kg.",
+    qImage: "media/anh100.png",
+    answerRef: "Nhiệt lượng tỏa ra trong 2 phút: Q = P.t = 1000 * (2 * 60) = 120000 J. Khối lượng nước bay hơi: m = Q/L = 120000 / 2,26.10^6 = 0,053 kg. Lượng nước còn lại: 0.3 - 0.053 = 0.247 kg"
+  }
+];
+
+  // --- UTILITY FUNCTIONS ---
+  function shuffleArray(arr) {
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/</g, "‹")
+      .replace(/>/g, "›")
+      .replace(/"/g, "'");
+  }
+
+  // --- DOM ELEMENTS ---
+  const btnMulti = document.getElementById('btn-multi');
+  const btnTrueFalse = document.getElementById('btn-truefalse');
+  const btnEssay = document.getElementById('btn-essay');
+  const toggleThemeBtn = document.getElementById('toggle-theme');
+  const btnExit = document.getElementById('btn-exit'); 
+  const btnBackHomeInQuiz = document.getElementById('btn-back-home-in-quiz'); // Nút Back Home trong quiz
+  const btnDownload = document.getElementById('btn-download');
+
+  const quizSection = document.getElementById('quiz-section');
+  const questionBlock = document.getElementById('question-block');
+  const answersBlock = document.getElementById('answers-block');
+  const essayInputBlock = document.getElementById('essay-input-block');
+  const essayAnswerTextarea = document.getElementById('essay-answer');
+  const btnEssaySubmit = document.getElementById('btn-essay-submit');
+  const btnNext = document.getElementById('btn-next');
+
+  const timerSpan = document.getElementById('timer');
+  const doneCountSpan = document.getElementById('done-count');
+  const correctCountSpan = document.getElementById('correct-count');
+  const wrongCountSpan = document.getElementById('wrong-count');
+
+  const resultSection = document.getElementById('result-section');
+  const resultTime = document.getElementById('result-time');
+  const resultTotal = document.getElementById('result-total');
+  const resultCorrect = document.getElementById('result-correct');
+  const resultWrong = document.getElementById('result-wrong');
+  const starRating = document.getElementById('star-rating');
+
+  // const btnRestart = document.getElementById('btn-restart'); // Đã xóa khỏi HTML, nên bỏ dòng này hoặc comment lại
+  const btnHome = document.getElementById('btn-home');
+
+  // --- STATE VARIABLES ---
+  let quizType = null; // 'multi', 'truefalse', 'essay'
+  let questions = [];
+  let currentQIdx = 0;
+  let timerInterval = null;
+  let timeSeconds = 0;
+  let doneCount = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let currentTFAnswerIdx = 0;
+
+  // --- TIMER FUNCTIONS ---
+  function startTimer() {
+    timeSeconds = 0;
+    timerSpan.textContent = formatTime(timeSeconds);
+    if(timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeSeconds++;
+      timerSpan.textContent = formatTime(timeSeconds);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if(timerInterval) clearInterval(timerInterval);
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s/60);
+    const sec = s % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (sec < 10 ? '0' + sec : sec);
+  }
+
+  // --- QUIZ FUNCTIONS ---
+  function resetStats() {
+    doneCount = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    doneCountSpan.textContent = "0";
+    correctCountSpan.textContent = "0";
+    wrongCountSpan.textContent = "0";
+  }
+
+  function initQuiz(type) {
+    quizType = type;
+    currentQIdx = 0;
+    resetStats();
+
+    if(type === 'multi') {
+      questions = multiChoiceQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+    } else if(type === 'truefalse') {
+      questions = trueFalseQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+      currentTFAnswerIdx = 0;
+    } else if(type === 'essay') {
+      questions = essayQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answerRef: q.answerRef,
+        answerRefImage: q.answerRefImage
+      }));
+      shuffleArray(questions);
+    }
+    
+    quizSection.style.display = 'block';
+    resultSection.style.display = 'none';
+    btnMulti.style.display = 'none';
+    btnTrueFalse.style.display = 'none';
+    btnEssay.style.display = 'none';
+    btnExit.style.display = 'none'; // Ẩn nút Exit khi bắt đầu quiz
+    toggleThemeBtn.style.display = 'none'; // Ẩn nút chuyển theme khi vào quiz
+    btnDownload.style.display = 'none';
+
+    showQuestion();
+    startTimer();
+  }
+
+  function showQuestion() {
+    // Ẩn nút "Tiếp tục" nếu nó đang hiển thị
+    btnNext.style.display = 'none'; 
+    // Nếu là dạng tự luận, nút "Xong" (submit) sẽ được hiển thị, ngược lại ẩn
+    btnEssaySubmit.style.display = (quizType === 'essay') ? 'block' : 'none';
+    // Đảm bảo nút "Xong" được kích hoạt lại cho câu hỏi tự luận mới
+    btnEssaySubmit.disabled = false; 
+
+    answersBlock.innerHTML = ''; // Xóa các câu trả lời cũ
+    essayInputBlock.style.display = 'none'; // Ẩn khung nhập tự luận
+    essayAnswerTextarea.value = ''; // Xóa nội dung cũ trong khung tự luận
+    
+    if (currentQIdx >= questions.length) {
+      endQuiz();
+      return;
+    }
+
+    const currentQ = questions[currentQIdx];
+    
+    // Display question text and image (if any)
+    let questionHTML = `
+      <div style="color: var(--orange); font-weight: bold; margin-bottom: 15px;">
+        Câu ${currentQIdx + 1}: ${escapeHtml(currentQ.q)}
+      </div>
+    `;
+    
+    if (currentQ.qImage) {
+      questionHTML += `
+        <div style="text-align: center; margin: 15px 0;">
+          <img src="${currentQ.qImage}" 
+               style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;"
+               onerror="this.style.display='none'">
+        </div>
+      `;
+    }
+    
+    questionBlock.innerHTML = questionHTML;
+
+    if (quizType === 'multi') {
+      // Multiple choice questions
+      answersBlock.style.display = 'block';
+      currentQ.answers.forEach((ans, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        
+        let answerContent = `${String.fromCharCode(65 + i)}. ${escapeHtml(ans.text)}`;
+        
+        if (ans.image) {
+          answerContent += `
+            <div style="margin-top: 8px; text-align: center;">
+              <img src="${ans.image}" 
+                   style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 3px;"
+                   onerror="this.style.display='none'">
+            </div>
+          `;
+        }
+        
+        btn.innerHTML = answerContent;
+        btn.onclick = () => handleMultiAnswerClick(btn, ans.correct, currentQ.answers);
+        answersBlock.appendChild(btn);
+      });
+
+    } else if (quizType === 'truefalse') {
+      // True/False questions
+      answersBlock.style.display = 'block';
+      currentTFAnswerIdx = 0;
+      showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+      
+    } else if (quizType === 'essay') {
+      // Essay questions
+      essayInputBlock.style.display = 'block';
+    }
+  }
+
+  function handleMultiAnswerClick(btn, isCorrect, allAnswers) {
+    Array.from(answersBlock.children).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(isCorrect) {
+      btn.classList.add('correct');
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+    } else {
+      btn.classList.add('incorrect');
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      // Highlight correct answer
+      const correctAns = allAnswers.find(a => a.correct);
+      for(let b of answersBlock.children) {
+        // Cẩn thận với việc so sánh textContent trực tiếp nếu có hình ảnh
+        // Cần lấy chỉ phần text của câu trả lời
+        const btnText = b.childNodes[0].nodeType === 3 ? b.childNodes[0].nodeValue.substring(3).trim() : ''; // Lấy text trước hình ảnh
+        const correctText = escapeHtml(correctAns.text);
+
+        if(btnText === correctText && correctAns.correct) {
+          b.classList.add('correct');
+          break;
+        }
+      }
+    }
+    btnNext.style.display = 'inline-block';
+  }
+
+  function showTrueFalseAnswer(answerObj) {
+    answersBlock.innerHTML = '';
+
+    const label = document.createElement('div');
+    label.style.marginBottom = '10px';
+    label.style.fontWeight = 'bold';
+    label.textContent = `Câu hỏi phụ ${currentTFAnswerIdx + 1}: ${answerObj.text}`;
+    answersBlock.appendChild(label);
+
+    if (answerObj.image) {
+      const imgDiv = document.createElement('div');
+      imgDiv.style.textAlign = 'center';
+      imgDiv.style.margin = '10px 0';
+      imgDiv.innerHTML = `<img src="${answerObj.image}" style="max-width: 100%; max-height: 200px; border: 1px solid #ccc; border-radius: 3px;" onerror="this.style.display='none'">`;
+      answersBlock.appendChild(imgDiv);
+    }
+
+    const btnTrue = document.createElement('button');
+    btnTrue.className = 'answer-btn';
+    btnTrue.textContent = 'Đúng';
+    btnTrue.onclick = () => handleTrueFalseAnswerClick(true, answerObj.correct);
+    answersBlock.appendChild(btnTrue);
+    
+    const btnFalse = document.createElement('button');
+    btnFalse.className = 'answer-btn';
+    btnFalse.textContent = 'Sai';
+    btnFalse.onclick = () => handleTrueFalseAnswerClick(false, answerObj.correct);
+    answersBlock.appendChild(btnFalse);
+  }
+
+  function handleTrueFalseAnswerClick(userAnswer, correctAnswer) {
+    Array.from(answersBlock.querySelectorAll('button')).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(userAnswer === correctAnswer) {
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    } else {
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('incorrect');
+        }
+        if(b.textContent.toLowerCase() === (correctAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    }
+
+    btnNext.style.display = 'inline-block';
+  }
+
+  // Essay submit handler
+  btnEssaySubmit.onclick = () => {
+    const userText = essayAnswerTextarea.value.trim();
+    if(userText.length === 0) {
+      alert('Hãy nhập câu trả lời trước khi nhấn "Xong"');
+      return;
+    }
+    btnEssaySubmit.disabled = true; // Vô hiệu hóa nút "Xong" sau khi submit
+    
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    const currentQ = questions[currentQIdx];
+    let answerRefHTML = `<br><br><em><strong>Đáp án tham khảo:</strong> ${currentQ.answerRef}</em>`;
+    
+    if(currentQ.answerRefImage) {
+      answerRefHTML += `<div style="margin: 15px 0; text-align: center;">
+        <img src="${currentQ.answerRefImage}" style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;">
+      </div>`;
+    }
+    
+    questionBlock.innerHTML += answerRefHTML;
+    btnNext.style.display = 'inline-block';
+  };
+
+  btnNext.onclick = () => {
+    // Ẩn nút "Tiếp tục"
+    btnNext.style.display = 'none';
+    // Đảm bảo nút "Xong" (essay) được kích hoạt lại
+    btnEssaySubmit.disabled = false; 
+
+    if(quizType === 'truefalse') {
+      currentTFAnswerIdx++;
+      const currentQ = questions[currentQIdx];
+      // Nếu còn câu hỏi phụ trong câu hỏi Đúng/Sai hiện tại
+      if(currentTFAnswerIdx < currentQ.answers.length) {
+        showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+        return; // Không chuyển sang câu hỏi tiếp theo mà hiển thị câu phụ
+      }
+    }
+
+    // Chuyển sang câu hỏi tiếp theo
+    currentQIdx++;
+    showQuestion();
+  };
+
+  function endQuiz() {
+    stopTimer();
+    quizSection.style.display = 'none';
+    resultSection.style.display = 'block';
+    toggleThemeBtn.style.display = 'block'; // Hiển thị lại nút chuyển theme
+
+    resultTime.textContent = formatTime(timeSeconds);
+    resultTotal.textContent = doneCount;
+    resultCorrect.textContent = correctCount;
+    resultWrong.textContent = wrongCount;
+
+    starRating.innerHTML = '';
+
+    // Logic tính sao đã được khôi phục và tinh chỉnh
+    if(quizType === 'multi' || quizType === 'truefalse') {
+      let starsGreen = 0;
+      let starsGray = 0;
+      
+      if(wrongCount === 0) { // Nếu không có câu sai
+        starsGreen = 3; // 3 sao xanh
+      } else if (wrongCount >= 1 && wrongCount <= 3) {
+        starsGreen = 2; // 2 sao xanh
+        starsGray = 1; // 1 sao xám
+      } else if (wrongCount >= 4 && wrongCount <= 9) {
+        starsGreen = 1; // 1 sao xanh
+        starsGray = 2; // 2 sao xám
+      } else { // wrongCount >= 10
+        starsGreen = 0; // 0 sao xanh
+        starsGray = 3; // 3 sao xám
+      }
+
+      for(let i = 1; i <= 3; i++) {
+        const star = document.createElement('span');
+        star.classList.add('star');
+        if(i <= starsGreen) star.classList.add('Green');
+        else if(i <= starsGray) star.classList.add('gray');
+        star.innerHTML = '&#9733;';
+        starRating.appendChild(star);
+      }
+    } else if (quizType === 'essay') {
+        // Đối với bài tự luận, không có điểm đúng/sai tự động
+        // Bạn có thể thêm logic chấm điểm thủ công hoặc hiển thị thông báo khác
+        const infoDiv = document.createElement('div');
+        infoDiv.textContent = "Bài Tự Luận Cần Được Giáo Viên Chấm Điểm.";
+        infoDiv.style.fontWeight = "bold";
+        infoDiv.style.marginTop = "20px";
+        starRating.appendChild(infoDiv);
+    }
+  }
+
+  // --- EVENT LISTENERS ---
+  // Đã xóa btnRestart.onclick và logic liên quan
+  // Nếu bạn muốn chức năng "làm lại" bài quiz, bạn cần tạo một nút mới với ID khác
+  // và thêm lại logic reset Stats vào event listener của nút đó.
+
+  // Nút Home (ở màn hình kết quả) - vẫn reload trang hiện tại
+  btnHome.onclick = () => {
+    location.reload(); 
+  };
+
+  btnMulti.onclick = () => initQuiz('multi');
+  btnTrueFalse.onclick = () => initQuiz('truefalse');
+  btnEssay.onclick = () => initQuiz('essay');
+  // New: Download button functionality
+  btnDownload.onclick = () => {
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'toancreator-default'; // Set the desired filename
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  };
+  
+  
+  // Xử lý sự kiện cho nút Exit mới
+  btnExit.onclick = () => {
+    window.location.href = '../index.html'; // Chuyển hướng về index.html
+  };
+
+  // Xử lý sự kiện cho nút Back to Home trong quiz
+  btnBackHomeInQuiz.onclick = () => {
+    if (confirm('Bạn có chắc chắn muốn thoát bài làm hiện tại?')) {
+      stopTimer(); // Dừng đồng hồ
+      location.reload(); // Tải lại trang promt-onlineV2.html
+    }
+  };
+
+  toggleThemeBtn.onclick = () => {
+    document.body.classList.toggle('dark');
+  };
+
+  // Ẩn/hiện nút toggle theme ban đầu
+  // Bạn có thể đặt nút toggle theme ở vị trí cố định thay vì ẩn/hiện tùy thuộc vào màn hình
+  // Hiện tại, nó sẽ luôn hiển thị trừ khi bị ẩn bởi CSS hoặc logic khác
+  toggleThemeBtn.style.display = 'block'; 
+})();
+</script>
+</body>
+</html>
