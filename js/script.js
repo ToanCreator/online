@@ -191,7 +191,7 @@ const subjects = [
             id: 7,
             title: "Websites",
             image: "https://i.ibb.co/Qvy9Vctj/wmremove-transformed-1.jpg",
-            lessons: ["THPT NGÔ GIA TỰ","DÔ LA CHAT - No sign in","GUESS THE DRAW - No sign in"]
+            lessons: ["THPT NGÔ GIA TỰ","DÔ LA CHAT - No sign in","GUESS THE DRAW - No sign in","MULTIPLE GAME - No sign in","MINI GAME - No sign in", "LINE GAME - No sign in","TRAITOR GAME - No sign in"]
     },
     {
             id: 8,
@@ -810,7 +810,10 @@ function downloadLesson() {
             "THPT NGÔ GIA TỰ": "https://thptngogiatu.giaoductayninh.vn/",
             "DÔ LA CHAT - No sign in": "https://toancreator.github.io/online-chat/",
             "GUESS THE DRAW - No sign in": "https://skribbl.io/",
-            
+            "MULTIPLE GAME - No sign in": "https://netgames.io/",
+            "MINI GAME - No sign in": "https://bean.lol/",
+            "LINE GAME - No sign in": "https://superhex.io/",
+            "TRAITOR GAME - No sign in": "https://betrayal.io/",
             // Môn Khác (id:8)
             "BỘ 30 ĐỀ THI TN TIN 2025": "https://is.gd/0Byez9",
             "SQL PYTHON": "https://is.gd/zCXEuI",
