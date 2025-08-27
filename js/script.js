@@ -161,7 +161,7 @@ const subjects = [
         id: 2,
         title: "Vật Lý",
         image: "https://i.ibb.co/sddMYYvR/retouch-2025060606155524.jpg",
-        lessons: ["LY-12-U1","LY-12-U2","LY-12-U3","LY-12-U4","LY-12-U5","LY-12-U6"]
+        lessons: ["LY-12-U1","LY-12-U2","LY-12-U3","LY-12-U4","LY-12-U5","LY-12-U6","LY-12-U7"]
     },
     {
         id: 3,
@@ -191,7 +191,7 @@ const subjects = [
             id: 7,
             title: "Websites",
             image: "https://i.ibb.co/Qvy9Vctj/wmremove-transformed-1.jpg",
-            lessons: ["THPT NGÔ GIA TỰ","DÔ LA CHAT - No sign in","GUESS THE DRAW - No sign in","MULTIPLE GAME - No sign in","MINI GAME - No sign in", "LINE GAME - No sign in","TRAITOR GAME - No sign in"]
+            lessons: ["THPT NGÔ GIA TỰ","DÔ LA CHAT - No sign in","GUESS THE DRAW - No sign in","MULTIPLE GAME - No sign in","MINI GAME - No sign in", "LINE GAME - No sign in","LEARN ENGLISH BY GAME - No sign in"]
     },
     {
             id: 8,
@@ -813,7 +813,7 @@ function downloadLesson() {
             "MULTIPLE GAME - No sign in": "https://netgames.io/",
             "MINI GAME - No sign in": "https://bean.lol/",
             "LINE GAME - No sign in": "https://superhex.io/",
-            "TRAITOR GAME - No sign in": "https://betrayal.io/",
+            "LEARN ENGLISH BY GAME - No sign in: "https://www.gamestolearnenglish.com",
             // Môn Khác (id:8)
             "BỘ 30 ĐỀ THI TN TIN 2025": "https://is.gd/0Byez9",
             "SQL PYTHON": "https://is.gd/zCXEuI",
