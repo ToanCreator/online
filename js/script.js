@@ -179,7 +179,7 @@ const subjects = [
         id: 5,
         title: "Lịch Sử",
         image: "https://i.ibb.co/wFT1xJk9/retouch-2025060606211684.jpg",
-        lessons: []
+        lessons: ["SU-12-U1"]
     },
     {
         id: 6,
