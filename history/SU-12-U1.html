@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toàn Creator - Online Lesson</title>
+<style>
+  :root {
+    --yellow: #f9d342;
+    --yellow-dark: #d4b833;
+    --Green: #2ecc71;
+    --starsGreen: #2ecc71;
+    --red: #d93025;
+    --green: #2ecc40;
+    --starsGray: #ccc;
+    --star-size: 30px;
+    --orange: #ff9800;
+  }
+  body {
+    margin:0; padding:0; font-family: Arial, sans-serif;
+    background: white; color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: black; color: white;
+  }
+  /* Existing #app rule */
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+/* Media query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+  #app {
+    max-width: 960px; /* Or any wider value you prefer, e.g., 900px, 1200px */
+    padding: 20px; /* Optional: Increase padding for more space on larger screens */
+  }
+
+  /* Optional: Adjust button widths for larger screens if they look too wide */
+  .btn {
+    max-width: 400px; /* Make main buttons a bit wider */
+  }
+
+  /* Optional: Adjust status bar layout for larger screens */
+  .status-bar {
+    font-size: 1.1em;
+  }
+}
+  h1, h3 {
+    text-align: center;
+    margin: 10px 0;
+  }
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+    color: #FF00FF;
+  }
+  hr {
+    border:none; border-bottom: 3px solid black;
+    margin: 5px 0 25px 0;
+  }
+  .btn {
+    background: #3399FF;
+    border-radius: 8px;
+    border:none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 15px;
+    width: 100%;
+    max-width: 350px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: 3px solid transparent;
+    user-select: none;
+  }
+  .btn:hover {
+    background: var(--yellow-dark);
+  }
+  .btn svg {
+    vertical-align: middle;
+  }
+  .question-container {
+    margin-bottom: 20px;
+    color: var(--orange) !important;
+    font-weight: bold;
+    font-size: 1.08em;
+    transition: color 0.3s;
+  }
+  body.dark .question-container {
+    color: var(--orange) !important;
+  }
+  .answers {
+    margin-top: 15px;
+  }
+  .answer-btn {
+    display: block;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 6px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
+    padding: 12px 10px;
+    margin: 7px 0;
+    cursor: pointer;
+    text-align: left;
+    user-select: none;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .answer-btn:hover:not(.disabled) {
+    background-color: #eee;
+  }
+  body.dark .answer-btn {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  body.dark .answer-btn:hover:not(.disabled) {
+    background-color: #444;
+  }
+  .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  body.dark .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  body.dark .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  .disabled {
+    pointer-events: none;
+  }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .star-container {
+    text-align: center;
+    margin: 20px 0 10px 0;
+  }
+  .star {
+    font-size: var(--star-size);
+    margin: 0 5px;
+    color: var(--starsGray);
+  }
+  .star.Green {
+    color: var(--Green);
+  }
+  .star.red {
+    color: var(--red);
+  }
+  .toggle-btn {
+    background: lime;
+    color: white;
+    font-size: 1.5em;
+    padding: 12px 0;
+    margin: 25px auto;
+    width: 150px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    display: block;
+  }
+  .input-textarea {
+    width: 100%;
+    min-height: 80px;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid black;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  body.dark .input-textarea {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  .btn-small {
+    background: #FF99CC;
+    width: auto;
+    padding: 8px 15px;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+  .answer-btn img {
+    max-width: 100%;
+    max-height: 150px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .question-container img {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  body.dark .answer-btn img,
+  body.dark .question-container img {
+    border-color: #555;
+  }
+  .question-container img, .answer-btn img {
+    display: block;
+    margin: 0 auto;
+    background: #f5f5f5;
+  }
+  body.dark .question-container img,
+  body.dark .answer-btn img {
+    background: #333;
+  }
+  /* Style for the header image placeholder */
+  .header-image-placeholder {
+    display: block;
+    width: 100%; /* Hoặc một chiều rộng cố định */
+    height: 100px; /* Điều chỉnh chiều cao này để phù hợp với kích thước bạn muốn */
+    background-color: #f0f0f0; /* Màu nền để dễ nhìn thấy placeholder */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 25px; /* Khoảng cách với tiêu đề bên dưới */
+    
+  }
+  body.dark .header-image-placeholder {
+    background-color: #333;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <img src="https://i.ibb.co/tMdHNdPH/Picsart-25-07-17-06-40-25-073.jpg" alt="Header Image" class="header-image-placeholder">
+  
+  <h2>LỊCH SỬ - BÀI 1</h2>
+
+  <button class="btn" id="btn-exit" style="background: var(--red);">
+    <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+      <path d="M16 17v-4h-2V7h-4V4H6V2H4v2h2v4h4v6h2v4h4v2h2v-2h-2z"/>
+    </svg>
+    Thoát
+  </button>
+  <button class="btn" id="btn-multi">TRẮC NGHIỆM 4 PHƯƠNG ÁN</button>
+  <button class="btn" id="btn-truefalse">TRẮC NGHIỆM ĐÚNG/SAI</button>
+  <button class="btn" id="btn-essay">TỰ LUẬN</button>
+
+  <button class="toggle-btn" id="toggle-theme">💡</button>
+  <button class="toggle-btn" id="btn-download" style="background: orange; margin-top: -20px; margin-bottom: 25px;">
+    Tải xuống
+  </button>
+  <div id="quiz-section" style="display:none; margin-top: 10px;">
+    <div class="status-bar">
+      <div><span id="timer">00:00</span></div>
+      <div>ㅤㅤ <span id="done-count">0</span></div>
+      <div>✅<span id="correct-count">0</span> | <strong>⛔</strong><span id="wrong-count">0</span></div>
+    </div>
+
+    <div id="question-block" class="question-container"></div>
+    <div id="answers-block" class="answers"></div>
+
+    <div id="essay-input-block" style="display:none;">
+      <textarea id="essay-answer" class="input-textarea" placeholder="Nhập câu trả lời của bạn..."></textarea>
+      <button id="btn-essay-submit" class="btn-small">Xong</button>
+    </div>
+
+    <div style="display:flex; justify-content: space-between; margin-top: 20px;">
+      <button id="btn-back-home-in-quiz" class="btn btn-small" style="background: var(--Green); width: 48%;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+      <button id="btn-next" class="btn btn-small" style="width: 48%;">Tiếp tục</button>
+    </div>
+  </div>
+
+  <div id="result-section" style="display:none; text-align:center; margin-top: 30px;">
+    <h2>KẾT THÚC BÀI LÀM</h2>
+    <div><strong>Tổng thời gian làm bài:</strong> <span id="result-time"></span></div>
+    <div><strong>Tổng số câu đã làm:</strong> <span id="result-total"></span></div>
+    <div><strong>Đúng:</strong><span id="result-correct"></span><strong> | </strong><strong>Sai:</strong><span id="result-wrong"></span></div>
+    <div id="star-rating" class="star-container"></div>
+    <div style="margin-top: 25px;">
+      <button id="btn-home" class="btn" style="display:inline-block; width:120px;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg> 
+      </button>
+      </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // --- QUESTION DATA ---
+  // Multiple choice questions [ABCD]
+const multiChoiceQuestions = [
+  {
+    q: "Sự ra đời của tổ chức Liên hợp quốc gắn với vai trò chủ yếu của quốc gia nào sau đây?",
+    qImage: null,
+    answers: [
+      { text: "Mỹ.", correct: true, image: null },
+      { text: "Đức.", correct: false, image: null },
+      { text: "Trung Quốc.", correct: false, image: null },
+      { text: "Nhật Bản.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Quốc gia nào sau đây không tham gia Hội nghị Têhêran từ ngày 28/11 đến ngày 1/12/1943?",
+    qImage: null,
+    answers: [
+      { text: "Liên Xô.", correct: false, image: null },
+      { text: "Mỹ.", correct: false, image: null },
+      { text: "Anh.", correct: false, image: null },
+      { text: "Trung Quốc.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Quốc gia nào ở châu Âu không giữ vị trí cao nhất trong cơ cấu tổ chức của Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Anh.", correct: false, image: null },
+      { text: "Pháp.", correct: false, image: null },
+      { text: "Nga.", correct: false, image: null },
+      { text: "Đức.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Trên thực tế, Liên hợp quốc không làm trung gian hoà giải những cuộc khủng hoảng quốc tế và xung đột tại quốc gia nào?",
+    qImage: null,
+    answers: [
+      { text: "En Xanvađô.", correct: false, image: null },
+      { text: "Goatêmala.", correct: false, image: null },
+      { text: "Inđônêxia.", correct: true, image: null },
+      { text: "Môdămbích.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tổ chức Liên hợp quốc không thúc đẩy mạnh mẽ sự phát triển của các nước thành viên trên lĩnh vực nào?",
+    qImage: null,
+    answers: [
+      { text: "Kinh tế.", correct: false, image: null },
+      { text: "Tài chính.", correct: false, image: null },
+      { text: "Văn hoá.", correct: false, image: null },
+      { text: "Quân sự.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Liên hợp quốc đã nỗ lực thúc đẩy việc xây dựng và ký kết những văn bản, điều ước quốc tế quan trọng nhằm bảo đảm quyền cơ bản của con người, đặc biệt là quyền đối với",
+    qImage: null,
+    answers: [
+      { text: "phụ nữ.", correct: true, image: null },
+      { text: "nam giới.", correct: false, image: null },
+      { text: "tư sản.", correct: false, image: null },
+      { text: "vô sản.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Ngày 1/1/1942, đại diện 26 nước đã ký bản Tuyên ngôn về Liên hợp quốc, cam kết thành lập tổ chức quốc tế vì hoà bình và an ninh thế giới sau chiến tranh ở đâu?",
+    qImage: null,
+    answers: [
+      { text: "Ianta (Liên Xô).", correct: false, image: null },
+      { text: "Oasinhtơn (Mỹ).", correct: true, image: null },
+      { text: "Têhêran (Iran).", correct: false, image: null },
+      { text: "Xan Phroranxixcô (Mỹ).", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Cơ quan nào của tổ chức Liên hợp quốc mang tính không thường trực?",
+    qImage: null,
+    answers: [
+      { text: "Ban Thư ký.", correct: false, image: null },
+      { text: "Đại hội đồng.", correct: true, image: null },
+      { text: "Hội đồng bảo an.", correct: false, image: null },
+      { text: "Toà án Liên hợp quốc.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hiệp ước cấm phổ biến vũ khí hạt nhân được tổ chức nào xây dựng năm 1968?",
+    qImage: null,
+    answers: [
+      { text: "Liên hợp quốc.", correct: true, image: null },
+      { text: "Quỹ tiền tệ quốc tế.", correct: false, image: null },
+      { text: "Liên minh châu Âu.", correct: false, image: null },
+      { text: "Thương mại thế giới.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Năm 2015, Liên hợp quốc thông qua Chương trình nghị sự 2030 vì sự phát triển bền vững nhằm thực hiện mục tiêu nào sau đây?",
+    qImage: null,
+    answers: [
+      { text: "Bình đẳng giới.", correct: true, image: null },
+      { text: "Bình đẳng y tế.", correct: false, image: null },
+      { text: "Bình đẳng thu nhập.", correct: false, image: null },
+      { text: "Bình đẳng giáo dục.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Năm 2021, đoàn sĩ quan Việt Nam tham gia Lực lượng gìn giữ hoà bình Liên hợp quốc lên đường làm nhiệm vụ chủ yếu ở đâu?",
+    qImage: null,
+    answers: [
+      { text: "Nam Phi.", correct: false, image: null },
+      { text: "Marốc.", correct: false, image: null },
+      { text: "Công gô.", correct: false, image: null },
+      { text: "Nam Xu Đăng.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Tổng thư kí nào của Liên hợp quốc được nhận giải thưởng Nobel về hoà bình?",
+    qImage: null,
+    answers: [
+      { text: "Ban KiMoon.", correct: false, image: null },
+      { text: "Kôphi Annan.", correct: true, image: null },
+      { text: "Antonio Guteres.", correct: false, image: null },
+      { text: "Kurt Waldhelm.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Năm 2015, Liên hợp quốc thông qua Chương trình nghị sự 2030 vì sự phát triển bền vững không gồm mục tiêu nào?",
+    qImage: null,
+    answers: [
+      { text: "Bình đăng giới.", correct: false, image: null },
+      { text: "Công nghiệp hoá.", correct: true, image: null },
+      { text: "Chất lượng giáo dục.", correct: false, image: null },
+      { text: "Cuộc sống khoẻ mạnh.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "“Các nước thành viên phải làm tròn nghĩa vụ đảm nhận theo Hiến chương để được hưởng toàn bộ các quyền và ưu đãi do tư cách thành viên mà có” phản ánh nội dung nào của Liên hợp quốc.",
+    qImage: null,
+    answers: [
+      { text: "Mục tiêu hoạt động.", correct: false, image: null },
+      { text: "Vai trò của tổ chức.", correct: false, image: null },
+      { text: "Nguyên tắc hoạt động.", correct: true, image: null },
+      { text: "Chương trình hành động.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Mục tiêu, hành động mang tính toàn cầu được đề ra trong Chương trình nghị sự 2030 của tổ chức Liên hợp quốc không bao gồm",
+    qImage: null,
+    answers: [
+      { text: "xóa nghèo.", correct: false, image: null },
+      { text: "bình đẳng giới.", correct: false, image: null },
+      { text: "chất lượng giáo dục.", correct: false, image: null },
+      { text: "chống Chiến tranh lạnh.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Liên hợp quốc có nhiều chương trình hỗ vôn, tri thức, kỹ thuật, cán bộ... để phát triển kinh tế của nhóm nước nào là chủ yếu?",
+    qImage: null,
+    answers: [
+      { text: "Các nước phát triển.", correct: false, image: null },
+      { text: "Các nước đang phát triển.", correct: true, image: null },
+      { text: "Các nước thuộc nhóm G7.", correct: false, image: null },
+      { text: "Các thành viên mới gia nhập.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Mục tiêu “Duy trì hoà bình, an ninh thế giới\" của tổ chức Liên hợp quốc là",
+    qImage: null,
+    answers: [
+      { text: "mục tiêu quan trọng thứ yếu.", correct: false, image: null },
+      { text: "mục tiêu mang tính sách lược.", correct: false, image: null },
+      { text: "cơ sở để thực hiện mục tiêu khác.", correct: true, image: null },
+      { text: "cơ sở để xoá bỏ xung đột, nội chiến.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tháng 9/2015, với việc lãnh đạo các nước thông qua Chương trình nghị sự 2030 vì sự phát triển bền vững với ba trụ cột chính nào?",
+    qImage: null,
+    answers: [
+      { text: "Kinh tế, văn hoá và xã hội.", correct: false, image: null },
+      { text: "Chính trị, an ninh và xã hội.", correct: false, image: null },
+      { text: "Kinh tế, xã hội và môi trường.", correct: true, image: null },
+      { text: "Quân sự, chính trị và ngoại giao.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Cơ quan chuyên môn nào của Liên hợp quốc không hoạt động ở Việt Nam?",
+    qImage: null,
+    answers: [
+      { text: "Tổ chức Y tế thế giới.", correct: false, image: null },
+      { text: "Tổ chức Lao động Quốc tế.", correct: false, image: null },
+      { text: "Hội đồng Kinh tế và Xã hội.", correct: true, image: null },
+      { text: "Quỹ Nông nghiệp và Lương thực.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tuyên ngôn Quốc tế Nhân quyền là văn kiện quốc tế quan trọng, nhằm bảo đảm quyền cơ bản của con người đó là",
+    qImage: null,
+    answers: [
+      { text: "quyền được làm việc.", correct: false, image: null },
+      { text: "quyền tự do tín ngưỡng.", correct: false, image: null },
+      { text: "quyền tự do và bình đẳng.", correct: true, image: null },
+      { text: "quyền bình đẳng về giới tính.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Cơ quan nào của Liên hợp quốc hoạt động dựa trên nguyên tắc nhất trí của 5 nước ủy viên thường trực?",
+    qImage: null,
+    answers: [
+      { text: "Đại Hội đồng.", correct: false, image: null },
+      { text: "Hội đồng Bảo an.", correct: true, image: null },
+      { text: "Hội đồng Quản thác.", correct: false, image: null },
+      { text: "Tòa án Quốc tế.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Trong cơ cấu tổ chức của Liên hợp quốc, Tổ chức Giáo dục, Khoa học và Văn hóa (UNESCO) là",
+    qImage: null,
+    answers: [
+      { text: "cơ quan chính.", correct: false, image: null },
+      { text: "cơ quan thường trực.", correct: false, image: null },
+      { text: "cơ quan chuyên môn.", correct: true, image: null },
+      { text: "cơ quan hành chính.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Văn bản quốc tế nào sau đây không được tổ chức Liên hợp quốc xây dựng?",
+    qImage: null,
+    answers: [
+      { text: "Công ước cầm vũ khí hạt nhân (2017).", correct: false, image: null },
+      { text: "Công ước cấm vũ khí hoá học (1992).", correct: false, image: null },
+      { text: "Hiệp ước cấm phổ biến vũ khí hạt nhân (1968).", correct: false, image: null },
+      { text: "Hiệp định hạn chế vũ khí tiến công chiến lược (1972).", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Văn kiện nào thể hiện rõ vai trò “Bảo đảm quyền con người, phát triển văn hoá, xã hội” của tổ chức Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Công ước cầm vũ khí hoá học.", correct: false, image: null },
+      { text: "Tuyên ngôn Quốc tế Nhân quyền.", correct: true, image: null },
+      { text: "Công ước Liên Hợp Quốc về Luật biển.", correct: false, image: null },
+      { text: "Hiệp ước cấm phổ biến vũ khí hạt nhân.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Năm 2015, Liên hợp quốc thông qua Chương trình nghị sự 2030 vì sự phát triển bền vững nhằm thực hiện mục tiêu nào?",
+    qImage: null,
+    answers: [
+      { text: "Công nghệ hiện đại và cơ sở xã hội.", correct: false, image: null },
+      { text: "Sản xuất và tiêu dùng với quy mô lớn.", correct: false, image: null },
+      { text: "Hành động ứng phó với biến đổi khí hậu.", correct: true, image: null },
+      { text: "Hoà bình, ổn định và không còn bóc lột.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hội nghị của Liên hiệp quốc về thương mại và phát triển (UNCTAD) thực hiện chức năng chủ yếu nào?",
+    qImage: null,
+    answers: [
+      { text: "Cấm vận các quốc gia chống đối.", correct: false, image: null },
+      { text: "Thống nhất đơn vị tiền tệ thế giới.", correct: false, image: null },
+      { text: "Thống nhất Luật thương mại quốc tế.", correct: true, image: null },
+      { text: "Thực hiện lệnh trừng phạt về kinh tế.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Năm 2015, Liên hợp quốc thông qua Chương trình nghị sự 2030 vì sự phát triển bền vững không gồm mục tiêu nào?",
+    qImage: null,
+    answers: [
+      { text: "Đô thị và cộng đồng bền vững.", correct: false, image: null },
+      { text: "Tiêu dùng và sản xuất có trách nhiệm.", correct: false, image: null },
+      { text: "Hành động ứng phó với biến đổi khí hậu.", correct: false, image: null },
+      { text: "Duy trì tăng trưởng đều trên lĩnh vực kinh tế.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Để phát triển văn hoá - xã hội thế giới, Liên hợp quốc đã thành lập",
+    qImage: null,
+    answers: [
+      { text: "các trường đại học ở châu Phi.", correct: false, image: null },
+      { text: "Quỹ Giáo dục không thể chờ đợi.", correct: true, image: null },
+      { text: "các cơ sở giáo dục trên thế giới.", correct: false, image: null },
+      { text: "Viện nghiên cứu giáo dục thế giới.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nội dung nào là một trong những đặc điểm nổi bật của tổ chức Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Thành viên là các tổ chức ngoại giao.", correct: false, image: null },
+      { text: "Chỉ có các cơ quan không thường trực.", correct: false, image: null },
+      { text: "Có điều ước quốc tế dưới dạng văn bản.", correct: false, image: null },
+      { text: "Là tổ chức phi chính phủ lớn nhất thế giới.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Một trong những vai trò của Liên hợp quốc về bảo đảm quyền con người, phát triển văn hóa xã hội là",
+    qImage: null,
+    answers: [
+      { text: "ra công ước về chống chạy đua vũ trang.", correct: false, image: null },
+      { text: "làm trung gian hòa giải các cuộc xung đột.", correct: false, image: null },
+      { text: "tạo cơ hội phát triển cho tất cả mọi người.", correct: true, image: null },
+      { text: "thúc đẩy quá trình phi thực dân hóa trên thế giới.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hội nghị của Liên hiệp quốc về thương mại và phát triển (UNCTAD) chú trọng tới sự phát triển kinh tế của nhóm nước nào trên thế giới?",
+    qImage: null,
+    answers: [
+      { text: "Các cường quốc thế giới.", correct: false, image: null },
+      { text: "Các nước chậm phát triển.", correct: false, image: null },
+      { text: "Các nước đang phát triển.", correct: true, image: null },
+      { text: "Các nước nghèo và lạc hậu.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Năm 1988, Giải thưởng Nobel Hoà bình được trao tặng cho",
+    qImage: null,
+    answers: [
+      { text: "tổ chức Y tế thế giới của Liên hợp quốc.", correct: false, image: null },
+      { text: "Hội đồng kinh tế và xã hội của Liên hợp quốc.", correct: false, image: null },
+      { text: "lực lượng giữ gìn hoà bình của Liên hợp quốc.", correct: true, image: null },
+      { text: "tổ chức Giáo dục, Khoa học và Văn hoá của Liên hợp quốc.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhận xét nào sau đây là đúng về tổ chức Liên Hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Là một nhà nước siêu quốc gia.", correct: false, image: null },
+      { text: "Là một tổ chức đa phương toàn cầu.", correct: true, image: null },
+      { text: "Là một trung tâm kinh tế - tài chính lớn.", correct: false, image: null },
+      { text: "Là liên minh khu vực lớn nhất hành tinh.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "“Mọi người sinh ra đều được tự do và bình đẳng về nhân quyền và các quyền. Mọi người đều được tạo hoá ban cho lý trí và lương tâm và cần phải đối xử với nhau bằng tình anh em” là đoạn trích thuộc văn kiện nào?",
+    qImage: null,
+    answers: [
+      { text: "Hiến chương của Liên hợp quốc.", correct: false, image: null },
+      { text: "Tuyên ngôn Quốc tế Nhân quyền.", correct: true, image: null },
+      { text: "Mục tiêu phát triển Thiên niên kỷ.", correct: false, image: null },
+      { text: "Chương trình nghị sự 2030 Liên hợp quốc.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Văn kiện Tuyên ngôn về thủ tiêu hoàn toàn chủ nghĩa thực dân, trao trả độc lập cho các quốc gia và các dân tộc thuộc địa là của tổ chức nào?",
+    qImage: null,
+    answers: [
+      { text: "Liên hợp quốc.", correct: true, image: null },
+      { text: "Toà án quốc tế.", correct: false, image: null },
+      { text: "Liên minh châu Âu.", correct: false, image: null },
+      { text: "Hiệp hội Đông Nam Á.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Văn kiện nào của Liên hợp quốc không góp phần thực thi quyền con người một cách trực tiếp?",
+    qImage: null,
+    answers: [
+      { text: "Tuyên ngôn Quốc tế Nhân quyền.", correct: false, image: null },
+      { text: "Hiệp ước cấm sử dụng vũ khí hạt nhân.", correct: true, image: null },
+      { text: "Công ước quốc tế về các quyền dân sự và chính trị.", correct: false, image: null },
+      { text: "Công ước quốc tế về các quyền kinh tế, xã hội, văn hoá.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Để thực hiện tốt vai trò của mình, hiện nay, Liên hợp quốc đang tiến hành",
+    qImage: null,
+    answers: [
+      { text: "xác định lại mục tiêu hoạt động.", correct: false, image: null },
+      { text: "hạn chế tầm ảnh hưởng của Mỹ.", correct: false, image: null },
+      { text: "quá trình cải tổ và dân chủ hoá.", correct: true, image: null },
+      { text: "tăng thành viên Hội đồng Bảo an.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhiều di sản văn hoá thế giới được bảo tồn dưới tác động của nhân tố chủ yếu nào?",
+    qImage: null,
+    answers: [
+      { text: "Sự phát triển của công nghệ thực tế ảo và AI.", correct: false, image: null },
+      { text: "Sự phát triển không ngừng của ngành du lịch.", correct: false, image: null },
+      { text: "Sự công nhận và hỗ trợ tài chính của UNESCO.", correct: true, image: null },
+      { text: "Sự chấm dứt chạy đua vũ trang giữa Mỹ và Liên Xô.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Từ năm 1960, Đại hội đồng Liên hợp quốc đề ra chiến lược cho từng thập kỷ nhằm mục đích gì?",
+    qImage: null,
+    answers: [
+      { text: "Chuyển trọng tâm hợp tác sang lĩnh vực kinh tế.", correct: false, image: null },
+      { text: "Ngăn chặn sự xói mòn của trật tự thế giới hai cực.", correct: false, image: null },
+      { text: "Huy động hợp tác quốc tế cho các mục tiêu chung.", correct: true, image: null },
+      { text: "Hạn chế nguy cơ mất bản sắc dân tộc của các nước.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Đại hội đồng Liên hợp quốc đã có hành động mới nào từ năm 1960?",
+    qImage: null,
+    answers: [
+      { text: "Đề ra chiến lược phát triển cho từng thập kỷ.", correct: true, image: null },
+      { text: "Đề ra mục tiêu và nguyên tắc hoạt động chung.", correct: false, image: null },
+      { text: "Cho phép mở rộng thành viên ở khu vực châu Phi.", correct: false, image: null },
+      { text: "Cho phép thành viên trình bày sáng kiến về hoà bình.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hiệp hội các quốc gia Đông Nam Á và tổ chức Liên hợp quốc đều chú trọng đến",
+    qImage: null,
+    answers: [
+      { text: "hợp tác phát triển giữa các thành viên.", correct: true, image: null },
+      { text: "việc hạn chế những ảnh hưởng của Mỹ.", correct: false, image: null },
+      { text: "xây dựng các chế độ xã hội khác nhau.", correct: false, image: null },
+      { text: "xây dựng tiềm lực kinh tế và quân sự.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hội nghị Ianta quyết định thành lập tổ chức Liên hợp quốc vì duy trì hòa bình thế giới",
+    qImage: null,
+    answers: [
+      { text: "là chiến lược toàn cầu của các cường quốc.", correct: false, image: null },
+      { text: "là nhiệm vụ xuyên suốt của lịch sử nhân loại.", correct: true, image: null },
+      { text: "để phát huy những vai trò của Hội Quốc liên.", correct: false, image: null },
+      { text: "là nhiệm vụ sách lược của các quốc gia sáng lập.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Xây dựng và soạn thảo được một hệ thống các công ước quốc tế về giải trừ quân bị chống chạy đua vũ trang là hoạt động thể hiện vai trò nào của tổ chức Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Duy trì hoà bình và an ninh quốc tế.", correct: true, image: null },
+      { text: "Ngăn chặn chiến tranh lạnh trên thế giới.", correct: false, image: null },
+      { text: "Bảo đảm quyền con người, phát triển văn hoá.", correct: false, image: null },
+      { text: "Thúc đẩy phát triển kinh tế, thương mại thế giới.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tổ chức kinh tế, thương mại lớn nhất trực thuộc Liên hợp quốc là",
+    qImage: null,
+    answers: [
+      { text: "Tổ chức Thương mại thế giới (WTO).", correct: false, image: null },
+      { text: "Diễn đàn hợp tác kinh tế châu Á - Thái Bình Dương (APEC).", correct: false, image: null },
+      { text: "Ủy ban Liên hiệp quốc về luật thương mại quốc tế (UNCITRAL).", correct: false, image: null },
+      { text: "Hội nghị của Liên hiệp quốc về thương mại và phát triển (UNCTAD).", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Nhằm thực hiện mục tiêu xoá đói giảm nghèo, thực hiện bình đẳng giới, đảm bảo bền vững về môi trường, năm 2020, tổ chức Liên hợp quốc đã",
+    qImage: null,
+    answers: [
+      { text: "thông qua Tuyên ngôn Quốc tế Nhân quyền.", correct: false, image: null },
+      { text: "cải tổ cơ cấu tổ chức theo hướng dân chủ hơn.", correct: false, image: null },
+      { text: "tổ chức Hội nghị về Thương mại và Phát triển.", correct: false, image: null },
+      { text: "thông qua các Mục tiêu phát triển Thiên niên kỷ.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Mối quan hệ giữa các thành viên của Liên hợp quốc dựa trên nền tảng nào?",
+    qImage: null,
+    answers: [
+      { text: "Bình đẳng giữa các quốc gia và quyền dân tộc tự quyết.", correct: true, image: null },
+      { text: "Không can thiệp vào các cuộc xung đột ở nhiều khu vực.", correct: false, image: null },
+      { text: "Quyền lợi quốc gia, quyền lợi dân tộc là trên hết, trước hết.", correct: false, image: null },
+      { text: "Chung sống hòa bình và đảm bảo sự nhất trí của các thành viên.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sau Chiến tranh thế giới thứ hai, sự tồn tại của Liên hợp quốc là",
+    qImage: null,
+    answers: [
+      { text: "một yêu cầu khách quan và là tất yếu của lịch sử.", correct: true, image: null },
+      { text: "sản phẩm của cách mạng khoa học - công nghệ.", correct: false, image: null },
+      { text: "sự tiếp nối những thành công của Hội Quốc liên.", correct: false, image: null },
+      { text: "khát vọng của riêng các nước thuộc địa và phụ thuộc.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhận định nào sau đây là đúng về tổ chức Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Có vai trò quyết định chấm dứt Chiến tranh lạnh.", correct: false, image: null },
+      { text: "Là diễn đàn khu vực vừa hợp tác, vừa đấu tranh.", correct: false, image: null },
+      { text: "Có cơ cấu tổ chức chặt chẽ, đầy đủ, bao quát.", correct: true, image: null },
+      { text: "Các nước thắng trận trong đại chiến được tham gia.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tổ chức Liên hợp quốc có điểm khác biệt cơ bản nào so với Hội Quốc liên?",
+    qImage: null,
+    answers: [
+      { text: "Đưa các quốc gia trên thế giới xích lại gần nhau hơn.", correct: true, image: null },
+      { text: "Đáp ứng được tất cả yêu cầu do lịch sử thế giới đặt ra.", correct: false, image: null },
+      { text: "Duy trì trật tự thế giới sau những đại chiến thảm khốc.", correct: false, image: null },
+      { text: "Làm cho nền hòa bình thế giới tạm thời, mong manh.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhận xét nào sau đây phản ánh đúng hạn chế của tổ chức Liên hợp quốc trong quá trình tồn tại và phát triển?",
+    qImage: null,
+    answers: [
+      { text: "Góp phần giải quyết nhiều cuộc xung đột trên thế giới.", correct: false, image: null },
+      { text: "Sự hợp tác còn lỏng lẻo, chưa mở rộng trên mọi lĩnh vực.", correct: true, image: null },
+      { text: "Không ngăn chặn được tình trạng căng thẳng trên thế giới.", correct: false, image: null },
+      { text: "Các cơ quan chuyên môn hoạt động chưa thực sự hiệu quả.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Sự kiện nổi bật nào diễn ra năm 1988 thể hiện vai trò duy trì hoà bình và an ninh thế giới của tổ chức Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Chiến tranh lạnh chấm dứt hoàn toàn trên phạm vi thế giới.", correct: false, image: null },
+      { text: "Chế độ phân biệt chủng tộc ở châu Phi chính thức bị xoá bỏ.", correct: false, image: null },
+      { text: "Hội đồng Bảo an Liên hợp quốc mở rộng gồm 15 thành viên.", correct: false, image: null },
+      { text: "Lực lượng gìn giữ hoà bình được tặng Giải thưởng Nobel Hoà bình.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Hội nghị Liên hợp quốc về Thương mại và Phát triển (thành lập năm 1964) nhằm mục tiêu cơ bản nào?",
+    qImage: null,
+    answers: [
+      { text: "Thúc đẩy sự phát triển kinh tế của các nước thành viên.", correct: true, image: null },
+      { text: "Thành lập một liên minh kinh tế trên phạm vi toàn cầu.", correct: false, image: null },
+      { text: "Khắc phục tình trạng khủng hoảng kinh tế trên thế giới.", correct: false, image: null },
+      { text: "Thay thế cho Hội đồng kinh tế và xã hội của Liên hợp quốc.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhận xét nào sau đây đúng về sự ra đời của tổ chức Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Có sự tham gia chuẩn bị của các nước mới giành độc lập.", correct: false, image: null },
+      { text: "Quá trình hình thành kéo dài với nhiều hội nghị quan trọng.", correct: true, image: null },
+      { text: "Nhanh chóng hoàn thiện về mặt tổ chức, gắn với vai trò của Mỹ.", correct: false, image: null },
+      { text: "Được chính thức thành lập ngay trong Chiến tranh thế giới thứ hai.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Việc phát triển và hợp tác kinh tế, thương mại quốc tế được Liên hợp quốc xem là",
+    qImage: null,
+    answers: [
+      { text: "mục tiêu quan trọng nhất để tổ chức phát triển toàn diện.", correct: false, image: null },
+      { text: "cơ sở chủ yếu để phát triển kinh tế của các nước thành viên.", correct: true, image: null },
+      { text: "công cụ để trừng phạt các nước thành viên vi phạm Hiến chương.", correct: false, image: null },
+      { text: "cơ sở quan trọng để hình thành các tổ chức kinh tế, tài chính khu vực.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Từ năm 1960, một trong những ưu tiên trọng tâm của Liên hợp quốc là",
+    qImage: null,
+    answers: [
+      { text: "tập trung giải trừ quân bị ở các khu vực điểm nóng trên thế giới.", correct: false, image: null },
+      { text: "tạo môi trường kinh tế, thương mại, tài chính quốc tế bình đẳng.", correct: true, image: null },
+      { text: "thành lập các tổ chức liên kết khu vực ở các châu lục trên thế giới.", correct: false, image: null },
+      { text: "thúc đẩy sự phát triển của các trung tâm kinh tế - tài chính thế giới.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Hội nghị Ianta quyết định thành lập tổ chức Liên hợp quốc vì duy trì hòa bình thế giới",
+    qImage: null,
+    answers: [
+      { text: "cần phải tiếp tục thực hiện sau những thành công của Hội Quốc liên.", correct: false, image: null },
+      { text: "là nhiệm vụ mới được đặt ra cho các nước thắng trận sau chiến tranh.", correct: false, image: null },
+      { text: "là nhiệm vụ cốt yếu của các tổ chức liên kết kinh tế, chính trị trên thế giới.", correct: false, image: null },
+      { text: "là vấn đề toàn cầu cần có sự chung tay của nhân loại và một công cụ bảo vệ.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Năm 2001, sự kiện nào ghi nhận vai trò giữ gìn hoà bình, an ninh thế giới của tổ chức Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Liên hợp quốc được trao tặng Giải thưởng Nobel Hoà bình.", correct: true, image: null },
+      { text: "Liên hợp quốc thông qua các Mục tiêu phát triển Thiên niên kỷ.", correct: false, image: null },
+      { text: "Vụ khủng bố vào toà tháp đôi trung tâm thương mại ở nước Mỹ.", correct: false, image: null },
+      { text: "Hiệp ước cấm phổ biến vũ khí hạt nhân được chính thức thông qua.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nội dung nào không phải nguyên tắc hoạt động của tổ chức Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Giải quyết các tranh chấp quốc tế bằng biện pháp hòa bình.", correct: false, image: null },
+      { text: "Tôn trọng bình đẳng chủ quyền của tất cả các quốc gia thành viên.", correct: false, image: null },
+      { text: "Từ bỏ đe doạ bằng vũ lực hoặc sử dụng vũ lực trong quan hệ quốc tế.", correct: false, image: null },
+      { text: "Giúp đỡ quốc gia bị Liên hợp quốc áp dụng hành động cưỡng chế.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Nội dung nào là mục tiêu của Liên hợp quốc được trình bày trong bản Hiến chương?",
+    qImage: null,
+    answers: [
+      { text: "Không can thiệp vào công việc nội bộ của bất cứ nước nào.", correct: false, image: null },
+      { text: "Là trung tâm điều hoà các nỗ lực quốc tế vì những mục tiêu chung.", correct: true, image: null },
+      { text: "Từ bỏ đe doạ bằng vũ lực hoặc sử dụng vũ lực trong quan hệ quốc tế.", correct: false, image: null },
+      { text: "Tránh giúp đỡ nước bị áp dụng hành động phòng ngừa hoặc cưỡng chế.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nội dung nào thể hiện vai trò duy trì hoà bình, an ninh quốc tế của tổ chức Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Tạo môi trường thuận lợi để thúc đẩy hợp tác quốc tế về kinh tế giữa các nước.", correct: false, image: null },
+      { text: "Có vai trò quan trọng trong cuộc đấu tranh nhằm thủ tiêu hệ thống thuộc địa.", correct: false, image: null },
+      { text: "Góp phần vào các hoạt động chống biến đổi khí hậu, dịch bệnh... trên thế giới.", correct: false, image: null },
+      { text: "Đóng vai trò quan trọng trong việc xây dựng các quỹ tài trợ quốc tế để phát triển.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Nhận định nào sau đây không đúng về Hiến chương của Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Trở thành tôn chỉ mục đích của các tổ chức quốc tế và khu vực.", correct: false, image: null },
+      { text: "Được xây dựng và thông qua tại Hội đồng Bảo an Liên hợp quốc.", correct: true, image: null },
+      { text: "Là cơ sở quan trọng để hoàn thiện cơ cấu và hoạt động của tổ chức.", correct: false, image: null },
+      { text: "Trở thành pháp luật quốc tế để giải quyết mọi xung đột trên thế giới.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nội dung nào không phải là đóng góp của Việt Nam cho tổ chức Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Đề cao vai trò của Liên hợp quốc và chủ nghĩa đa phương.", correct: false, image: null },
+      { text: "Phản đối hành động áp bức, xâm lược, cấm vận đơn phương.", correct: false, image: null },
+      { text: "Đóng góp vào quá trình hình thành và xây dựng cơ cấu tổ chức.", correct: true, image: null },
+      { text: "Tham gia vào đấu tranh chống phổ biến vũ khí hủy diệt hàng loạt.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nội dung nào là mục tiêu của Liên hợp quốc được trình bày trong bản Hiến chương?",
+    qImage: null,
+    answers: [
+      { text: "Đấu tranh nhằm thủ tiêu hệ thống thuộc địa của chủ nghĩa thực dân.", correct: false, image: null },
+      { text: "Triển khai hoạt động giữ gìn hoà bình ở nhiều khu vực trên thế giới.", correct: false, image: null },
+      { text: "Tránh giúp đỡ nước bị áp dụng hành động phòng ngừa hoặc cưỡng chế.", correct: false, image: null },
+      { text: "Thúc đẩy hợp tác quốc tế để giải quyết các vấn đề kinh tế, xã hội, văn hoá.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Nội dung nào thể hiện vai trò duy trì hoà bình, an ninh quốc tế cuả tổ chức Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Đẩy mạnh các mối giao lưu, hợp tác giữa các quốc gia trên thế giới.", correct: false, image: null },
+      { text: "Triển khai hoạt động giữ gìn hoà bình ở nhiều khu vực trên thế giới.", correct: true, image: null },
+      { text: "Góp phần ngăn chặn không để xảy ra một cuộc chiến tranh thế giới thứ hai.", correct: false, image: null },
+      { text: "Đóng vai trò quan trọng trong việc cải thiện, nâng cao đời sống của người dân.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Mục đích của tổ chức UNCTAD là gì?",
+    qImage: null,
+    answers: [
+      { text: "Thúc đẩy sự phát triển toàn diện về kinh tế, chính trị, văn hoá toàn thế giới.", correct: false, image: null },
+      { text: "Thúc đẩy sự phát triển kinh tế và thương mại của tất cả các nước thành viên.", correct: true, image: null },
+      { text: "Ngăn ngừa và giảm thiểu những rủi ro của cuộc khủng hoảng kinh tế thế giới.", correct: false, image: null },
+      { text: "Giải quyết tình trạng chênh lệch về trình độ phát triển của các nước thành viên.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Tổ chức Giáo dục, Văn hoá, Khoa học của Liên hợp quốc có vai trò như thế nào?",
+    qImage: null,
+    answers: [
+      { text: "Thúc đẩy những phát minh khoa học về trí tuệ nhân tạo ở các quốc gia.", correct: false, image: null },
+      { text: "Xây dựng một bản sắc văn hoá chung cho tất cả các quốc gia trên thế giới.", correct: false, image: null },
+      { text: "Thúc đẩy phổ cập giáo dục trung học phổ thông cho các nước đang phát triển.", correct: false, image: null },
+      { text: "Thúc đẩy đối thoại, hợp tác giữa các dân tộc về văn hoá, giáo dục và khoa học.", correct: true, image: null }
+    ]
+  },
+  {
+    q: "Quỹ Giáo dục không thể chờ đợi của Liên hợp quốc có hoạt động tiêu biểu nào năm 2021?",
+    qImage: null,
+    answers: [
+      { text: "Hỗ trợ trẻ em ở các khu vực chiến sự và khó khăn tiếp cận với giáo dục.", correct: true, image: null },
+      { text: "Xoá bỏ được tình trạng mù chữ ở các quốc gia kém phát triển ở châu Phi.", correct: false, image: null },
+      { text: "Mở lớp học online miễn phí toàn cầu để khắc phục ảnh hưởng của Covid-19.", correct: false, image: null },
+      { text: "Tổ chức các cuộc thi về khoa học kỹ thuật cho học sinh toàn thế giới tham gia.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Nhận định nào sau đây đúng về mục tiêu của tổ chức Liên hợp quốc?",
+    qImage: null,
+    answers: [
+      { text: "Thúc đẩy quan hệ hữu nghị giữa các dân tộc là mục tiêu cao nhất.", correct: false, image: null },
+      { text: "Mang tính bao quát, phản ánh mối quan tâm toàn diện của các quốc gia.", correct: true, image: null },
+      { text: "Mang tính toàn diện, thay đổi tuỳ theo mối quân hệ giữa Mỹ và Liên Xô.", correct: false, image: null },
+      { text: "Mục tiêu được hình thành sau khi ban hành Hiến chương Liên hợp quốc.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Từ khi gia nhập tổ chức Liên hợp quốc (năm 1977), Việt Nam đã",
+    qImage: null,
+    answers: [
+      { text: "tranh thủ những nguồn lực quan trọng công cuộc xây dựng và bảo vệ đất nước.", correct: true, image: null },
+      { text: "trở thành nước đầu tiên ở Đông Nam Á tham gia vào xu thế toàn cầu hoá.", correct: false, image: null },
+      { text: "viện trợ cho các nước châu Phi đấu tranh chống lại thực dân Anh, Bồ Đào Nha.", correct: false, image: null },
+      { text: "nhận được viện trợ của các nước thành viên để đánh bại chủ nghĩa thực dân mới.", correct: false, image: null }
+    ]
+  },
+  {
+    q: "Vì sao việc góp phần vào duy trì hòa bình thế giới là một cống hiến to lớn, cao cả của Liên hợp quốc đối với nhân loại?",
+    qImage: null,
+    answers: [
+      { text: "Duy trì hòa bình thế giới là trách nhiệm chuyên biệt của tổ chức Liên hợp quốc.", correct: false, image: null },
+      { text: "Hoà bình là nhân tố duy nhất tạo nên sự hưng thịnh của các quốc gia trên thế giới.", correct: false, image: null },
+      { text: "Nguy cơ thường trực của chiến tranh thế giới đe doạ hoà bình và an ninh nhân loại.", correct: false, image: null },
+      { text: "Hòa bình đem đến nhiều giá trị to lớn cho sự phát triển của cá nhân và các quốc gia.", correct: true, image: null }
+    ]
+  }
+];
+
+  // True/False questions [D/S]
+  const trueFalseQuestions = [
+  {
+    "q": "Đọc đoạn tư liệu sau đây: “Duy trì hoà bình và an ninh quốc tế, và để đạt được mục đích đó, thi hành những biện pháp tập thể có hiệu quả để phòng ngừa và loại trừ các mối đe dọa hoà bình, cấm mọi hành vi xâm lược và phá hoại hoà bình khác; điều chỉnh hoặc giải quyết các vụ tranh chấp hoặc những tình thế có tính chất quốc tế có thể đưa đến sự phá hoại hoà bình, bằng phương pháp hoà bình theo đúng nguyên tắc của công lý và pháp luật quốc tế\" (Trích: Điều 1, Hiến chương Liên hợp quốc).",
+    "qImage": null,
+    "answers": [
+      { "text": "Theo đoạn tư liệu trên, mục tiêu của Liên hợp quốc được thể hiện tại Điều 1 của Hiến chương Liên hợp quốc.", "correct": true, "image": null },
+      { "text": "Hiến chương có nhiều mục tiêu, trong đó mục đích quan trọng nhất là duy trì hoà bình và an ninh quốc tế.", "correct": true, "image": null },
+      { "text": "Mục tiêu duy trì hoà bình, an ninh quốc tế được chú trọng và là cơ sở thứ yếu để thực hiện các mục tiêu khác.", "correct": false, "image": null },
+      { "text": "Mục tiêu duy trì hoà bình và an ninh thế giới là cơ sở quan trọng nhất để kết thúc các cuộc xung đột, nội chiến trên thế giới.", "correct": false, "image": null }
+    ]
+  },
+  {
+    "q": "Đọc đoạn tư liệu sau đây: “Ai cũng được hưởng những quyền tự do ghi trong bản Tuyên Ngôn này không phân biệt đối xử vì bất cứ lý do nào, như chủng tộc, màu da, nam nữ, ngôn ngữ, tôn giáo, chính kiến hay quan niệm, nguồn gốc dân tộc hay xã hội, tài sản, dòng dõi hay bất cứ thân trạng nào khác. Ngoài ra không được phân biệt về quy chế chính trị, pháp lý hay quốc tế của quốc gia hay lãnh thổ mà người đó trực thuộc, dù là nước độc lập, bị giám hộ, mất chủ quyền hay bị hạn chế chủ quyền”. (Trích: Điều 2, Tuyên ngôn Quốc tế Nhân quyền của Liên hợp quốc năm 1948).",
+    "qImage": null,
+    "answers": [
+      { "text": "Tuyên ngôn Quốc tế Nhân quyền được ban hành cùng với Hiến chương Liên hợp quốc.", "correct": false, "image": null },
+      { "text": "Tuyên ngôn Quốc tế Nhân quyền ghi nhận quyền bình đẳng của con người trên thế giới, không ghi nhận quyền bình đẳng của quốc gia.", "correct": false, "image": null },
+      { "text": "Theo Tuyên ngôn Quốc tế Nhân quyền, chủng tộc, màu da, nam nữ, ngôn ngữ, tôn giáo không phải là căn cứ để phân biệt quyền con người.", "correct": true, "image": null },
+      { "text": "Tuyên ngôn Quốc tế Nhân quyền công bố đã xóa bỏ được chế độ phân biệt chủng tộc trên thế giới.", "correct": false, "image": null }
+    ]
+  },
+  {
+    "q": "Cho bảng niên biểu về quá trình thành lập Liên hợp quốc:",
+    "qImage": "media/anh1.jpg",
+    "answers": [
+      { "text": "Quá trình hình thành của LHQ diễn ra kéo dài với nhiều sự kiện quan trọng thể hiện sự nỗ lực vì hoà bình chung của cộng đồng quốc tế.", "correct": true, "image": null },
+      { "text": "Ý tưởng thành lập LHQ gắn liền với quá trình thiết lập và hoạt động phe Đồng minh chống phát xít trong Chiến tranh thế giới thứ hai.", "correct": true, "image": null },
+      { "text": "Tổ chức Liên hợp quốc được thành lập để nhanh chóng kết thúc Chiến tranh thế giới thứ hai.", "correct": false, "image": null },
+      { "text": "Liên Xô, Mỹ, Anh đóng vai trò quan trọng nhất cho sự ra đời của tổ chức Liên hợp quốc.", "correct": true, "image": null }
+    ]
+  },
+  {
+    "q": "Đọc đoạn tư liệu sau đây: “Liên hợp quốc đã nhiều lần ra tuyên bố về việc ngăn ngừa chiến tranh khi có tình hình căng thẳng trên thế giới, thuyết phục các bên đối địch ngồi đàm phán để tránh các cuộc xung đột vũ trang. Các phương pháp và công cụ ngăn ngừa và loại trừ xung đột có nhiều loại rất đa dạng; đối với việc giải quyết một số tranh chấp, Liên hợp quốc đã phải sử dụng lực lượng vũ trang để gìn giữ hoà bình, sử dụng nhóm quan sát viên hoặc phái đoàn để làm sáng tỏ tình hình, tiến hành hoạt động môi giới, trung gian\". (Võ Khánh Vinh, Giáo trình Liên hợp quốc - Tổ chức và hoạt động, Nxb Công an nhân dân, 2003, tr.35).",
+    "qImage": null,
+    "answers": [
+      { "text": "Nội dung đoạn tư liệu phản ánh vai trò của tổ chức Liên hợp quốc về duy trì hoà bình và anh ninh thế giới.", "correct": true, "image": null },
+      { "text": "Liên hợp quốc có nhiều biện pháp và công cụ ngăn ngừa và loại trừ xung đột trên thế giới.", "correct": true, "image": null },
+      { "text": "Liên hợp quốc không sử dụng lực lượng vũ trang để gìn giữ hoà bình an ninh thế giới.", "correct": false, "image": null },
+      { "text": "Liên hợp quốc sử dụng nhóm quan sát viên hoặc phái đoàn để bí mật theo dõi tình hình chính trị của các nước.", "correct": false, "image": null }
+    ]
+  },
+  {
+    "q": "Đọc đoạn tư liệu sau đây: “Tổ chức Liên hợp quốc ra đời thực sự có ý nghĩa to lớn trong đời sống chính trị quốc tế trong gần 60 năm qua. Đây là sự kiện quan trọng đánh dấu sự xuất hiện của các hoạt động ngoại giao đa phương hiện đại, một bước ngoặt quyết định trong lịch sử phát triển của nền ngoại giao đa phương nói chung. Gần 60 năm tồn tại và phát triển của mình, Liên hợp quốc có đóng góp rất quan trọng trong việc giữ gìn hoà bình và an ninh thế giới; những đóng góp đáng kể vào tiến trình phi thực dân hoá, những nỗ lực trong việc giải trừ quân bị và hạn chế sản xuất vũ khí hạt nhân...\". (Trần Nam Tiến (Chủ biên), Lịch sử quan hệ quốc tế hiện đại (1945-2000), Nxb Giáo dục, 2010, tr.24).",
+    "qImage": null,
+    "answers": [
+      { "text": "Đoạn tư liệu trên đánh giá về các nguyên tắc hoạt động của tổ chức Liên hợp quốc.", "correct": false, "image": null },
+      { "text": "Tổ chức Liên hợp quốc ra đời đã mở đầu cho sự xuất hiện của các hoạt động ngoại giao song phương hiện đại.", "correct": false, "image": null },
+      { "text": "Tổ chức Liên hợp quốc những đóng góp đáng kể vào tiến trình đấu tranh giải phóng dân tộc trên thế giới.", "correct": true, "image": null },
+      { "text": "Liên hợp quốc đã ban hành nhiều công ước về hạn chế sản xuất vũ khí hạt nhân.", "correct": true, "image": null }
+    ]
+  },
+  {
+    "q": "Đọc đoạn tư liệu sau đây: “Chúng ta thừa nhận rằng, bên cạnh trách nhiệm riêng với các xã hội của chúng ta, chúng ta còn có một trách nhiệm chung là ủng hộ các nguyên tắc về nhân phẩm con người, về bình đẳng và công bằng ở cấp độ toàn cầu. Bởi vậy, với tư cách là những nhà lãnh đạo, chúng ta có một trách nhiệm với tất cả nhân dân thế giới, đặc biệt là với những người dễ bị tổn thương nhất, mà đặc biệt là với trẻ em của thế giới, đối tượng mà tương lai của chúng ta phụ thuộc vào”. (Trích các Mục tiêu phát triển Thiên niên kỷ, đã được Hội nghị Thượng đỉnh Thiên niên kỷ (9/2000) thông qua).",
+    "qImage": null,
+    "answers": [
+      { "text": "Từ năm 2000, Liên hợp quốc thúc đẩy việc thực hiện các Mục tiêu phát triển Thiên niên kỷ.", "correct": true, "image": null },
+      { "text": "Liên hợp quốc không có trách nhiệm nào khác ngoài bảo vệ, duy trì hoà bình, an ninh thế giới.", "correct": false, "image": null },
+      { "text": "Các Mục tiêu phát triển Thiên niên kỷ của Liên hợp quốc nhằm xoá đói giảm nghèo, thực hiện bình đẳng giới.", "correct": true, "image": null },
+      { "text": "Liên hợp quốc đặc biệt chú ý đến trách nhiệm với trẻ em, đối tượng dễ bị tổn thương nhất.", "correct": true, "image": null }
+    ]
+  }
+];
+
+    // Essay questions [TL]
+  const essayQuestions = [
+    {
+      q: "Trong tiếng Việt, chữ nào có ngàn 'h' ? ",
+      qImage: null,
+      answerRef: "là chữ 'ngành' có ngàn 'h' ",
+      answerRefImage: null
+    },
+    {
+      q: "Trong tiếng Anh, chữ 'GG' viết tắt của từ gì ? ",
+      qImage: null,
+      answerRef: "là 'Good Game' ",
+      answerRefImage: null
+    }
+  ];
+
+  // --- UTILITY FUNCTIONS ---
+  function shuffleArray(arr) {
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/</g, "‹")
+      .replace(/>/g, "›")
+      .replace(/"/g, "'");
+  }
+
+  // --- DOM ELEMENTS ---
+  const btnMulti = document.getElementById('btn-multi');
+  const btnTrueFalse = document.getElementById('btn-truefalse');
+  const btnEssay = document.getElementById('btn-essay');
+  const toggleThemeBtn = document.getElementById('toggle-theme');
+  const btnExit = document.getElementById('btn-exit'); 
+  const btnBackHomeInQuiz = document.getElementById('btn-back-home-in-quiz'); // Nút Back Home trong quiz
+  const btnDownload = document.getElementById('btn-download');
+
+  const quizSection = document.getElementById('quiz-section');
+  const questionBlock = document.getElementById('question-block');
+  const answersBlock = document.getElementById('answers-block');
+  const essayInputBlock = document.getElementById('essay-input-block');
+  const essayAnswerTextarea = document.getElementById('essay-answer');
+  const btnEssaySubmit = document.getElementById('btn-essay-submit');
+  const btnNext = document.getElementById('btn-next');
+
+  const timerSpan = document.getElementById('timer');
+  const doneCountSpan = document.getElementById('done-count');
+  const correctCountSpan = document.getElementById('correct-count');
+  const wrongCountSpan = document.getElementById('wrong-count');
+
+  const resultSection = document.getElementById('result-section');
+  const resultTime = document.getElementById('result-time');
+  const resultTotal = document.getElementById('result-total');
+  const resultCorrect = document.getElementById('result-correct');
+  const resultWrong = document.getElementById('result-wrong');
+  const starRating = document.getElementById('star-rating');
+
+  // const btnRestart = document.getElementById('btn-restart'); // Đã xóa khỏi HTML, nên bỏ dòng này hoặc comment lại
+  const btnHome = document.getElementById('btn-home');
+
+  // --- STATE VARIABLES ---
+  let quizType = null; // 'multi', 'truefalse', 'essay'
+  let questions = [];
+  let currentQIdx = 0;
+  let timerInterval = null;
+  let timeSeconds = 0;
+  let doneCount = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let currentTFAnswerIdx = 0;
+
+  // --- TIMER FUNCTIONS ---
+  function startTimer() {
+    timeSeconds = 0;
+    timerSpan.textContent = formatTime(timeSeconds);
+    if(timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeSeconds++;
+      timerSpan.textContent = formatTime(timeSeconds);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if(timerInterval) clearInterval(timerInterval);
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s/60);
+    const sec = s % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (sec < 10 ? '0' + sec : sec);
+  }
+
+  // --- QUIZ FUNCTIONS ---
+  function resetStats() {
+    doneCount = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    doneCountSpan.textContent = "0";
+    correctCountSpan.textContent = "0";
+    wrongCountSpan.textContent = "0";
+  }
+
+  function initQuiz(type) {
+    quizType = type;
+    currentQIdx = 0;
+    resetStats();
+
+    if(type === 'multi') {
+      questions = multiChoiceQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+    } else if(type === 'truefalse') {
+      questions = trueFalseQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+      currentTFAnswerIdx = 0;
+    } else if(type === 'essay') {
+      questions = essayQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answerRef: q.answerRef,
+        answerRefImage: q.answerRefImage
+      }));
+      shuffleArray(questions);
+    }
+    
+    quizSection.style.display = 'block';
+    resultSection.style.display = 'none';
+    btnMulti.style.display = 'none';
+    btnTrueFalse.style.display = 'none';
+    btnEssay.style.display = 'none';
+    btnExit.style.display = 'none'; // Ẩn nút Exit khi bắt đầu quiz
+    toggleThemeBtn.style.display = 'none'; // Ẩn nút chuyển theme khi vào quiz
+    btnDownload.style.display = 'none';
+
+    showQuestion();
+    startTimer();
+  }
+
+  function showQuestion() {
+    // Ẩn nút "Tiếp tục" nếu nó đang hiển thị
+    btnNext.style.display = 'none'; 
+    // Nếu là dạng tự luận, nút "Xong" (submit) sẽ được hiển thị, ngược lại ẩn
+    btnEssaySubmit.style.display = (quizType === 'essay') ? 'block' : 'none';
+    // Đảm bảo nút "Xong" được kích hoạt lại cho câu hỏi tự luận mới
+    btnEssaySubmit.disabled = false; 
+
+    answersBlock.innerHTML = ''; // Xóa các câu trả lời cũ
+    essayInputBlock.style.display = 'none'; // Ẩn khung nhập tự luận
+    essayAnswerTextarea.value = ''; // Xóa nội dung cũ trong khung tự luận
+    
+    if (currentQIdx >= questions.length) {
+      endQuiz();
+      return;
+    }
+
+    const currentQ = questions[currentQIdx];
+    
+    // Display question text and image (if any)
+    let questionHTML = `
+      <div style="color: var(--orange); font-weight: bold; margin-bottom: 15px;">
+        Câu ${currentQIdx + 1}: ${escapeHtml(currentQ.q)}
+      </div>
+    `;
+    
+    if (currentQ.qImage) {
+      questionHTML += `
+        <div style="text-align: center; margin: 15px 0;">
+          <img src="${currentQ.qImage}" 
+               style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;"
+               onerror="this.style.display='none'">
+        </div>
+      `;
+    }
+    
+    questionBlock.innerHTML = questionHTML;
+
+    if (quizType === 'multi') {
+      // Multiple choice questions
+      answersBlock.style.display = 'block';
+      currentQ.answers.forEach((ans, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        
+        let answerContent = `${String.fromCharCode(65 + i)}. ${escapeHtml(ans.text)}`;
+        
+        if (ans.image) {
+          answerContent += `
+            <div style="margin-top: 8px; text-align: center;">
+              <img src="${ans.image}" 
+                   style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 3px;"
+                   onerror="this.style.display='none'">
+            </div>
+          `;
+        }
+        
+        btn.innerHTML = answerContent;
+        btn.onclick = () => handleMultiAnswerClick(btn, ans.correct, currentQ.answers);
+        answersBlock.appendChild(btn);
+      });
+
+    } else if (quizType === 'truefalse') {
+      // True/False questions
+      answersBlock.style.display = 'block';
+      currentTFAnswerIdx = 0;
+      showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+      
+    } else if (quizType === 'essay') {
+      // Essay questions
+      essayInputBlock.style.display = 'block';
+    }
+  }
+
+  function handleMultiAnswerClick(btn, isCorrect, allAnswers) {
+    Array.from(answersBlock.children).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(isCorrect) {
+      btn.classList.add('correct');
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+    } else {
+      btn.classList.add('incorrect');
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      // Highlight correct answer
+      const correctAns = allAnswers.find(a => a.correct);
+      for(let b of answersBlock.children) {
+        // Cẩn thận với việc so sánh textContent trực tiếp nếu có hình ảnh
+        // Cần lấy chỉ phần text của câu trả lời
+        const btnText = b.childNodes[0].nodeType === 3 ? b.childNodes[0].nodeValue.substring(3).trim() : ''; // Lấy text trước hình ảnh
+        const correctText = escapeHtml(correctAns.text);
+
+        if(btnText === correctText && correctAns.correct) {
+          b.classList.add('correct');
+          break;
+        }
+      }
+    }
+    btnNext.style.display = 'inline-block';
+  }
+
+  function showTrueFalseAnswer(answerObj) {
+    answersBlock.innerHTML = '';
+
+    const label = document.createElement('div');
+    label.style.marginBottom = '10px';
+    label.style.fontWeight = 'bold';
+    label.textContent = `Câu hỏi phụ ${currentTFAnswerIdx + 1}: ${answerObj.text}`;
+    answersBlock.appendChild(label);
+
+    if (answerObj.image) {
+      const imgDiv = document.createElement('div');
+      imgDiv.style.textAlign = 'center';
+      imgDiv.style.margin = '10px 0';
+      imgDiv.innerHTML = `<img src="${answerObj.image}" style="max-width: 100%; max-height: 200px; border: 1px solid #ccc; border-radius: 3px;" onerror="this.style.display='none'">`;
+      answersBlock.appendChild(imgDiv);
+    }
+
+    const btnTrue = document.createElement('button');
+    btnTrue.className = 'answer-btn';
+    btnTrue.textContent = 'Đúng';
+    btnTrue.onclick = () => handleTrueFalseAnswerClick(true, answerObj.correct);
+    answersBlock.appendChild(btnTrue);
+    
+    const btnFalse = document.createElement('button');
+    btnFalse.className = 'answer-btn';
+    btnFalse.textContent = 'Sai';
+    btnFalse.onclick = () => handleTrueFalseAnswerClick(false, answerObj.correct);
+    answersBlock.appendChild(btnFalse);
+  }
+
+  function handleTrueFalseAnswerClick(userAnswer, correctAnswer) {
+    Array.from(answersBlock.querySelectorAll('button')).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(userAnswer === correctAnswer) {
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    } else {
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('incorrect');
+        }
+        if(b.textContent.toLowerCase() === (correctAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    }
+
+    btnNext.style.display = 'inline-block';
+  }
+
+  // Essay submit handler
+  btnEssaySubmit.onclick = () => {
+    const userText = essayAnswerTextarea.value.trim();
+    if(userText.length === 0) {
+      alert('Hãy nhập câu trả lời trước khi nhấn "Xong"');
+      return;
+    }
+    btnEssaySubmit.disabled = true; // Vô hiệu hóa nút "Xong" sau khi submit
+    
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    const currentQ = questions[currentQIdx];
+    let answerRefHTML = `<br><br><em><strong>Đáp án tham khảo:</strong> ${currentQ.answerRef}</em>`;
+    
+    if(currentQ.answerRefImage) {
+      answerRefHTML += `<div style="margin: 15px 0; text-align: center;">
+        <img src="${currentQ.answerRefImage}" style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;">
+      </div>`;
+    }
+    
+    questionBlock.innerHTML += answerRefHTML;
+    btnNext.style.display = 'inline-block';
+  };
+
+  btnNext.onclick = () => {
+    // Ẩn nút "Tiếp tục"
+    btnNext.style.display = 'none';
+    // Đảm bảo nút "Xong" (essay) được kích hoạt lại
+    btnEssaySubmit.disabled = false; 
+
+    if(quizType === 'truefalse') {
+      currentTFAnswerIdx++;
+      const currentQ = questions[currentQIdx];
+      // Nếu còn câu hỏi phụ trong câu hỏi Đúng/Sai hiện tại
+      if(currentTFAnswerIdx < currentQ.answers.length) {
+        showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+        return; // Không chuyển sang câu hỏi tiếp theo mà hiển thị câu phụ
+      }
+    }
+
+    // Chuyển sang câu hỏi tiếp theo
+    currentQIdx++;
+    showQuestion();
+  };
+
+  function endQuiz() {
+    stopTimer();
+    quizSection.style.display = 'none';
+    resultSection.style.display = 'block';
+    toggleThemeBtn.style.display = 'block'; // Hiển thị lại nút chuyển theme
+
+    resultTime.textContent = formatTime(timeSeconds);
+    resultTotal.textContent = doneCount;
+    resultCorrect.textContent = correctCount;
+    resultWrong.textContent = wrongCount;
+
+    starRating.innerHTML = '';
+
+    // Logic tính sao đã được khôi phục và tinh chỉnh
+    if(quizType === 'multi' || quizType === 'truefalse') {
+      let starsGreen = 0;
+      let starsGray = 0;
+      
+      if(wrongCount === 0) { // Nếu không có câu sai
+        starsGreen = 3; // 3 sao xanh
+      } else if (wrongCount >= 1 && wrongCount <= 3) {
+        starsGreen = 2; // 2 sao xanh
+        starsGray = 1; // 1 sao xám
+      } else if (wrongCount >= 4 && wrongCount <= 9) {
+        starsGreen = 1; // 1 sao xanh
+        starsGray = 2; // 2 sao xám
+      } else { // wrongCount >= 10
+        starsGreen = 0; // 0 sao xanh
+        starsGray = 3; // 3 sao xám
+      }
+
+      for(let i = 1; i <= 3; i++) {
+        const star = document.createElement('span');
+        star.classList.add('star');
+        if(i <= starsGreen) star.classList.add('Green');
+        else if(i <= starsGray) star.classList.add('gray');
+        star.innerHTML = '&#9733;';
+        starRating.appendChild(star);
+      }
+    } else if (quizType === 'essay') {
+        // Đối với bài tự luận, không có điểm đúng/sai tự động
+        // Bạn có thể thêm logic chấm điểm thủ công hoặc hiển thị thông báo khác
+        const infoDiv = document.createElement('div');
+        infoDiv.textContent = "Bài Tự Luận Cần Được Giáo Viên Chấm Điểm.";
+        infoDiv.style.fontWeight = "bold";
+        infoDiv.style.marginTop = "20px";
+        starRating.appendChild(infoDiv);
+    }
+  }
+
+  // --- EVENT LISTENERS ---
+  // Đã xóa btnRestart.onclick và logic liên quan
+  // Nếu bạn muốn chức năng "làm lại" bài quiz, bạn cần tạo một nút mới với ID khác
+  // và thêm lại logic reset Stats vào event listener của nút đó.
+
+  // Nút Home (ở màn hình kết quả) - vẫn reload trang hiện tại
+  btnHome.onclick = () => {
+    location.reload(); 
+  };
+
+  btnMulti.onclick = () => initQuiz('multi');
+  btnTrueFalse.onclick = () => initQuiz('truefalse');
+  btnEssay.onclick = () => initQuiz('essay');
+  // New: Download button functionality
+  btnDownload.onclick = () => {
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'toancreator-default'; // Set the desired filename
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  };
+  
+  
+  // Xử lý sự kiện cho nút Exit mới
+  btnExit.onclick = () => {
+    window.location.href = '../index.html'; // Chuyển hướng về index.html
+  };
+
+  // Xử lý sự kiện cho nút Back to Home trong quiz
+  btnBackHomeInQuiz.onclick = () => {
+    if (confirm('Bạn có chắc chắn muốn thoát bài làm hiện tại?')) {
+      stopTimer(); // Dừng đồng hồ
+      location.reload(); // Tải lại trang promt-onlineV2.html
+    }
+  };
+
+  toggleThemeBtn.onclick = () => {
+    document.body.classList.toggle('dark');
+  };
+
+  // Ẩn/hiện nút toggle theme ban đầu
+  // Bạn có thể đặt nút toggle theme ở vị trí cố định thay vì ẩn/hiện tùy thuộc vào màn hình
+  // Hiện tại, nó sẽ luôn hiển thị trừ khi bị ẩn bởi CSS hoặc logic khác
+  toggleThemeBtn.style.display = 'block'; 
+})();
+</script>
+</body>
+</html>
