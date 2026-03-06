@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toàn Creator - Online Lesson</title>
+<style>
+  :root {
+    --yellow: #f9d342;
+    --yellow-dark: #d4b833;
+    --Green: #2ecc71;
+    --starsGreen: #2ecc71;
+    --red: #d93025;
+    --green: #2ecc40;
+    --starsGray: #ccc;
+    --star-size: 30px;
+    --orange: #ff9800;
+  }
+  body {
+    margin:0; padding:0; font-family: Arial, sans-serif;
+    background: white; color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: black; color: white;
+  }
+  /* Existing #app rule */
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+/* Media query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+  #app {
+    max-width: 960px; /* Or any wider value you prefer, e.g., 900px, 1200px */
+    padding: 20px; /* Optional: Increase padding for more space on larger screens */
+  }
+
+  /* Optional: Adjust button widths for larger screens if they look too wide */
+  .btn {
+    max-width: 400px; /* Make main buttons a bit wider */
+  }
+
+  /* Optional: Adjust status bar layout for larger screens */
+  .status-bar {
+    font-size: 1.1em;
+  }
+}
+  h1, h3 {
+    text-align: center;
+    margin: 10px 0;
+  }
+  h2 {
+    text-align: center;
+    margin: 10px 0;
+    color: #FF00FF;
+  }
+  hr {
+    border:none; border-bottom: 3px solid black;
+    margin: 5px 0 25px 0;
+  }
+  .btn {
+    background: #3399FF;
+    border-radius: 8px;
+    border:none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 15px;
+    width: 100%;
+    max-width: 350px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: 3px solid transparent;
+    user-select: none;
+  }
+  .btn:hover {
+    background: var(--yellow-dark);
+  }
+  .btn svg {
+    vertical-align: middle;
+  }
+  .question-container {
+    margin-bottom: 20px;
+    color: var(--orange) !important;
+    font-weight: bold;
+    font-size: 1.08em;
+    transition: color 0.3s;
+  }
+  body.dark .question-container {
+    color: var(--orange) !important;
+  }
+  .answers {
+    margin-top: 15px;
+  }
+  .answer-btn {
+    display: block;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 6px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
+    padding: 12px 10px;
+    margin: 7px 0;
+    cursor: pointer;
+    text-align: left;
+    user-select: none;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .answer-btn:hover:not(.disabled) {
+    background-color: #eee;
+  }
+  body.dark .answer-btn {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  body.dark .answer-btn:hover:not(.disabled) {
+    background-color: #444;
+  }
+  .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  body.dark .answer-btn.correct {
+    background-color: var(--green) !important;
+    color: white !important;
+    border-color: var(--green) !important;
+  }
+  body.dark .answer-btn.incorrect {
+    background-color: var(--red) !important;
+    color: white !important;
+    border-color: var(--red) !important;
+  }
+  .disabled {
+    pointer-events: none;
+  }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .star-container {
+    text-align: center;
+    margin: 20px 0 10px 0;
+  }
+  .star {
+    font-size: var(--star-size);
+    margin: 0 5px;
+    color: var(--starsGray);
+  }
+  .star.Green {
+    color: var(--Green);
+  }
+  .star.red {
+    color: var(--red);
+  }
+  .toggle-btn {
+    background: lime;
+    color: white;
+    font-size: 1.5em;
+    padding: 12px 0;
+    margin: 25px auto;
+    width: 150px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    display: block;
+  }
+  .input-textarea {
+    width: 100%;
+    min-height: 80px;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 6px;
+    border: 2px solid black;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+  body.dark .input-textarea {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+  .btn-small {
+    background: #FF99CC;
+    width: auto;
+    padding: 8px 15px;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+  .answer-btn img {
+    max-width: 100%;
+    max-height: 150px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .question-container img {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  body.dark .answer-btn img,
+  body.dark .question-container img {
+    border-color: #555;
+  }
+  .question-container img, .answer-btn img {
+    display: block;
+    margin: 0 auto;
+    background: #f5f5f5;
+  }
+  body.dark .question-container img,
+  body.dark .answer-btn img {
+    background: #333;
+  }
+  /* Style for the header image placeholder */
+  .header-image-placeholder {
+    display: block;
+    width: 100%; /* Hoặc một chiều rộng cố định */
+    height: 100px; /* Điều chỉnh chiều cao này để phù hợp với kích thước bạn muốn */
+    background-color: #f0f0f0; /* Màu nền để dễ nhìn thấy placeholder */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 25px; /* Khoảng cách với tiêu đề bên dưới */
+    
+  }
+  body.dark .header-image-placeholder {
+    background-color: #333;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <img src="https://i.ibb.co/tMdHNdPH/Picsart-25-07-17-06-40-25-073.jpg" alt="Header Image" class="header-image-placeholder">
+  
+  <h2>SỬ - BÀI 12 A (31 TN + 4 ĐS)</h2>
+
+  <button class="btn" id="btn-exit" style="background: var(--red);">
+    <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+      <path d="M16 17v-4h-2V7h-4V4H6V2H4v2h2v4h4v6h2v4h4v2h2v-2h-2z"/>
+    </svg>
+    Thoát
+  </button>
+  <button class="btn" id="btn-multi">TRẮC NGHIỆM 4 PHƯƠNG ÁN</button>
+  <button class="btn" id="btn-truefalse">TRẮC NGHIỆM ĐÚNG/SAI</button>
+  <button class="btn" id="btn-essay">TỰ LUẬN</button>
+
+  <button class="toggle-btn" id="toggle-theme">💡</button>
+  <button class="toggle-btn" id="btn-download" style="background: orange; margin-top: -20px; margin-bottom: 25px;">
+    Tải xuống
+  </button>
+  <div id="quiz-section" style="display:none; margin-top: 10px;">
+    <div class="status-bar">
+      <div><span id="timer">00:00</span></div>
+      <div>ㅤㅤ <span id="done-count">0</span></div>
+      <div>✅<span id="correct-count">0</span> | <strong>⛔</strong><span id="wrong-count">0</span></div>
+    </div>
+
+    <div id="question-block" class="question-container"></div>
+    <div id="answers-block" class="answers"></div>
+
+    <div id="essay-input-block" style="display:none;">
+      <textarea id="essay-answer" class="input-textarea" placeholder="Nhập câu trả lời của bạn..."></textarea>
+      <button id="btn-essay-submit" class="btn-small">Xong</button>
+    </div>
+
+    <div style="display:flex; justify-content: space-between; margin-top: 20px;">
+      <button id="btn-back-home-in-quiz" class="btn btn-small" style="background: var(--Green); width: 48%;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+      <button id="btn-next" class="btn btn-small" style="width: 48%;">Tiếp tục</button>
+    </div>
+  </div>
+
+  <div id="result-section" style="display:none; text-align:center; margin-top: 30px;">
+    <h2>KẾT THÚC BÀI LÀM</h2>
+    <div><strong>Tổng thời gian làm bài:</strong> <span id="result-time"></span></div>
+    <div><strong>Tổng số câu đã làm:</strong> <span id="result-total"></span></div>
+    <div><strong>Đúng:</strong><span id="result-correct"></span><strong> | </strong><strong>Sai:</strong><span id="result-wrong"></span></div>
+    <div id="star-rating" class="star-container"></div>
+    <div style="margin-top: 25px;">
+      <button id="btn-home" class="btn" style="display:inline-block; width:120px;">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:5px;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg> 
+      </button>
+      </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // --- QUESTION DATA ---
+  // Multiple choice questions [ABCD]
+  const multiChoiceQuestions = [
+    {
+      q: "Một trong những nhà yêu nước Việt Nam tham gia hoạt động đối ngoại trong những năm đầu thế kỉ XX là",
+      qImage: null,
+      answers: [
+        { text: "Nguyễn Trường Tộ.", correct: false, image: null },
+        { text: "Phan Bội Châu.", correct: true, image: null },
+        { text: "Tôn Thất Thuyết.", correct: false, image: null },
+        { text: "Phan Đình Phùng.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Năm 1912, Phan Bội Châu tham gia thành lập tổ chức Việt Nam Quang phục hội khi đang hoạt động ở",
+      qImage: null,
+      answers: [
+        { text: "Trung Quốc.", correct: true, image: null },
+        { text: "Nhật Bản.", correct: false, image: null },
+        { text: "Ấn Độ.", correct: false, image: null },
+        { text: "Liên Xô.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Từ năm 1905 đến 1908, Phan Bội Châu tổ chức phong trào nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Đồng khởi.", correct: false, image: null },
+        { text: "Cần vương.", correct: false, image: null },
+        { text: "Duy tân.", correct: false, image: null },
+        { text: "Đông du.", correct: true, image: null }
+      ]
+    },
+    {
+      q: "Đầu thế kỉ XX, Phan Bội Châu phát động phong trào đưa thanh niên Việt Nam đến học tập ở quốc gia nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Trung Quốc", correct: false, image: null },
+        { text: "Nhật Bản", correct: true, image: null },
+        { text: "Liên Xô", correct: false, image: null },
+        { text: "Ấn Độ", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Trong những năm đầu thế kỉ XX, Phan Bội Châu có hoạt động đối ngoại chủ yếu ở những quốc gia nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Liên Xô và Trung Quốc.", correct: false, image: null },
+        { text: "Nhật Bản và Trung Quốc.", correct: true, image: null },
+        { text: "Thái Lan và Ấn Độ.", correct: false, image: null },
+        { text: "Triều Tiên và Trung Quốc.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Nội dung nào sau đây là hoạt động đối ngoại của Phan Bội Châu trong những năm đầu thế kỉ XX?",
+      qImage: null,
+      answers: [
+        { text: "Vận động cải cách ở Nhật Bản.", correct: false, image: null },
+        { text: "Sáng lập Hội liên hiệp thuộc địa.", correct: false, image: null },
+        { text: "Tổ chức phong trào Đông du.", correct: true, image: null },
+        { text: "Tổ chức diễn thuyết ở Pháp.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Trong những năm đầu thế kỉ XX, Phan Bội Châu có hoạt động nào sau đây ở Trung Quốc?",
+      qImage: null,
+      answers: [
+        { text: "Tham gia sáng lập Hội chấn Hoa Hưng Á.", correct: true, image: null },
+        { text: "Viết bài cho tờ báo Đời sống công nhân.", correct: false, image: null },
+        { text: "Bỏ phiếu tán thành gia nhập Quốc tế III.", correct: false, image: null },
+        { text: "Tham dự Đại hội V của Quốc tế cộng sản.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Trong quá trình hoạt động ở Nhật Bản, Phan Bội Châu đã tham gia thành lập tổ chức nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Hội liên hiệp thuộc địa.", correct: false, image: null },
+        { text: "Đông Á Đồng minh hội.", correct: true, image: null },
+        { text: "Việt Nam Quang phục hội.", correct: false, image: null },
+        { text: "Việt Nam Quốc dân đảng.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Từ năm 1911 đến năm 1925, Phan Châu Trinh có hoạt động đối ngoại nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Tiếp xúc với các lực lượng tiến bộ ở Pháp.", correct: true, image: null },
+        { text: "Đưa thanh niên Việt Nam sang Nhật học tập.", correct: false, image: null },
+        { text: "Mở lớp huấn luyện chính trị cho thanh niên.", correct: false, image: null },
+        { text: "Thành lập Hội liên hiệp thuộc địa ở Pari.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Trong những năm đầu thế kỉ XX, hoạt động đối ngoại của Phan Châu Trinh chủ yếu diễn ra ở",
+      qImage: null,
+      answers: [
+        { text: "Anh", correct: false, image: null },
+        { text: "Pháp", correct: true, image: null },
+        { text: "Đức", correct: false, image: null },
+        { text: "Mĩ", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Một trong những hình thức đối ngoại của Phan Châu Trinh trong những năm đầu thế kỉ XX là",
+      qImage: null,
+      answers: [
+        { text: "mít tinh, biểu tình.", correct: false, image: null },
+        { text: "viết báo, diễn thuyết.", correct: true, image: null },
+        { text: "bãi công, nổi dậy.", correct: false, image: null },
+        { text: "bãi khóa, tuần hành.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Năm 1921, Nguyễn Ái Quốc tham gia sáng lập Hội liên hiệp thuộc địa khi đang hoạt động ở",
+      qImage: null,
+      answers: [
+        { text: "Đức.", correct: false, image: null },
+        { text: "Áo.", correct: false, image: null },
+        { text: "Anh.", correct: false, image: null },
+        { text: "Pháp.", correct: true, image: null }
+      ]
+    },
+    {
+      q: "Trong thập niên 20 của thế kỉ XX, hoạt động đối ngoại của Nguyễn Ái Quốc diễn ra chủ yếu ở những quốc gia nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Anh, Nhật Bản và Hàn Quốc.", correct: false, image: null },
+        { text: "Đức, Thái Lan và Mông Cổ.", correct: false, image: null },
+        { text: "Pháp, Trung Quốc và Liên Xô.", correct: true, image: null },
+        { text: "Xiêm, Ấn Độ và Triều Tiên.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Trong thập niên 20 của thế kỉ XX, Nguyễn Ái Quốc có hoạt động đối ngoại nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Tham dự Đại hội V của Quốc tế Cộng sản.", correct: true, image: null },
+        { text: "Thành lập Đảng Cộng sản Đông Dương.", correct: false, image: null },
+        { text: "Tổ chức các lớp học Bình dân học vụ.", correct: false, image: null },
+        { text: "Thành lập Mặt trận Dân chủ Đông Dương.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Nội dung nào sau đây là hoạt động đối ngoại của Nguyễn Ái Quốc trong những năm 1920-1930?",
+      qImage: null,
+      answers: [
+        { text: "Gia nhập Đảng Xã hội Pháp.", correct: true, image: null },
+        { text: "Tổ chức phong trào Đông du.", correct: false, image: null },
+        { text: "Tổ chức cuộc vận dộng Duy tân.", correct: false, image: null },
+        { text: "Ủng hộ Liên Xô chống phát xít.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Trong giai đoạn 1920-1930, Nguyễn Ái Quốc đã tham gia sáng lập tổ chức nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Việt Nam giải phóng quân.", correct: false, image: null },
+        { text: "Đảng Công sản Pháp.", correct: true, image: null },
+        { text: "Mặt trận Việt Minh.", correct: false, image: null },
+        { text: "Đảng Xã hội Pháp.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Một trong những hoạt động đối ngoại của Đảng Cộng sản Đông Dương trong những năm 1930-1945 là duy trì liên lạc với tổ chức nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Đảng Lập Hiến.", correct: false, image: null },
+        { text: "Quốc tế Cộng sản.", correct: true, image: null },
+        { text: "Đảng Xã hội Pháp.", correct: false, image: null },
+        { text: "Đảng Quốc xã.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Nội dung nào sau đây không phải là hoạt động đối ngoại của Phan Bội Châu trong những năm đầu thế kỉ XX?",
+      qImage: null,
+      answers: [
+        { text: "Tham gia thành lập Đông Á đồng minh hội.", correct: false, image: null },
+        { text: "Tham gia sáng lập Hội chấn Hoa Hưng Á.", correct: false, image: null },
+        { text: "Thành lập tổ chức Việt Nam Quang phục hội.", correct: false, image: null },
+        { text: "Gia nhập vào các tổ chức tiến bộ ở Pháp.", correct: true, image: null }
+      ]
+    },
+    {
+      q: "Trong những năm đầu thế kỉ XX, Phan Châu Trinh không có hoạt động đối ngoại nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Gửi thư đề nghị chính phủ Pháp cải cách chế độ cai trị.", correct: false, image: null },
+        { text: "Tham gia thành lập Nhóm những người yêu nước ở Pháp.", correct: false, image: null },
+        { text: "Tổ chức các buổi diễn thuyết về tình hình Việt Nam.", correct: false, image: null },
+        { text: "Cử người về nước ám sát những tên thực dân đầu sỏ.", correct: true, image: null }
+      ]
+    },
+    {
+      q: "Nội dung nào sau đây phản ánh không đúng hoạt động đối ngoại của Nguyễn Ái Quốc trong những năm 1911-1930?",
+      qImage: null,
+      answers: [
+        { text: "Tham gia sáng lập Đảng Cộng sản Pháp.", correct: false, image: null },
+        { text: "Gia nhập vào Đảng xã hội Pháp.", correct: false, image: null },
+        { text: "Thành lập Hội liên hiệp thuộc địa.", correct: false, image: null },
+        { text: "Mở cuộc vận động Duy Tân ở Pháp.", correct: true, image: null }
+      ]
+    },
+    {
+      q: "Trong những năm 1939-1945, Đảng Cộng sản Đông Dương không có hoạt động đối ngoại nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Ủng hộ lực lượng Đồng minh chống phát xít.", correct: false, image: null },
+        { text: "Trung lập với các hoạt động của Quốc tế cộng sản.", correct: true, image: null },
+        { text: "Ủng hộ các hoạt động của Quốc tế cộng sản.", correct: false, image: null },
+        { text: "Liên hệ với phong trào dân tộc chống quân phiệt Nhật.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Hoạt động đối ngoại của Phan Bội Châu trong những năm đầu thế kỉ XX hướng đến mục tiêu nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Tìm sự giúp đỡ bên ngoài để chống thực dân Pháp.", correct: true, image: null },
+        { text: "Thành lập các liên minh quân sự để chống phát xít.", correct: false, image: null },
+        { text: "Giúp Việt Nam nhanh chóng gia nhập Liên Hợp Quốc.", correct: false, image: null },
+        { text: "Bảo vệ cuộc kháng chiến kiến quốc của dân tộc Việt Nam.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Hoạt động đối ngoại của Phan Châu Trinh trong những năm đầu thế kỉ XX nhằm thực hiện mục đích nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Thiết lập quan hệ ngoại giao với các nước xã hội chủ nghĩa.", correct: false, image: null },
+        { text: "Ủng hộ lực lượng Đồng minh chống lại phe phát xít.", correct: false, image: null },
+        { text: "Tìm kiếm sự ủng hộ của nhân dân tiến bộ ở Pháp.", correct: true, image: null },
+        { text: "Xác lập quan hệ giữa Việt Nam với Quốc tế Cộng sản.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Hoạt động đối ngoại của Việt Nam từ đầu thế kỉ XX đến năm 1945 hướng đến phục vụ sự nghiệp nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Thống nhất đất nước.", correct: false, image: null },
+        { text: "Giải phóng dân tộc.", correct: true, image: null },
+        { text: "Giải phóng giai cấp.", correct: false, image: null },
+        { text: "Bảo vệ nền độc lập.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Hoạt động đối ngoại của Đảng Cộng Sản Đông Dương trong Chiến tranh thế giới thứ hai (1939-1945) nhằm thực hiện mục đích chính nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Đánh Pháp, đuổi Nhật và giành độc lập dân tộc.", correct: true, image: null },
+        { text: "Xác lập quan hệ gắn bó giữa các nước ở Đông Dương.", correct: false, image: null },
+        { text: "Xóa bỏ ách thống trị của thực dân Pháp và can thiệp Mĩ.", correct: false, image: null },
+        { text: "Tìm giải pháp ngoại giao cho nước Việt Nam cộng hòa.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Nhận xét nào sau đây phản ánh đúng đóng góp các hoạt động đối ngoại của những nhà yêu nước Việt Nam trong những năm đầu thế kỉ XX?",
+      qImage: null,
+      answers: [
+        { text: "Tăng cường đoàn kết chiến đấu của các nước Đông Dương.", correct: false, image: null },
+        { text: "Tạo điều kiện cho sự ra đời một chính đảng tư sản ở Việt Nam.", correct: false, image: null },
+        { text: "Thúc đẩy Việt Nam nhanh chóng gia nhập tổ chức Liên hợp quốc.", correct: false, image: null },
+        { text: "Đặt nền móng cho hoạt động đối ngoại của Việt Nam thời cận đại.", correct: true, image: null }
+      ]
+    },
+    {
+      q: "Hoạt động đối ngoại của Việt Nam trong giai đoạn 1930-1945 có điểm gì khác biệt so với hoạt động đối ngoại của những nhà yêu nước Việt Nam trong những năm đầu thế kỉ XX?",
+      qImage: null,
+      answers: [
+        { text: "Kết nối cách mạng Việt Nam với cách mạng thế giới.", correct: false, image: null },
+        { text: "Đưa khuynh hướng cứu nước mới xuất hiện ở Việt Nam.", correct: false, image: null },
+        { text: "Tìm ra con đường cứu nước mới cho dân tộc Việt Nam.", correct: false, image: null },
+        { text: "Gắn liền với sự lãnh đạo của một chính đảng vô sản.", correct: true, image: null }
+      ]
+    },
+    {
+      q: "Hoạt động đối ngoại của Việt Nam từ đầu thế kỉ XX đến 1945 nhằm thực hiện mục đích chung nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Xóa bỏ chế độ cai trị của thực dân mới ở Việt Nam.", correct: false, image: null },
+        { text: "Tranh thủ sự ủng hộ và giúp đỡ của phe Đồng minh.", correct: false, image: null },
+        { text: "Đánh đuổi thực dân Pháp, giành độc lập dân tộc.", correct: true, image: null },
+        { text: "Thực hiện các nhiệm vụ chung của cách mạng thế giới.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Nội dung nào sau đây phản ánh không đúng bối cảnh hoạt động đối ngoại của các nhà yêu nước Việt Nam trong những năm đầu thế kỉ XX?",
+      qImage: null,
+      answers: [
+        { text: "Sự khủng hoảng về đường lối cứu nước ở Việt Nam.", correct: false, image: null },
+        { text: "Sự xuất hiện khuynh hướng cứu nước mới ở Việt Nam.", correct: false, image: null },
+        { text: "Giai cấp công nhân Việt Nam đã có hệ tư tưởng riêng.", correct: true, image: null },
+        { text: "Kinh tế và xã hội ở Việt Nam có sự chuyển biến mới.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Các nhà yêu nước Việt Nam trong thập niên đầu thế kỉ XX tiến hành các hoạt động đối ngoại trong bối cảnh nào sau đây?",
+      qImage: null,
+      answers: [
+        { text: "Con đường giải phóng dân tộc theo ngọn cờ phong kiến bị bế tắc.", correct: true, image: null },
+        { text: "Đảng Cộng sản Pháp thành lập và giúp đỡ cách mạng Việt Nam.", correct: false, image: null },
+        { text: "Phong trào đấu tranh chống phát xít trên thế giới phát triển mạnh.", correct: false, image: null },
+        { text: "Phong trào dân tộc theo khuynh hướng dân chủ tư sản ngừng hoạt động.", correct: false, image: null }
+      ]
+    },
+    {
+      q: "Những hoạt động đối ngoại của những nhà yêu nước Việt Nam đầu thế kỉ XX có đóng góp gì đối với sự nghiệp giải phóng dân tộc ở Việt Nam?",
+      qImage: null,
+      answers: [
+        { text: "Kêu gọi được nhiều nước xã hội chủ nghĩa giúp đỡ Việt Nam.", correct: false, image: null },
+        { text: "Hoàn chỉnh kế hoạch chống Pháp giành độc lập dân tộc ở Việt Nam.", correct: false, image: null },
+        { text: "Góp phần gắn kết cách mạng Việt Nam với cách mạng thế giới.", correct: true, image: null },
+        { text: "Giúp Việt Nam nhận được nhiều viện trợ từ các nước trên thế giới.", correct: false, image: null }
+      ]
+    }
+  ];
+
+  // True/False questions [D/S]
+  const trueFalseQuestions = [
+    {
+      q: "",
+      qImage: "https://i.ibb.co/RG7V8gVx/Screenshot-2026-03-06-17-17-19-65-a27b88515698e5a58d06d430da63049d.jpg",
+      answers: [
+        { text: "Đoạn tư liệu trên đề cập đến sự kiện Nguyễn Ái Quốc đọc Sơ thảo lần thứ nhất những luận cương về vấn đề dân tộc và vấn đề thuộc địa của Lê nin.", correct: true, image: null },
+        { text: "Sự kiện đề cập trong đoạn tư liệu trên đánh dấu cách mạng Việt Nam đi theo cách mạng dân chủ tư sản.", correct: false, image: null },
+        { text: "“Đây là cái cần thiết cho chúng ta, đây là con đường giải phóng chúng ta” trong đoạn tư liệu chính là đề cập đến con đường cách mạng vô sản.", correct: true, image: null },
+        { text: "Đóng góp lớn có nghĩa đầu tiên của Nguyễn Ái Quốc với cách mạng Việt Nam là tìm ra được con đường giải phóng dân tộc đúng đắn cho dân tộc Việt Nam – cách mạng vô sản.", correct: true, image: null }
+      ]
+    },
+    {
+      q: "",
+      qImage: "https://i.ibb.co/q3QshCvg/Screenshot-2026-03-06-17-18-27-12-a27b88515698e5a58d06d430da63049d.jpg",
+      answers: [
+        { text: "Năm 1921, Nguyễn Ái Quốc tham gia thành lập Hội liên hiệp các dân tộc bị áp bức tại Pháp – là một hình thức liên minh của các dân tộc bị áp bức.", correct: false, image: null },
+        { text: "Bằng những hoạt động tại Pháp, Liên Xô, Nguyễn Ái Quốc chính thức xác lập quan hệ giữa cách mạng Việt Nam với Quốc tế cộng sản và cách mạng thế giới.", correct: true, image: null },
+        { text: "Những hoạt động của Nguyễn Ái Quốc tại Pháp, Liên Xô và Trung Quốc đóng vai trò quan trọng trong quá trình chuẩn bị về tư tưởng, chính trị, tổ chức cho việc thành lập Đảng Cộng Sản Việt Nam.", correct: true, image: null },
+        { text: "Nhận thức được con đường duy nhất để xóa bỏ sự áp bức chỉ có thể là liên hiệp các dân tộc nhỏ yếu bị áp bức và giai cấp vô sản toàn thế giới được hình thành trong hoạt động ngoại giao của Nguyễn Ái Quốc đầu thế kỉ XX.", correct: true, image: null }
+      ]
+    },
+    {
+      q: "",
+      qImage: "https://i.ibb.co/TBWBbdd2/Screenshot-2026-03-06-17-19-05-82-a27b88515698e5a58d06d430da63049d.jpg",
+      answers: [
+        { text: "Với Hiệp định Giơ-ne-vơ, Việt Nam Dân chủ Cộng hoà đã được công nhận bởi các nước trên thế giới.", correct: false, image: null },
+        { text: "Từ sau Hiệp định Giơ-ne-vơ, các nước lớn không còn can thiệp vào Việt Nam.", correct: false, image: null },
+        { text: "Từ sau Hiệp định Giơ-ne-vơ các nước Đồng minh đã thiết lập quan hệ ngoại giao với Việt Nam Dân chủ Cộng hoà.", correct: false, image: null },
+        { text: "Với Hiệp định Giơ-ne-vơ, vị thế quốc tế của Việt Nam Dân chủ Cộng hoà đã được nâng cao.", correct: true, image: null }
+      ]
+    },
+    {
+      q: "",
+      qImage: "https://i.ibb.co/93S7z53c/Screenshot-2026-03-06-17-19-25-03-a27b88515698e5a58d06d430da63049d.jpg",
+      answers: [
+        { text: "Thập niên đầu thế kỉ XX, Phan Bội Châu đã có hoạt động đối ngoại ở Nhật Bản.", correct: true, image: null },
+        { text: "Chủ trương dựa vào Nhật Bản để lật đổ chế độ phong kiến của Phan Bội Châu đã thất bại.", correct: false, image: null },
+        { text: "Phan Bội Châu muốn dựa vào quan hệ bên ngoài để chống Pháp, giành độc lập.", correct: true, image: null },
+        { text: "Hoạt động của Phan Bội Châu đã chấm dứt khuynh hướng dân chủ tư sản ở Việt Nam.", correct: false, image: null }
+      ]
+    }
+  ];
+
+    // Essay questions [TL]
+  const essayQuestions = [
+    {
+      q: "Trong tiếng Việt, chữ nào có ngàn 'h' ? ",
+      qImage: null,
+      answerRef: "là chữ 'ngành' có ngàn 'h' ",
+      answerRefImage: null
+    },
+    {
+      q: "Trong tiếng Anh, chữ 'GG' viết tắt của từ gì ? ",
+      qImage: null,
+      answerRef: "là 'Good Game' ",
+      answerRefImage: null
+    }
+  ];
+
+  // --- UTILITY FUNCTIONS ---
+  function shuffleArray(arr) {
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/</g, "‹")
+      .replace(/>/g, "›")
+      .replace(/"/g, "'");
+  }
+
+  // --- DOM ELEMENTS ---
+  const btnMulti = document.getElementById('btn-multi');
+  const btnTrueFalse = document.getElementById('btn-truefalse');
+  const btnEssay = document.getElementById('btn-essay');
+  const toggleThemeBtn = document.getElementById('toggle-theme');
+  const btnExit = document.getElementById('btn-exit'); 
+  const btnBackHomeInQuiz = document.getElementById('btn-back-home-in-quiz'); // Nút Back Home trong quiz
+  const btnDownload = document.getElementById('btn-download');
+
+  const quizSection = document.getElementById('quiz-section');
+  const questionBlock = document.getElementById('question-block');
+  const answersBlock = document.getElementById('answers-block');
+  const essayInputBlock = document.getElementById('essay-input-block');
+  const essayAnswerTextarea = document.getElementById('essay-answer');
+  const btnEssaySubmit = document.getElementById('btn-essay-submit');
+  const btnNext = document.getElementById('btn-next');
+
+  const timerSpan = document.getElementById('timer');
+  const doneCountSpan = document.getElementById('done-count');
+  const correctCountSpan = document.getElementById('correct-count');
+  const wrongCountSpan = document.getElementById('wrong-count');
+
+  const resultSection = document.getElementById('result-section');
+  const resultTime = document.getElementById('result-time');
+  const resultTotal = document.getElementById('result-total');
+  const resultCorrect = document.getElementById('result-correct');
+  const resultWrong = document.getElementById('result-wrong');
+  const starRating = document.getElementById('star-rating');
+
+  // const btnRestart = document.getElementById('btn-restart'); // Đã xóa khỏi HTML, nên bỏ dòng này hoặc comment lại
+  const btnHome = document.getElementById('btn-home');
+
+  // --- STATE VARIABLES ---
+  let quizType = null; // 'multi', 'truefalse', 'essay'
+  let questions = [];
+  let currentQIdx = 0;
+  let timerInterval = null;
+  let timeSeconds = 0;
+  let doneCount = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let currentTFAnswerIdx = 0;
+
+  // --- TIMER FUNCTIONS ---
+  function startTimer() {
+    timeSeconds = 0;
+    timerSpan.textContent = formatTime(timeSeconds);
+    if(timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeSeconds++;
+      timerSpan.textContent = formatTime(timeSeconds);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if(timerInterval) clearInterval(timerInterval);
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s/60);
+    const sec = s % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (sec < 10 ? '0' + sec : sec);
+  }
+
+  // --- QUIZ FUNCTIONS ---
+  function resetStats() {
+    doneCount = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    doneCountSpan.textContent = "0";
+    correctCountSpan.textContent = "0";
+    wrongCountSpan.textContent = "0";
+  }
+
+  function initQuiz(type) {
+    quizType = type;
+    currentQIdx = 0;
+    resetStats();
+
+    if(type === 'multi') {
+      questions = multiChoiceQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+    } else if(type === 'truefalse') {
+      questions = trueFalseQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answers: shuffleArray(q.answers.slice())
+      }));
+      shuffleArray(questions);
+      currentTFAnswerIdx = 0;
+    } else if(type === 'essay') {
+      questions = essayQuestions.map(q => ({
+        q: q.q,
+        qImage: q.qImage,
+        answerRef: q.answerRef,
+        answerRefImage: q.answerRefImage
+      }));
+      shuffleArray(questions);
+    }
+    
+    quizSection.style.display = 'block';
+    resultSection.style.display = 'none';
+    btnMulti.style.display = 'none';
+    btnTrueFalse.style.display = 'none';
+    btnEssay.style.display = 'none';
+    btnExit.style.display = 'none'; // Ẩn nút Exit khi bắt đầu quiz
+    toggleThemeBtn.style.display = 'none'; // Ẩn nút chuyển theme khi vào quiz
+    btnDownload.style.display = 'none';
+
+    showQuestion();
+    startTimer();
+  }
+
+  function showQuestion() {
+    // Ẩn nút "Tiếp tục" nếu nó đang hiển thị
+    btnNext.style.display = 'none'; 
+    // Nếu là dạng tự luận, nút "Xong" (submit) sẽ được hiển thị, ngược lại ẩn
+    btnEssaySubmit.style.display = (quizType === 'essay') ? 'block' : 'none';
+    // Đảm bảo nút "Xong" được kích hoạt lại cho câu hỏi tự luận mới
+    btnEssaySubmit.disabled = false; 
+
+    answersBlock.innerHTML = ''; // Xóa các câu trả lời cũ
+    essayInputBlock.style.display = 'none'; // Ẩn khung nhập tự luận
+    essayAnswerTextarea.value = ''; // Xóa nội dung cũ trong khung tự luận
+    
+    if (currentQIdx >= questions.length) {
+      endQuiz();
+      return;
+    }
+
+    const currentQ = questions[currentQIdx];
+    
+    // Display question text and image (if any)
+    let questionHTML = `
+      <div style="color: var(--orange); font-weight: bold; margin-bottom: 15px;">
+        Câu ${currentQIdx + 1}: ${escapeHtml(currentQ.q)}
+      </div>
+    `;
+    
+    if (currentQ.qImage) {
+      questionHTML += `
+        <div style="text-align: center; margin: 15px 0;">
+          <img src="${currentQ.qImage}" 
+               style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;"
+               onerror="this.style.display='none'">
+        </div>
+      `;
+    }
+    
+    questionBlock.innerHTML = questionHTML;
+
+    if (quizType === 'multi') {
+      // Multiple choice questions
+      answersBlock.style.display = 'block';
+      currentQ.answers.forEach((ans, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        
+        let answerContent = `${String.fromCharCode(65 + i)}. ${escapeHtml(ans.text)}`;
+        
+        if (ans.image) {
+          answerContent += `
+            <div style="margin-top: 8px; text-align: center;">
+              <img src="${ans.image}" 
+                   style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 3px;"
+                   onerror="this.style.display='none'">
+            </div>
+          `;
+        }
+        
+        btn.innerHTML = answerContent;
+        btn.onclick = () => handleMultiAnswerClick(btn, ans.correct, currentQ.answers);
+        answersBlock.appendChild(btn);
+      });
+
+    } else if (quizType === 'truefalse') {
+      // True/False questions
+      answersBlock.style.display = 'block';
+      currentTFAnswerIdx = 0;
+      showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+      
+    } else if (quizType === 'essay') {
+      // Essay questions
+      essayInputBlock.style.display = 'block';
+    }
+  }
+
+  function handleMultiAnswerClick(btn, isCorrect, allAnswers) {
+    Array.from(answersBlock.children).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(isCorrect) {
+      btn.classList.add('correct');
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+    } else {
+      btn.classList.add('incorrect');
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      // Highlight correct answer
+      const correctAns = allAnswers.find(a => a.correct);
+      for(let b of answersBlock.children) {
+        // Cẩn thận với việc so sánh textContent trực tiếp nếu có hình ảnh
+        // Cần lấy chỉ phần text của câu trả lời
+        const btnText = b.childNodes[0].nodeType === 3 ? b.childNodes[0].nodeValue.substring(3).trim() : ''; // Lấy text trước hình ảnh
+        const correctText = escapeHtml(correctAns.text);
+
+        if(btnText === correctText && correctAns.correct) {
+          b.classList.add('correct');
+          break;
+        }
+      }
+    }
+    btnNext.style.display = 'inline-block';
+  }
+
+  function showTrueFalseAnswer(answerObj) {
+    answersBlock.innerHTML = '';
+
+    const label = document.createElement('div');
+    label.style.marginBottom = '10px';
+    label.style.fontWeight = 'bold';
+    label.textContent = `Câu hỏi phụ ${currentTFAnswerIdx + 1}: ${answerObj.text}`;
+    answersBlock.appendChild(label);
+
+    if (answerObj.image) {
+      const imgDiv = document.createElement('div');
+      imgDiv.style.textAlign = 'center';
+      imgDiv.style.margin = '10px 0';
+      imgDiv.innerHTML = `<img src="${answerObj.image}" style="max-width: 100%; max-height: 200px; border: 1px solid #ccc; border-radius: 3px;" onerror="this.style.display='none'">`;
+      answersBlock.appendChild(imgDiv);
+    }
+
+    const btnTrue = document.createElement('button');
+    btnTrue.className = 'answer-btn';
+    btnTrue.textContent = 'Đúng';
+    btnTrue.onclick = () => handleTrueFalseAnswerClick(true, answerObj.correct);
+    answersBlock.appendChild(btnTrue);
+    
+    const btnFalse = document.createElement('button');
+    btnFalse.className = 'answer-btn';
+    btnFalse.textContent = 'Sai';
+    btnFalse.onclick = () => handleTrueFalseAnswerClick(false, answerObj.correct);
+    answersBlock.appendChild(btnFalse);
+  }
+
+  function handleTrueFalseAnswerClick(userAnswer, correctAnswer) {
+    Array.from(answersBlock.querySelectorAll('button')).forEach(b => b.classList.add('disabled'));
+
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    if(userAnswer === correctAnswer) {
+      correctCount++;
+      correctCountSpan.textContent = correctCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    } else {
+      wrongCount++;
+      wrongCountSpan.textContent = wrongCount;
+      Array.from(answersBlock.querySelectorAll('button')).forEach(b => {
+        if(b.textContent.toLowerCase() === (userAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('incorrect');
+        }
+        if(b.textContent.toLowerCase() === (correctAnswer ? 'đúng' : 'sai')) {
+          b.classList.add('correct');
+        }
+      });
+    }
+
+    btnNext.style.display = 'inline-block';
+  }
+
+  // Essay submit handler
+  btnEssaySubmit.onclick = () => {
+    const userText = essayAnswerTextarea.value.trim();
+    if(userText.length === 0) {
+      alert('Hãy nhập câu trả lời trước khi nhấn "Xong"');
+      return;
+    }
+    btnEssaySubmit.disabled = true; // Vô hiệu hóa nút "Xong" sau khi submit
+    
+    doneCount++;
+    doneCountSpan.textContent = doneCount;
+
+    const currentQ = questions[currentQIdx];
+    let answerRefHTML = `<br><br><em><strong>Đáp án tham khảo:</strong> ${currentQ.answerRef}</em>`;
+    
+    if(currentQ.answerRefImage) {
+      answerRefHTML += `<div style="margin: 15px 0; text-align: center;">
+        <img src="${currentQ.answerRefImage}" style="max-width: 100%; max-height: 300px; border: 1px solid #ccc; border-radius: 5px;">
+      </div>`;
+    }
+    
+    questionBlock.innerHTML += answerRefHTML;
+    btnNext.style.display = 'inline-block';
+  };
+
+  btnNext.onclick = () => {
+    // Ẩn nút "Tiếp tục"
+    btnNext.style.display = 'none';
+    // Đảm bảo nút "Xong" (essay) được kích hoạt lại
+    btnEssaySubmit.disabled = false; 
+
+    if(quizType === 'truefalse') {
+      currentTFAnswerIdx++;
+      const currentQ = questions[currentQIdx];
+      // Nếu còn câu hỏi phụ trong câu hỏi Đúng/Sai hiện tại
+      if(currentTFAnswerIdx < currentQ.answers.length) {
+        showTrueFalseAnswer(currentQ.answers[currentTFAnswerIdx]);
+        return; // Không chuyển sang câu hỏi tiếp theo mà hiển thị câu phụ
+      }
+    }
+
+    // Chuyển sang câu hỏi tiếp theo
+    currentQIdx++;
+    showQuestion();
+  };
+
+  function endQuiz() {
+    stopTimer();
+    quizSection.style.display = 'none';
+    resultSection.style.display = 'block';
+    toggleThemeBtn.style.display = 'block'; // Hiển thị lại nút chuyển theme
+
+    resultTime.textContent = formatTime(timeSeconds);
+    resultTotal.textContent = doneCount;
+    resultCorrect.textContent = correctCount;
+    resultWrong.textContent = wrongCount;
+
+    starRating.innerHTML = '';
+
+    // Logic tính sao đã được khôi phục và tinh chỉnh
+    if(quizType === 'multi' || quizType === 'truefalse') {
+      let starsGreen = 0;
+      let starsGray = 0;
+      
+      if(wrongCount === 0) { // Nếu không có câu sai
+        starsGreen = 3; // 3 sao xanh
+      } else if (wrongCount >= 1 && wrongCount <= 3) {
+        starsGreen = 2; // 2 sao xanh
+        starsGray = 1; // 1 sao xám
+      } else if (wrongCount >= 4 && wrongCount <= 9) {
+        starsGreen = 1; // 1 sao xanh
+        starsGray = 2; // 2 sao xám
+      } else { // wrongCount >= 10
+        starsGreen = 0; // 0 sao xanh
+        starsGray = 3; // 3 sao xám
+      }
+
+      for(let i = 1; i <= 3; i++) {
+        const star = document.createElement('span');
+        star.classList.add('star');
+        if(i <= starsGreen) star.classList.add('Green');
+        else if(i <= starsGray) star.classList.add('gray');
+        star.innerHTML = '&#9733;';
+        starRating.appendChild(star);
+      }
+    } else if (quizType === 'essay') {
+        // Đối với bài tự luận, không có điểm đúng/sai tự động
+        // Bạn có thể thêm logic chấm điểm thủ công hoặc hiển thị thông báo khác
+        const infoDiv = document.createElement('div');
+        infoDiv.textContent = "Bài Tự Luận Cần Được Giáo Viên Chấm Điểm.";
+        infoDiv.style.fontWeight = "bold";
+        infoDiv.style.marginTop = "20px";
+        starRating.appendChild(infoDiv);
+    }
+  }
+
+  // --- EVENT LISTENERS ---
+  // Đã xóa btnRestart.onclick và logic liên quan
+  // Nếu bạn muốn chức năng "làm lại" bài quiz, bạn cần tạo một nút mới với ID khác
+  // và thêm lại logic reset Stats vào event listener của nút đó.
+
+  // Nút Home (ở màn hình kết quả) - vẫn reload trang hiện tại
+  btnHome.onclick = () => {
+    location.reload(); 
+  };
+
+  btnMulti.onclick = () => initQuiz('multi');
+  btnTrueFalse.onclick = () => initQuiz('truefalse');
+  btnEssay.onclick = () => initQuiz('essay');
+  // New: Download button functionality
+  btnDownload.onclick = () => {
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'toancreator-default'; // Set the desired filename
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  };
+  
+  
+  // Xử lý sự kiện cho nút Exit mới
+  btnExit.onclick = () => {
+    window.location.href = 'https://youtu.be/dQw4w9WgXcQ?si=vCkTUiFy48Qx_jXf'; // Chuyển hướng về index.html
+  };
+
+  // Xử lý sự kiện cho nút Back to Home trong quiz
+  btnBackHomeInQuiz.onclick = () => {
+    if (confirm('Bạn có chắc chắn muốn thoát bài làm hiện tại?')) {
+      stopTimer(); // Dừng đồng hồ
+      location.reload(); // Tải lại trang promt-onlineV2.html
+    }
+  };
+
+  toggleThemeBtn.onclick = () => {
+    document.body.classList.toggle('dark');
+  };
+
+  // Ẩn/hiện nút toggle theme ban đầu
+  // Bạn có thể đặt nút toggle theme ở vị trí cố định thay vì ẩn/hiện tùy thuộc vào màn hình
+  // Hiện tại, nó sẽ luôn hiển thị trừ khi bị ẩn bởi CSS hoặc logic khác
+  toggleThemeBtn.style.display = 'block'; 
+})();
+</script>
+</body>
+</html>
